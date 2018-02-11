@@ -1,0 +1,56 @@
+BW2stagePPS             Relvariance components for 2-stage sample
+BW2stagePPSe            Estimated relvariance components for 2-stage
+                        sample
+BW2stageSRS             Relvariance components for 2-stage sample
+BW3stagePPS             Relvariance components for 3-stage sample
+BW3stagePPSe            Estimated relvariance components for 3-stage
+                        sample
+CVcalc2                 Coefficient of variation of an estimated total
+                        in a 2-stage sample
+CVcalc3                 Coefficient of variation of an estimated total
+                        in a 3-stage sample
+Domainy1y2              Domain data
+HMT                     Generate an HMT population
+MDarea.pop              Maryland area population
+NRFUopt                 Sample sizes for a nonresponse follow-up study
+clusOpt2                Compute optimal sample sizes for a two-stage
+                        sample
+clusOpt2fixedPSU        Optimal number of sample elements per PSU in a
+                        two-stage sample when the sample of PSUs is
+                        fixed
+clusOpt3                Compute optimal sample sizes for a three-stage
+                        sample
+clusOpt3fixedPSU        Compute optimal number of sample secondary
+                        sampling units (SSUs) and elements per primary
+                        sampling unit (PSU) in a three-stage sample
+                        when the sample of PSUs is fixed
+dub                     Sample sizes for a double sampling design
+gamEst                  Estimate variance model parameter gamma
+gammaFit                Iteratively estimate variance model parameter
+                        gamma
+hospital                Hospital Data
+labor                   Labor force population
+nCont                   Compute a simple random sample size for an
+                        estimated mean
+nDep2sam                Simple random sample size for difference in
+                        means
+nDomain                 Compute a simple random sample size for an
+                        estimated mean or total for a domain
+nLogOdds                Calculate simple random sample size for
+                        estimating a proportion
+nProp                   Compute simple random sample size for
+                        estimating a proportion
+nProp2sam               Simple random sample size for difference in
+                        proportions
+nPropMoe                Simple random sample size for a proportion
+                        based on margin of error
+nWilson                 Calculate a simple random sample size for
+                        estimating a proportion
+nhis                    National Health Interview Survey: Demographic
+                        variables
+nhis.large              National Health Interview Survey: Demographic
+                        and health variables
+smho.N874               Survey of Mental Health Organizations Data
+smho98                  Survey of Mental Health Organizations Data
+strAlloc                Allocate a sample to strata
+wtdvar                  Compute weighted variance
