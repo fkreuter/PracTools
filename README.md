@@ -7,7 +7,7 @@ This repository contains projects and examples for the text [Practical Tools for
 
 ### PracTools
 
-The PracTools folder contains code for the [PracTools](https://cran.r-project.org/web/packages/PracTools/index.html) R package.
+The [PracTools R package](https://cran.r-project.org/web/packages/PracTools/index.html) is available on CRAN.
 
 ### Authors
 
