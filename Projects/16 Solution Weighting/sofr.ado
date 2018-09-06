@@ -1,0 +1,1 @@
+infile rec.id nr.class respstat stratum nsamp nstrat v.strat srmarst sred xsrrcr xact2r xreth4r xsexr xcpay1r ra006a ra006b ra008 ra115 ra118 ra112ra pred.logit p.class.10:p.class.10_fmt unwt.rr wt.rr d0 d1 a1 d2 a2 d3  using  C:\Projects\Practical Tools Book\Book Chapters\18 Solution Weighting\sofr.cal.stata.csv , automatic

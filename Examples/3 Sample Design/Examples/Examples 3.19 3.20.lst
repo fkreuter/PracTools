@@ -1,0 +1,325 @@
+The SAS System                                                                                                                                                         17:17 Saturday, July 10, 2010   1
+Example 3.19
+
+The FREQ Procedure
+
+                                                Cumulative    Cumulative
+stratum6    STRATUM    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+       1          1         151       17.26           151        17.26  
+       1          2          64        7.31           215        24.57  
+       2          3          43        4.91           258        29.49  
+       2          4          22        2.51           280        32.00  
+       3          5         150       17.14           430        49.14  
+       3          6          23        2.63           453        51.77  
+       3          7          65        7.43           518        59.20  
+       3          8          14        1.60           532        60.80  
+       4          9          38        4.34           570        65.14  
+       4         10          12        1.37           582        66.51  
+       5         11          13        1.49           595        68.00  
+       5         12          77        8.80           672        76.80  
+       5         13          59        6.74           731        83.54  
+       6         14          86        9.83           817        93.37  
+       6         15          39        4.46           856        97.83  
+       6         16          19        2.17           875       100.00  
+
+
+                                     Cumulative    Cumulative
+stratum6    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+       1         215       24.57           215        24.57  
+       2          65        7.43           280        32.00  
+       3         252       28.80           532        60.80  
+       4          50        5.71           582        66.51  
+       5         149       17.03           731        83.54  
+       6         144       16.46           875       100.00  
+The SAS System                                                                                                                                                         17:17 Saturday, July 10, 2010   2
+Example 3.19
+
+The SURVEYSELECT Procedure
+
+Selection Method    Simple Random Sampling
+Strata Variable     stratum6              
+
+Input Data Set            SMHO98
+Random Number Seed         82841
+Number of Strata               6
+Total Sample Size             60
+Output Data Set         SAMPDATA
+The SAS System                                                                                                                                                         17:17 Saturday, July 10, 2010   3
+Example 3.19
+
+The FREQ Procedure
+
+                                     Cumulative    Cumulative
+stratum6    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+       1          10       16.67            10        16.67  
+       2          10       16.67            20        33.33  
+       3          10       16.67            30        50.00  
+       4          10       16.67            40        66.67  
+       5          10       16.67            50        83.33  
+       6          10       16.67            60       100.00  
+The SAS System                                                                                                                                                         17:17 Saturday, July 10, 2010   4
+Example 3.19
+
+The CONTENTS Procedure
+
+Data Set Name        WORK.SAMPDATA                          Observations          60
+Member Type          DATA                                   Variables             6 
+Engine               V9                                     Indexes               0 
+Created              Saturday, July 10, 2010 05:17:21 PM    Observation Length    48
+Last Modified        Saturday, July 10, 2010 05:17:21 PM    Deleted Observations  0 
+Protection                                                  Compressed            NO
+Data Set Type                                               Sorted                NO
+Label                                                                               
+Data Representation  WINDOWS_32                                                     
+Encoding             wlatin1  Western (Windows)                                     
+
+
+                                     Engine/Host Dependent Information
+
+Data Set Page Size          4096                                                                            
+Number of Data Set Pages    2                                                                               
+First Data Page             1                                                                               
+Max Obs per Page            84                                                                              
+Obs in First Data Page      50                                                                              
+Number of Data Set Repairs  0                                                                               
+Filename                    C:\DOCUME~1\jdever\LOCALS~1\Temp\a\SAS Temporary Files\_TD4112\sampdata.sas7bdat
+Release Created             9.0202M2                                                                        
+Host Created                NET_SRV                                                                         
+
+
+          Alphabetic List of Variables and Attributes
+ 
+#    Variable          Type    Len    Label
+
+3    BEDS              Num       8                            
+4    HospID            Num       8                            
+2    STRATUM           Num       8    Primary sampling stratum
+6    SamplingWeight    Num       8    Sampling Weight         
+5    SelectionProb     Num       8    Probability of Selection
+1    stratum6          Num       3                            
+The SAS System                                                                                                                                                         17:17 Saturday, July 10, 2010   5
+Example 3.19
+
+stratum6=1
+
+The MEANS Procedure
+
+Variable          Label                            Minimum            Mean         Maximum             Sum
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+SelectionProb     Probability of Selection       0.0465116       0.0465116       0.0465116       0.4651163
+SamplingWeight    Sampling Weight               21.5000000      21.5000000      21.5000000     215.0000000
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+
+
+stratum6=2
+
+Variable          Label                            Minimum            Mean         Maximum             Sum
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+SelectionProb     Probability of Selection       0.1538462       0.1538462       0.1538462       1.5384615
+SamplingWeight    Sampling Weight                6.5000000       6.5000000       6.5000000      65.0000000
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+
+
+stratum6=3
+
+Variable          Label                            Minimum            Mean         Maximum             Sum
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+SelectionProb     Probability of Selection       0.0396825       0.0396825       0.0396825       0.3968254
+SamplingWeight    Sampling Weight               25.2000000      25.2000000      25.2000000     252.0000000
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+
+
+stratum6=4
+
+Variable          Label                            Minimum            Mean         Maximum             Sum
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+SelectionProb     Probability of Selection       0.2000000       0.2000000       0.2000000       2.0000000
+SamplingWeight    Sampling Weight                5.0000000       5.0000000       5.0000000      50.0000000
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+
+
+stratum6=5
+
+Variable          Label                            Minimum            Mean         Maximum             Sum
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+SelectionProb     Probability of Selection       0.0671141       0.0671141       0.0671141       0.6711409
+SamplingWeight    Sampling Weight               14.9000000      14.9000000      14.9000000     149.0000000
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+
+
+The SAS System                                                                                                                                                         17:17 Saturday, July 10, 2010   6
+Example 3.19
+
+stratum6=6
+
+The MEANS Procedure
+
+Variable          Label                            Minimum            Mean         Maximum             Sum
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+SelectionProb     Probability of Selection       0.0694444       0.0694444       0.0694444       0.6944444
+SamplingWeight    Sampling Weight               14.4000000      14.4000000      14.4000000     144.0000000
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+The SAS System                                                                                                                                                         17:17 Saturday, July 10, 2010   7
+Example 3.19
+
+The MEANS Procedure
+
+Variable          Label                            Minimum            Mean         Maximum             Sum
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+SelectionProb     Probability of Selection       0.0396825       0.0960998       0.2000000       5.7659886
+SamplingWeight    Sampling Weight                5.0000000      14.5833333      25.2000000     875.0000000
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+The SAS System                                                                                                                                                         17:17 Saturday, July 10, 2010   8
+Example 3.20
+
+The FREQ Procedure
+
+                                                Cumulative    Cumulative
+stratum5    STRATUM    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+       1          1         151       22.50           151        22.50  
+       1          2          64        9.54           215        32.04  
+       2          3          42        6.26           257        38.30  
+       2          4          22        3.28           279        41.58  
+       3          5         150       22.35           429        63.93  
+       3          6           2        0.30           431        64.23  
+       3          7          63        9.39           494        73.62  
+       3          8           1        0.15           495        73.77  
+       4          9          38        5.66           533        79.43  
+       4         12           4        0.60           537        80.03  
+       4         13           2        0.30           539        80.33  
+       5         14          85       12.67           624        93.00  
+       5         15          38        5.66           662        98.66  
+       5         16           9        1.34           671       100.00  
+
+
+                                     Cumulative    Cumulative
+stratum5    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+       1         215       32.04           215        32.04  
+       2          64        9.54           279        41.58  
+       3         216       32.19           495        73.77  
+       4          44        6.56           539        80.33  
+       5         132       19.67           671       100.00  
+The SAS System                                                                                                                                                         17:17 Saturday, July 10, 2010   9
+Example 3.20
+
+The SURVEYSELECT Procedure
+
+Allocation         Proportional
+Strata Variable    stratum5    
+
+Input Data Set                 SMHO98INP
+Number of Strata                       5
+Total Sample Size                     50
+Allocation Output Data Set      STRATSIZ
+The SAS System                                                                                                                                                         17:17 Saturday, July 10, 2010  10
+Example 3.20
+
+                   Sample
+Obs    stratum5     Size
+
+ 1         1         16  
+ 2         2          5  
+ 3         3         16  
+ 4         4          3  
+ 5         5         10  
+                   ======
+                     50  
+The SAS System                                                                                                                                                         17:17 Saturday, July 10, 2010  11
+Example 3.20
+
+The CONTENTS Procedure
+
+Data Set Name        WORK.STRATSIZ                          Observations          5 
+Member Type          DATA                                   Variables             5 
+Engine               V9                                     Indexes               0 
+Created              Saturday, July 10, 2010 05:17:21 PM    Observation Length    40
+Last Modified        Saturday, July 10, 2010 05:17:21 PM    Deleted Observations  0 
+Protection                                                  Compressed            NO
+Data Set Type                                               Sorted                NO
+Label                                                                               
+Data Representation  WINDOWS_32                                                     
+Encoding             wlatin1  Western (Windows)                                     
+
+
+                                     Engine/Host Dependent Information
+
+Data Set Page Size          4096                                                                            
+Number of Data Set Pages    1                                                                               
+First Data Page             1                                                                               
+Max Obs per Page            101                                                                             
+Obs in First Data Page      5                                                                               
+Number of Data Set Repairs  0                                                                               
+Filename                    C:\DOCUME~1\jdever\LOCALS~1\Temp\a\SAS Temporary Files\_TD4112\stratsiz.sas7bdat
+Release Created             9.0202M2                                                                        
+Host Created                NET_SRV                                                                         
+
+
+                  Alphabetic List of Variables and Attributes
+ 
+#    Variable            Type    Len    Label
+
+5    ActualProportion    Num       8    Actual Proportion of Total Sample Size
+3    AllocProportion     Num       8    Allocation Proportion                 
+4    SampleSize          Num       8    Sample Size                           
+2    Total               Num       8    Total Number of Sampling Units        
+1    stratum5            Num       3                                          
+The SAS System                                                                                                                                                         17:17 Saturday, July 10, 2010  12
+Example 3.20
+
+The SURVEYSELECT Procedure
+
+Selection Method    PPS Systematic
+Size Measure        sqrtBEDS      
+Strata Variable     stratum5      
+
+Input Data Set           SMHO98INP
+Random Number Seed         4297005
+Sample Size Data Set      STRATSIZ
+Number of Strata                 5
+Total Sample Size               50
+Output Data Set           SAMPDAT2
+The SAS System                                                                                                                                                         17:17 Saturday, July 10, 2010  13
+Example 3.20
+
+The CONTENTS Procedure
+
+Data Set Name        WORK.SAMPDAT2                          Observations          50
+Member Type          DATA                                   Variables             6 
+Engine               V9                                     Indexes               0 
+Created              Saturday, July 10, 2010 05:17:21 PM    Observation Length    48
+Last Modified        Saturday, July 10, 2010 05:17:21 PM    Deleted Observations  0 
+Protection                                                  Compressed            NO
+Data Set Type                                               Sorted                NO
+Label                                                                               
+Data Representation  WINDOWS_32                                                     
+Encoding             wlatin1  Western (Windows)                                     
+
+
+                                     Engine/Host Dependent Information
+
+Data Set Page Size          4096                                                                            
+Number of Data Set Pages    2                                                                               
+First Data Page             1                                                                               
+Max Obs per Page            84                                                                              
+Obs in First Data Page      49                                                                              
+Number of Data Set Repairs  0                                                                               
+Filename                    C:\DOCUME~1\jdever\LOCALS~1\Temp\a\SAS Temporary Files\_TD4112\sampdat2.sas7bdat
+Release Created             9.0202M2                                                                        
+Host Created                NET_SRV                                                                         
+
+
+                Alphabetic List of Variables and Attributes
+ 
+#    Variable          Type    Len    Label
+
+5    ExpectedHits      Num       8    Expected Number of Hits (Selections)
+2    HospID            Num       8                                        
+4    NumberHits        Num       8    Number of Hits (Selections)         
+6    SamplingWeight    Num       8    Sampling Weight                     
+3    sqrtBEDS          Num       8                                        
+1    stratum5          Num       3                                        

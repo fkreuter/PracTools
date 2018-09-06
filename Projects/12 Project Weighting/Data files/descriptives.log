@@ -1,0 +1,150 @@
+1                                                          The SAS System                             13:49 Friday, October 29, 2010
+
+NOTE: Unable to open SASUSER.REGSTRY. WORK.REGSTRY will be opened instead.
+NOTE: All registry changes will be lost at the end of the session.
+
+WARNING: Unable to copy SASUSER registry to WORK registry. Because of this, you will not see registry customizations during this 
+         session.
+NOTE: Unable to open SASUSER.PROFILE. WORK.PROFILE will be opened instead.
+NOTE: All profile changes will be lost at the end of the session.
+NOTE: Copyright (c) 2002-2008 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.2 (TS1M0) 
+      Licensed to UNIVERSITY OF MARYLAND-CAMPUSWIDE-T/R, Site 0070003533.
+NOTE: This session is executing on the XP_PRO  platform.
+
+
+
+NOTE: SAS initialization used:
+      real time           0.48 seconds
+      cpu time            0.40 seconds
+      
+1          /********************************************************************************/
+2          /* FILE:    descriptives.sas                                                    */
+3          /* TOPIC:   2003 May SOFS - Reserve Component (SOFR)                            */
+4          /* DATE:    10/29/2010                                                          */
+5          /* AUTHOR:  R. Valliant                                                         */
+6          /* PURPOSE: Basic tabulations on data files for ch. 13 weighting project        */
+7          /* REVISED:                                                                     */
+8          /********************************************************************************/
+9          
+10         options nocenter pageno=1 errors=1 orientation=portrait
+11                 nofmterr ls=200
+12                 pagesize = 80;
+13         
+14         libname library "C:\Projects\Practical Tools Book\Book Chapters\13 Project Weighting\Data files";
+NOTE: Libref LIBRARY was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: C:\Projects\Practical Tools Book\Book Chapters\13 Project Weighting\Data files
+15         libname a "C:\Projects\Practical Tools Book\Book Chapters\13 Project Weighting\Data files";
+NOTE: Libname A refers to the same physical library as LIBRARY.
+NOTE: Libref A was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: C:\Projects\Practical Tools Book\Book Chapters\13 Project Weighting\Data files
+16         
+17         title "Contents of SOFR file";
+18         proc contents data = a.sofr;
+19         run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.04 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 1.
+
+20         
+21         title "Contents of RCCPDS pop count file";
+22         proc contents data = a.rccpds57;
+23         run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 2.
+
+24         
+25         title "Frequencies on SOFR file variables";
+26         proc freq data = a.sofr;
+27           tables ra008 			/* reenlist         	*/
+28           		ra115 			/* prepared for job 	*/
+29           		ra118 			/* stress           	*/
+30           		ra006a 			/* compensation			*/
+31           		ra006b 			/* type of work			*/
+32           		ra112ra 		/* days compensated		*/
+33                 sred 			/* education			*/
+34                 srmarst 		/* marital status		*/
+35                 xact2r 			/* activated 30 days	*/
+36                 xcpay1r 		/* paygrade				*/
+37                 xreth4r 		/* race-ethnicity		*/
+38                 xsexr 			/* gender				*/
+39                 xsrrcr			/* service				*/
+2 The SAS System                                                                                                                                                          13:49 Friday, October 29, 2010
+
+40                 respstat		/* response status		*/
+41              ;
+42         run;
+
+NOTE: There were 71701 observations read from the data set A.SOFR.
+NOTE: The PROCEDURE FREQ printed pages 3-10.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.12 seconds
+      cpu time            0.11 seconds
+      
+
+43         
+44         proc freq data = a.sofr;
+45         	tables  stratum
+46         			v_strat
+47         			stratum * v_strat / list
+48         	;
+49         run;
+
+NOTE: There were 71701 observations read from the data set A.SOFR.
+NOTE: The PROCEDURE FREQ printed pages 11-26.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.04 seconds
+      
+
+50         
+51         title "List of pop counts from RCCPDS57";
+52         proc print data = a.rccpds57;
+53         run;
+
+NOTE: There were 4365 observations read from the data set A.RCCPDS57.
+NOTE: The PROCEDURE PRINT printed pages 27-84.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+54         
+55         data sofr45;
+56         	set a.sofr;
+57         	if (stratum = 4 | stratum = 5);
+58         run;
+
+NOTE: There were 71701 observations read from the data set A.SOFR.
+NOTE: The data set WORK.SOFR45 has 83 observations and 19 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.48 seconds
+      cpu time            0.06 seconds
+      
+
+59         
+60         title "Records from sofr45";
+61         proc print data = sofr45;
+62         run;
+
+NOTE: There were 83 observations read from the data set WORK.SOFR45.
+NOTE: The PROCEDURE PRINT printed pages 85-88.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+      
+
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: The SAS System used:
+      real time           1.73 seconds
+      cpu time            0.78 seconds
+      

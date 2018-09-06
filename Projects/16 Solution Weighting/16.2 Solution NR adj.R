@@ -1,0 +1,641 @@
+#****************************************************************************************
+# FILE:     16.2 Solution NR adj.R.
+# PROJECT:  Practical Tools for Designing and Weighting Survey Samples
+# DATE:     12/31/2010
+# AUTHOR:   R. Valliant
+# REVISED:
+#****************************************************************************************
+
+require(doBy)
+require(rpart)
+
+        # Step 3a: Nonresponse adjustments
+
+attach("C:\\Projects\\Practical Tools Book\\Book Chapters\\16 Solution Weighting\\sofr.d1.RData")
+# exclude ineligibles and UNKNOWNS
+
+pick <- sofr.d1$disp!=3 & sofr.d1$disp!=4
+sofr.d1.elig <- sofr.d1[pick,]
+dim(sofr.d1.elig)
+#[1] 66148    25
+dimnames(sofr.d1.elig)[[2]]
+
+        # count of eligible respondents and nonrespondents
+table(sofr.d1.elig$disp)
+#    1     2
+#25559 40589
+
+# Compute resp variable: 1- Respondents, 0- Nonrespondents
+sofr.d1.elig$resp <- abs(sofr.d1.elig$disp - 2)
+table(sofr.d1.elig$resp)
+
+#nonresp  resp
+#    0     1
+#40589 25559
+
+
+#---------------------------------------------------------------------------------------------------
+# Step3a.1. NONRESPONSE ADJUSTMENT - METHOD1
+# Propensity score modeling
+
+# Respondent/Nonrespondent tabs in Table 8- tabs by resp (excluding known and unknown eligibles)
+        # by service
+(counts.xsrrcr <- with(sofr.d1.elig,table(resp,xsrrcr,useNA="ifany")))
+#    xsrrcr
+#resp     1     2     3     4     5     6
+#   0 10060  8398  4686  7869  4855  4721
+#   1  5424  5179  3617  3283  4207  3849
+
+prp.xsrrcr <- prop.table(counts.xsrrcr,2)
+100*round(prp.xsrrcr,3)
+#    xsrrcr
+#resp    1    2    3    4    5    6
+#   0 65.0 61.9 56.4 70.6 53.6 55.1
+#   1 35.0 38.1 43.6 29.4 46.4 44.9
+
+(counts.xreth4r <- with(sofr.d1.elig,table(resp,xreth4r,useNA="ifany")))
+prp.xreth4r <- prop.table(counts.xreth4r,2)
+round(prp.xreth4r,3)
+#    xreth4r
+#resp     1     2
+#   0 20625 19964
+#   1 16833  8726
+
+#    xreth4r
+#resp     1     2
+#   0 0.551 0.696
+#   1 0.449 0.304
+
+(counts.xsexr <- with(sofr.d1.elig,table(resp,xsexr,useNA="ifany")))
+prp.xsexr <- prop.table(counts.xsexr,2)
+round(prp.xsexr,3)
+#    xsexr
+#resp     1     2
+#   0 34100  6489
+#   1 21007  4552
+#    xsexr
+#resp     1     2
+#   0 0.619 0.588
+#   1 0.381 0.412
+
+(counts.xcpay1r <- with(sofr.d1.elig,table(resp,xcpay1r,useNA="ifany")))
+prp.xcpay1r <- prop.table(counts.xcpay1r,2)
+round(prp.xcpay1r,3)
+#    xcpay1r
+#resp     1     2     3     4     5     6     7
+#   0  7026 12936 10146  2810   987  3185  3499
+#   1  1494  4125  5653  3162  1356  3783  5986
+#    xcpay1r
+#resp     1     2     3     4     5     6     7
+#   0 0.825 0.758 0.642 0.471 0.421 0.457 0.369
+#   1 0.175 0.242 0.358 0.529 0.579 0.543 0.631
+
+#   The following vars each have some missing values, mainly among NRs
+#   But, Rs also have some, particularly for sred and xact2r.
+(counts.srmarst <- with(sofr.d1.elig,table(resp,srmarst,useNA="ifany")))
+#    srmarst
+#resp     1     2     3     4     5  <NA>
+#   0   233     6    40     0   157 40153
+#   1 16934   397  2538    75  5577    38
+prop.table(counts.srmarst,2)
+#    srmarst
+#resp            1            2            3            4            5         <NA>
+#   0 0.0135725520 0.0148883375 0.0155159038 0.0000000000 0.0273805371 0.9990545147
+#   1 0.9864274480 0.9851116625 0.9844840962 1.0000000000 0.9726194629 0.0009454853
+(counts.xact2r <- with(sofr.d1.elig,table(resp,xact2r,useNA="ifany")))
+#    xact2r
+#resp     1     2     3  <NA>
+#   0     7   148    24 40410
+#   1   611 12912 11814   222
+prop.table(counts.xact2r,2)
+#    xact2r
+#resp           1           2           3        <NA>
+#   0 0.011326861 0.011332312 0.002027369 0.994536326
+#   1 0.988673139 0.988667688 0.997972631 0.005463674
+(counts.sred <- with(sofr.d1.elig,table(resp,sred,useNA="ifany")))
+#    sred
+#resp     1     2     3     4     5     6     7  <NA>
+#   0     0     0     1     2     1     8     1 40576
+#   1   146  2059  2465  4967  2399  7750  4912   861
+prop.table(counts.sred,2)
+#    sred
+#resp            1            2            3            4            5            6            7         <NA>
+#   0 0.0000000000 0.0000000000 0.0004055150 0.0004024955 0.0004166667 0.0010311936 0.0002035416 0.9792214687
+#   1 1.0000000000 1.0000000000 0.9995944850 0.9995975045 0.9995833333 0.9989688064 0.9997964584 0.0207785313
+
+
+
+# Fit a logistic model
+# Main effects only
+glm.logit1  <-  glm(resp ~ as.factor(xsrrcr)
+                        + as.factor(xreth4r)
+                        + as.factor(xsexr)
+                        + as.factor(xcpay1r),
+                        family=binomial(link = "logit"),
+                        data = sofr.d1.elig)
+summary(glm.logit1)
+
+#Call:
+#glm(formula = resp ~ as.factor(xsrrcr) + as.factor(xreth4r) +
+#    as.factor(xsexr) + as.factor(xcpay1r), family = binomial(link = "logit"),
+#    data = sofr.d1.elig)
+
+#Deviance Residuals:
+#    Min       1Q   Median       3Q      Max
+#-1.6145  -0.8954  -0.6446   1.0915   2.0874
+
+#Coefficients:
+#                    Estimate Std. Error z value Pr(>|z|)
+#(Intercept)         -1.39320    0.03495 -39.859  < 2e-16 ***
+#as.factor(xsrrcr)2   0.12014    0.02620   4.585 4.54e-06 ***
+#as.factor(xsrrcr)3   0.36529    0.02996  12.194  < 2e-16 ***
+#as.factor(xsrrcr)4  -0.33442    0.02941 -11.372  < 2e-16 ***
+#as.factor(xsrrcr)5   0.31690    0.02916  10.867  < 2e-16 ***
+#as.factor(xsrrcr)6   0.28908    0.02974   9.721  < 2e-16 ***
+#as.factor(xreth4r)2 -0.33083    0.01827 -18.105  < 2e-16 ***
+#as.factor(xsexr)2    0.11087    0.02307   4.805 1.55e-06 ***
+#as.factor(xcpay1r)2  0.25836    0.03453   7.483 7.26e-14 ***
+#as.factor(xcpay1r)3  0.83612    0.03365  24.847  < 2e-16 ***
+#as.factor(xcpay1r)4  1.53353    0.03923  39.090  < 2e-16 ***
+#as.factor(xcpay1r)5  1.76907    0.05203  34.000  < 2e-16 ***
+#as.factor(xcpay1r)6  1.47846    0.03838  38.526  < 2e-16 ***
+#as.factor(xcpay1r)7  1.90332    0.03627  52.473  < 2e-16 ***
+#---
+#Signif. codes:  0 *** 0.001 ** 0.01 * 0.05 . 0.1   1
+
+#(Dispersion parameter for binomial family taken to be 1)
+
+#    Null deviance: 88256  on 66147  degrees of freedom
+#Residual deviance: 79833  on 66134  degrees of freedom
+#AIC: 79861
+
+#Number of Fisher Scoring iterations: 4
+
+anova(glm.logit1, test="Chisq")
+#Analysis of Deviance Table
+#
+#Model: binomial, link: logit
+#
+#Response: resp
+#
+#Terms added sequentially (first to last)
+#
+#                   Df Deviance Resid. Df Resid. Dev P(>|Chi|)
+#NULL                               66147      88256
+#as.factor(xsrrcr)   5    951.3     66142      87304 < 2.2e-16 ***
+#as.factor(xreth4r)  1   1376.9     66141      85927 < 2.2e-16 ***
+#as.factor(xsexr)    1     13.2     66140      85914 0.0002764 ***
+#as.factor(xcpay1r)  6   6081.2     66134      79833 < 2.2e-16 ***
+#---
+#Signif. codes:  0 *** 0.001 ** 0.01 * 0.05 . 0.1   1
+
+# Main effects + 2-way interactions
+glm.logit2  <-  glm(resp ~ as.factor(xsrrcr)*as.factor(xreth4r)
+                        + as.factor(xsrrcr)*as.factor(xsexr)
+                        + as.factor(xsrrcr)*as.factor(xcpay1r)
+                        + as.factor(xreth4r)*as.factor(xsexr)
+                        + as.factor(xreth4r)*as.factor(xcpay1r)
+                        + as.factor(xsexr)*as.factor(xcpay1r),
+                        family=binomial(link = "logit"),
+                        data = sofr.d1.elig)
+summary(glm.logit2)
+anova(glm.logit2, test="Chisq")
+#Analysis of Deviance Table
+#
+#Model: binomial, link: logit
+#
+#Response: resp
+#
+#Terms added sequentially (first to last)
+#                                      Df Deviance Resid. Df Resid. Dev P(>|Chi|)
+#NULL                                                  66147      88256
+#as.factor(xsrrcr)                      5    951.3     66142      87304 < 2.2e-16 ***
+#as.factor(xreth4r)                     1   1376.9     66141      85927 < 2.2e-16 ***
+#as.factor(xsexr)                       1     13.2     66140      85914 0.0002764 ***
+#as.factor(xcpay1r)                     6   6081.2     66134      79833 < 2.2e-16 ***
+#as.factor(xsrrcr):as.factor(xreth4r)   5     71.0     66129      79762 6.379e-14 ***
+#as.factor(xsrrcr):as.factor(xsexr)     5     15.9     66124      79746 0.0070584 **
+#as.factor(xsrrcr):as.factor(xcpay1r)  30    209.9     66094      79536 < 2.2e-16 ***
+#as.factor(xreth4r):as.factor(xsexr)    1     31.2     66093      79505 2.291e-08 ***
+#as.factor(xreth4r):as.factor(xcpay1r)  6      7.2     66087      79498 0.3004589
+#as.factor(xsexr):as.factor(xcpay1r)    6     36.8     66081      79461 1.937e-06 ***
+#---
+#Signif. codes:  0 *** 0.001 ** 0.01 * 0.05 . 0.1   1
+
+
+#---------------------------------------------------------------------------------------------------
+        #Create adjustment classes based on propensity scores for interaction model
+
+L.hat  <-  glm.logit2$linear.predictors # Extract predicted values from logistic regression
+
+pred.logit  <-  exp(L.hat) / (1 + exp(L.hat) ) # Convert predicted values to propensity scores
+
+                # 5 adjustment classes based on propensity scores
+quintiles5  <-  quantile(pred.logit, probs = seq(0,1,0.2))
+p.class.5  <-  cut(pred.logit, breaks = quintiles5,include.lowest=T)
+table(p.class.5,useNA="always")
+
+#p.class5
+#[0.0981,0.213]    (0.213,0.3]    (0.3,0.446]  (0.446,0.569]  (0.569,0.735]           <NA>
+#         13568          13539          13077          13213          12751              0
+
+
+        # compare different methods of computing a class propensity adjustment
+cbind("Unweighted mean" = by(data = pred.logit, p.class.5, mean),
+                                # weights sofr.d1.elig$d1 are base wts adjusted for unknown eligibility
+      "Weighted mean" = by(data = data.frame(pred.logit, wt = sofr.d1.elig$d1),
+                           p.class.5,
+                           function(x) {weighted.mean(x$pred.logit, x$wt)}),
+      "Unweighted response rate" = by(as.numeric(sofr.d1.elig$resp), p.class.5, mean),
+      "Weighted response rate" = by(data = data.frame(sofr.d1.elig,wt = sofr.d1.elig$d1),
+                                    p.class.5,
+                                    function(x) {weighted.mean(x$resp, x$wt)}),
+      "Median response propensity" = by(pred.logit, p.class.5, median)
+)
+
+
+#---------------------------------------------------------------------------------------------------
+                #10 adjustment classes based on propensity scores
+quintiles10  <-  quantile(pred.logit, probs = seq(0,1,0.1))
+p.class.10  <-  cut(pred.logit, breaks = quintiles10,include.lowest=T)
+table(p.class.10,useNA="always")
+
+#p.class.10
+#[0.0981,0.166]  (0.166,0.213]  (0.213,0.264]    (0.264,0.3]     (0.3,0.36]   (0.36,0.446]
+#          8218           5350           7600           5939           6053           7024
+# (0.446,0.519]  (0.519,0.569]  (0.569,0.627]  (0.627,0.735]           <NA>
+#          6182           7031           6136           6615              0
+
+        # compare different methods of computing a class propensity adjustment
+cbind("Unweighted mean" = by(data = pred.logit, p.class.10, mean),
+      "Weighted mean" = by(data = data.frame(pred.logit, wt = sofr.d1.elig$d1),
+                           p.class.10,
+                           function(x) {weighted.mean(x$pred.logit, x$wt)}),
+      "Unweighted response rate" = by(as.numeric(sofr.d1.elig$resp), p.class.10, mean),
+      "Weighted response rate" = by(data = data.frame(sofr.d1.elig,wt = sofr.d1.elig$d1),
+                                    p.class.10,
+                                    function(x) {weighted.mean(x$resp, x$wt)}),
+      "Median response propensity" = by(pred.logit, p.class.10, median)
+)
+
+
+sofr.d1.elig$pred.logit <- pred.logit #merge propensity score into the data
+sofr.d1.elig$p.class.5 <- p.class.5   #merge 5 class identifiers
+sofr.d1.elig$p.class.10 <- p.class.10 #merge 10 class identifiers
+
+                              #compute unweighted mean propensity per class
+means.logit.5  <-  summaryBy(pred.logit ~ p.class.5,data=sofr.d1.elig,
+                          FUN = function(x) { c(mean.c = mean(x)) } )
+means.logit.10  <-  summaryBy(pred.logit ~ p.class.10,data=sofr.d1.elig,
+                          FUN = function(x) { c(mean.c = mean(x)) } )
+
+pdf("C:\\Projects\\Practical Tools Book\\Book Chapters\\16 Solution Weighting\\Fig161.pdf",
+    width = 9, height = 6.5)
+            # boxplots of propensity scores by 5 and 10 adjustment classes
+par(mfrow=c(1,2), mar=c(8, 4, 5, 2))
+
+name5 <- names(table(p.class.5))
+
+boxplot(pred.logit~p.class.5,
+        names=name5,
+        las=2,
+        col = "peach puff",
+        boxwex = 0.5,
+        cex.axis=1)
+grid(nx = NULL, col = "gray40", lwd = 2)
+boxplot(pred.logit~p.class.5,
+        names=name5,
+        las=2,
+        col = "peach puff",
+        boxwex = 0.5,
+        cex.axis=1,
+        add = TRUE)
+
+points(x=seq(from=1,to=5,by=1),y=means.logit.5[,2], pch = 19, col="blue")
+title(main="Predicted Response Propensities in 5 adjustment classes\nDots represent class mean",
+      cex.main=0.8)
+
+name10 <- names(table(p.class.10))
+
+boxplot(pred.logit~p.class.10,
+        names=name10,
+        las=2,
+        col = "peach puff",
+        cex.axis=1)
+grid(nx = NULL, col = "gray40", lwd = 2)
+boxplot(pred.logit~p.class.10,
+        names=name10,
+        las=2,
+        col = "peach puff",
+        cex.axis=1,
+        add = TRUE)
+
+points(x=seq(from=1,to=10,by=1),y=means.logit.10[,2], pch = 19, col="blue")
+title(main="Predicted Response Propensities in 10 adjustment classes\nDots represent class mean",
+      cex.main=0.8)
+dev.off()
+
+#---------------------------------------------------------------------------------------------------
+# Weighted propensity model
+
+sofr.1.dsgn  <-
+         svydesign(ids = ~0, # no clusters
+                   strata = ~stratum,
+                   fpc = ~f0,
+                   data = sofr.d1.elig,
+                   weights = ~d1)
+
+glm.logit.wt  <-  svyglm(resp ~ as.factor(xsrrcr)*as.factor(xreth4r)
+                        + as.factor(xsrrcr)*as.factor(xsexr)
+                        + as.factor(xsrrcr)*as.factor(xcpay1r)
+                        + as.factor(xreth4r)*as.factor(xsexr)
+                        + as.factor(xreth4r)*as.factor(xcpay1r)
+                        + as.factor(xsexr)*as.factor(xcpay1r),
+                        family=binomial(link = "logit"),
+                        design = sofr.1.dsgn)
+summary(glm.logit.wt)
+
+        # test whether interaction terms are significant
+regTermTest(glm.logit.wt, "as.factor(xsrrcr):as.factor(xreth4r)")
+#Wald test for as.factor(xsrrcr):as.factor(xreth4r)
+# in svyglm(resp ~ as.factor(xsrrcr) * as.factor(xreth4r) + as.factor(xsrrcr) *
+#    as.factor(xsexr) + as.factor(xsrrcr) * as.factor(xcpay1r) +
+#    as.factor(xreth4r) * as.factor(xsexr) + as.factor(xreth4r) *
+#    as.factor(xcpay1r) + as.factor(xsexr) * as.factor(xcpay1r),
+#    family = binomial(link = "logit"), design = sofr.1.dsgn)
+#F =  4.304580  on  5  and  65678  df: p= 0.00064586
+
+regTermTest(glm.logit.wt, "as.factor(xsrrcr):as.factor(xsexr)")
+#Wald test for as.factor(xsrrcr):as.factor(xsexr)
+# in svyglm(resp ~ as.factor(xsrrcr) * as.factor(xreth4r) + as.factor(xsrrcr) *
+#    as.factor(xsexr) + as.factor(xsrrcr) * as.factor(xcpay1r) +
+#    as.factor(xreth4r) * as.factor(xsexr) + as.factor(xreth4r) *
+#    as.factor(xcpay1r) + as.factor(xsexr) * as.factor(xcpay1r),
+#    family = binomial(link = "logit"), design = sofr.1.dsgn)
+#F =  3.453976  on  5  and  65678  df: p= 0.0040186
+
+regTermTest(glm.logit.wt, "as.factor(xsrrcr):as.factor(xcpay1r)")
+#Wald test for as.factor(xsrrcr):as.factor(xcpay1r)
+# in svyglm(resp ~ as.factor(xsrrcr) * as.factor(xreth4r) + as.factor(xsrrcr) *
+#    as.factor(xsexr) + as.factor(xsrrcr) * as.factor(xcpay1r) +
+#    as.factor(xreth4r) * as.factor(xsexr) + as.factor(xreth4r) *
+#    as.factor(xcpay1r) + as.factor(xsexr) * as.factor(xcpay1r),
+#    family = binomial(link = "logit"), design = sofr.1.dsgn)
+#F =  4.171519  on  30  and  65678  df: p= 1.4361e-13
+
+regTermTest(glm.logit.wt, "as.factor(xreth4r):as.factor(xcpay1r)")
+#Wald test for as.factor(xreth4r):as.factor(xcpay1r)
+# in svyglm(resp ~ as.factor(xsrrcr) * as.factor(xreth4r) + as.factor(xsrrcr) *
+#    as.factor(xsexr) + as.factor(xsrrcr) * as.factor(xcpay1r) +
+#    as.factor(xreth4r) * as.factor(xsexr) + as.factor(xreth4r) *
+#    as.factor(xcpay1r) + as.factor(xsexr) * as.factor(xcpay1r),
+#    family = binomial(link = "logit"), design = sofr.1.dsgn)
+#F =  1.070505  on  6  and  65678  df: p= 0.37752
+
+regTermTest(glm.logit.wt, "as.factor(xreth4r):as.factor(xsexr)")
+#Wald test for as.factor(xreth4r):as.factor(xsexr)
+# in svyglm(resp ~ as.factor(xsrrcr) * as.factor(xreth4r) + as.factor(xsrrcr) *
+#    as.factor(xsexr) + as.factor(xsrrcr) * as.factor(xcpay1r) +
+#    as.factor(xreth4r) * as.factor(xsexr) + as.factor(xreth4r) *
+#    as.factor(xcpay1r) + as.factor(xsexr) * as.factor(xcpay1r),
+#    family = binomial(link = "logit"), design = sofr.1.dsgn)
+#F =  3.913208  on  1  and  65678  df: p= 0.047912
+
+regTermTest(glm.logit.wt, "as.factor(xsexr):as.factor(xcpay1r)")
+#Wald test for as.factor(xsexr):as.factor(xcpay1r)
+# in svyglm(resp ~ as.factor(xsrrcr) * as.factor(xreth4r) + as.factor(xsrrcr) *
+#    as.factor(xsexr) + as.factor(xsrrcr) * as.factor(xcpay1r) +
+#    as.factor(xreth4r) * as.factor(xsexr) + as.factor(xreth4r) *
+#    as.factor(xcpay1r) + as.factor(xsexr) * as.factor(xcpay1r),
+#    family = binomial(link = "logit"), design = sofr.1.dsgn)
+#F =  1.341596  on  6  and  65678  df: p= 0.23451
+
+#---------------------------------------------------------------------------------------------------
+# Covariate balance checks
+v1 <- rep(0,nrow(sofr.d1.elig))
+v1 <- sofr.d1.elig$xsrrcr == 1      # Army National Guard
+
+chk <- glm(v1 ~ as.factor(p.class.10) + as.factor(resp) + as.factor(p.class.10)*as.factor(resp),
+            family=binomial(link = "logit"),
+        data = sofr.d1.elig)
+anova(chk, test="Chisq")
+
+v1 <- rep(0,nrow(sofr.d1.elig))
+v1 <- sofr.d1.elig$xsrrcr == 2      # Army Reserve
+
+chk <- glm(v1 ~ as.factor(p.class.10) + as.factor(resp) + as.factor(p.class.10)*as.factor(resp),
+            family=binomial(link = "logit"),
+        data = sofr.d1.elig)
+anova(chk, test="Chisq")
+
+v1 <- rep(0,nrow(sofr.d1.elig))
+v1 <- sofr.d1.elig$xcpay1r == 1      # E1-E3
+
+chk <- glm(v1 ~ as.factor(p.class.10) + as.factor(resp) + as.factor(p.class.10)*as.factor(resp),
+            family=binomial(link = "logit"),
+        data = sofr.d1.elig)
+anova(chk, test="Chisq")
+
+v1 <- rep(0,nrow(sofr.d1.elig))
+v1 <- sofr.d1.elig$xsexr == 1      # Male
+
+chk <- glm(v1 ~ as.factor(p.class.10) + as.factor(resp) + as.factor(p.class.10)*as.factor(resp),
+            family=binomial(link = "logit"),
+        data = sofr.d1.elig)
+anova(chk, test="Chisq")
+
+
+v1 <- rep(0,nrow(sofr.d1.elig))
+v1 <- sofr.d1.elig$xreth4r == 1      # Non-Hispanic white
+
+chk <- glm(v1 ~ as.factor(p.class.10) + as.factor(resp) + as.factor(p.class.10)*as.factor(resp),
+            family=binomial(link = "logit"),
+        data = sofr.d1.elig)
+anova(chk, test="Chisq")
+
+#---------------------------------------------------------------------------------------------------
+# Step 3a.2. NONRESPONSE ADJUSTMENT - METHOD2
+# Forming adjustment classes by classification trees
+
+set.seed(611033736)
+
+        # Classification tree including xcpay1r+xreth4r+xsexr+xsrrcr
+        # minbucket is set to 250 after running some iterations (iterations are not shown here)
+
+t1  <-  rpart(resp ~ xcpay1r + xreth4r + xsexr + xsrrcr,
+                   method = "class",
+                   control = rpart.control(minbucket = 250, cp=0),
+                   data = sofr.d1.elig)
+
+print(t1, digits=4)
+
+#n= 66148
+
+#node), split, n, loss, yval, (yprob)
+#      * denotes terminal node
+
+#  1) root 66148 25560 0 (0.6136 0.3864)
+#    2) xcpay1r< 3.5 41380 11270 0 (0.7276 0.2724) *
+#    3) xcpay1r>=3.5 24768 10480 1 (0.4232 0.5768)
+#      6) xcpay1r< 6.5 15283  6982 1 (0.4568 0.5432)
+#       12) xreth4r>=1.5 4966  2423 0 (0.5121 0.4879)
+#         24) xsrrcr< 4.5 3727  1766 0 (0.5262 0.4738)
+#           48) xsrrcr>=3.5 669   285 0 (0.5740 0.4260) *
+#           49) xsrrcr< 3.5 3058  1481 0 (0.5157 0.4843)
+#             98) xsrrcr< 1.5 1125   510 0 (0.5467 0.4533) *
+#             99) xsrrcr>=1.5 1933   962 1 (0.4977 0.5023)
+#              198) xsrrcr< 2.5 1637   807 0 (0.5070 0.4930)
+#                396) xsexr>=1.5 473   222 0 (0.5307 0.4693) *
+#                397) xsexr< 1.5 1164   579 1 (0.4974 0.5026)
+#                  794) xcpay1r< 4.5 562   279 0 (0.5036 0.4964) *
+#                  795) xcpay1r>=4.5 602   296 1 (0.4917 0.5083) *
+#              199) xsrrcr>=2.5 296   132 1 (0.4459 0.5541) *
+#         25) xsrrcr>=4.5 1239   582 1 (0.4697 0.5303) *
+#       13) xreth4r< 1.5 10317  4439 1 (0.4303 0.5697)
+#         26) xsrrcr>=3.5 4376  1980 1 (0.4525 0.5475)
+#           52) xsrrcr< 4.5 1055   476 0 (0.5488 0.4512)
+#            104) xcpay1r< 4.5 494   190 0 (0.6154 0.3846) *
+#            105) xcpay1r>=4.5 561   275 1 (0.4902 0.5098) *
+#           53) xsrrcr>=4.5 3321  1401 1 (0.4219 0.5781) *
+#         27) xsrrcr< 3.5 5941  2459 1 (0.4139 0.5861) *
+#      7) xcpay1r>=6.5 9485  3499 1 (0.3689 0.6311) *
+
+    # regression tree for NR adjustment classes
+postscript("C:\\Projects\\Practical Tools Book\\Book Chapters\\16 Solution Weighting\\Fig 16.2.eps",
+           width=14,
+           height=11)
+
+par(mfrow = c(1,1))
+plot(t1, uniform=TRUE, compress=TRUE, margin = 0.1)
+text(t1, use.n=TRUE, all=TRUE,
+     digits=15,
+     cex=0.8,
+#     pretty=2,
+#     pretty=1,
+     fancy=FALSE,
+     fwidth=0.6,    # set width of node enclosures; works with pretty
+     fheight=0.6,   # set height of node enclosures
+     xpd = TRUE,
+     font = 3)
+dev.off()
+
+sofr.d1.elig <- cbind(sofr.d1.elig,nr.class=t1$where) # Merge class identifier
+
+unwt.rr  <-  by(as.numeric(sofr.d1.elig[, "resp"]), t1$where, mean)
+with(sofr.d1.elig,mean(resp))
+#[1] 0.3863911  # Overall unweighted response rate
+
+
+            # tabulate number of persons (R + NR) in each class
+table(t1$where,useNA="ifany")
+
+#    2     7     9    12    14    15    16    17    21    22    23    24    25
+#41380   669  1125   473   562   602   296  1239   494   561  3321  5941  9485
+
+# Weighted response rate
+wt.rr  <-  by(data = data.frame(resp = as.numeric(sofr.d1.elig[,"resp"]),
+            wt = sofr.d1.elig[,"d1"]),
+            t1$where,
+            function(x) {weighted.mean(x$resp, x$wt)} )
+
+            # unwtd and wtd response rates in cart cells
+tree.rr  <-  cbind(nr.class=as.numeric(names(wt.rr)), unwt.rr, wt.rr)
+
+weighted.mean(sofr.d1.elig$resp, sofr.d1.elig$d1)
+#[1] 0.4031889   # Overall weighted response rate
+
+
+# merge NR class and response rates onto sofr.d1.elig file
+sofr.d1.elig  <-  merge(sofr.d1.elig, data.frame(tree.rr), by="nr.class")
+sofr.d1.elig  <-  sofr.d1.elig[order(sofr.d1.elig$rec.id),]
+
+        # Counts of R + NR for the 4 vars used to form the tree
+with(sofr.d1.elig,table(nr.class,xcpay1r,useNA="ifany"))
+#        xcpay1r
+#nr.class     1     2     3     4     5     6     7
+#      2   8520 17061 15799     0     0     0     0
+#      7      0     0     0   502    89    78     0
+#      9      0     0     0   468   130   527     0
+#      12     0     0     0   199    26   248     0
+#      14     0     0     0   562     0     0     0
+#      15     0     0     0     0   108   494     0
+#      16     0     0     0   118    14   164     0
+#      17     0     0     0   733     2   504     0
+#      21     0     0     0   494     0     0     0
+#      22     0     0     0     0   287   274     0
+#      23     0     0     0  1419     5  1897     0
+#      24     0     0     0  1477  1682  2782     0
+#      25     0     0     0     0     0     0  9485
+
+
+with(sofr.d1.elig,table(nr.class,xreth4r,useNA="ifany"))
+#        xreth4r
+#nr.class     1     2
+#      2  19532 21848
+#      7      0   669
+#      9      0  1125
+#      12     0   473
+#      14     0   562
+#      15     0   602
+#      16     0   296
+#      17     0  1239
+#      21   494     0
+#      22   561     0
+#      23  3321     0
+#      24  5941     0
+#      25  7609  1876
+
+
+with(sofr.d1.elig,table(nr.class,xsexr,useNA="ifany"))
+#        xsexr
+#nr.class     1     2
+#      2  34517  6863
+#      7    614    55
+#      9    988   137
+#      12     0   473
+#      14   562     0
+#      15   602     0
+#      16   219    77
+#      17   931   308
+#      21   384   110
+#      22   517    44
+#      23  2598   723
+#      24  5079   862
+#      25  8096  1389
+
+with(sofr.d1.elig,table(nr.class,xsrrcr,useNA="ifany"))
+#        xsrrcr
+#nr.class     1     2     3     4     5     6
+#      2  10061  8369  5740  7144  5089  4977
+#      7      0     0     0   669     0     0
+#      9   1125     0     0     0     0     0
+#      12     0   473     0     0     0     0
+#      14     0   562     0     0     0     0
+#      15     0   602     0     0     0     0
+#      16     0     0   296     0     0     0
+#      17     0     0     0     0   645   594
+#      21     0     0     0   494     0     0
+#      22     0     0     0   561     0     0
+#      23     0     0     0     0  1891  1430
+#      24  3005  2004   932     0     0     0
+#      25  1293  1567  1335  2284  1437  1569
+
+#--------------------------------------------------------------------------------------------------
+# Compute NR-adjusted weight
+
+sofr.d1.elig$a2 <- 1/(sofr.d1.elig$wt.rr) # Use weighted response rates for NR adjustment
+sofr.d1.elig$d2 <- sofr.d1.elig$d1 * sofr.d1.elig$a2
+
+        # reset d2 to missing for nonrespondents
+sofr.d1.elig$d2[sofr.d2$disp==2] <- NA
+
+sofr.d2 <- sofr.d1.elig
+dim(sofr.d2)
+#[1] 66148    33    This includes R, NR
+table(sofr.d2$disp)
+#    1     2
+#25559 40589
+sum(sofr.d2$d2[sofr.d2$disp==1])
+#[1] 813341.9
+
+save(sofr.d2, file=paste(file_loc_out,"sofr.d2.RData", sep=""))

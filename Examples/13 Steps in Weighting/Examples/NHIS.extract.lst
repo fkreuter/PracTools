@@ -1,0 +1,551 @@
+                                              The SAS System          15:57 Saturday, October 13, 2007   1
+
+                                            The FREQ Procedure
+
+                                      Stratum for variance estimation
+ 
+                                                           Cumulative    Cumulative
+                       STRATUM    Frequency     Percent     Frequency      Percent
+                       ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+                             1          41        1.04            41         1.04  
+                             2          49        1.25            90         2.29  
+                             3           8        0.20            98         2.50  
+                             4          30        0.76           128         3.26  
+                             5          28        0.71           156         3.98  
+                             6          19        0.48           175         4.46  
+                             7          31        0.79           206         5.25  
+                             8          34        0.87           240         6.12  
+                             9          33        0.84           273         6.96  
+                            10          42        1.07           315         8.03  
+                            11          52        1.33           367         9.35  
+                            12          46        1.17           413        10.52  
+                            13          29        0.74           442        11.26  
+                            14          39        0.99           481        12.26  
+                            15          42        1.07           523        13.33  
+                            16          54        1.38           577        14.70  
+                            17          55        1.40           632        16.11  
+                            18          36        0.92           668        17.02  
+                            19           9        0.23           677        17.25  
+                            20          60        1.53           737        18.78  
+                            21          44        1.12           781        19.90  
+                            22          61        1.55           842        21.46  
+                            23          52        1.33           894        22.78  
+                            24          30        0.76           924        23.55  
+                            25          21        0.54           945        24.08  
+                            26          25        0.64           970        24.72  
+                            27          55        1.40          1025        26.12  
+                            28          57        1.45          1082        27.57  
+                            29          27        0.69          1109        28.26  
+                            30          37        0.94          1146        29.20  
+                            31          33        0.84          1179        30.05  
+                            32          41        1.04          1220        31.09  
+                            33          41        1.04          1261        32.14  
+                            34          55        1.40          1316        33.54  
+                            35          40        1.02          1356        34.56  
+                            36          30        0.76          1386        35.32  
+                            37          20        0.51          1406        35.83  
+                            38          17        0.43          1423        36.26  
+                            39          36        0.92          1459        37.18  
+                            40          20        0.51          1479        37.69  
+                            41          30        0.76          1509        38.46  
+                            42          43        1.10          1552        39.55  
+                            43          41        1.04          1593        40.60  
+                            44          51        1.30          1644        41.90  
+                            45          48        1.22          1692        43.12  
+                            46          67        1.71          1759        44.83  
+                            47          23        0.59          1782        45.41  
+                            48          31        0.79          1813        46.20  
+                            49          32        0.82          1845        47.02  
+                            50          26        0.66          1871        47.68  
+                                              The SAS System          15:57 Saturday, October 13, 2007   2
+
+                                            The FREQ Procedure
+
+                                      Stratum for variance estimation
+ 
+                                                           Cumulative    Cumulative
+                       STRATUM    Frequency     Percent     Frequency      Percent
+                       ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+                            51          33        0.84          1904        48.52  
+                            52          31        0.79          1935        49.31  
+                            53          56        1.43          1991        50.74  
+                            54          26        0.66          2017        51.40  
+                            55          52        1.33          2069        52.73  
+                            56          43        1.10          2112        53.82  
+                            57          25        0.64          2137        54.46  
+                            58          29        0.74          2166        55.20  
+                            59          32        0.82          2198        56.01  
+                            60          37        0.94          2235        56.96  
+                            61          37        0.94          2272        57.90  
+                            62          48        1.22          2320        59.12  
+                            63          30        0.76          2350        59.89  
+                            64          44        1.12          2394        61.01  
+                            65          30        0.76          2424        61.77  
+                            66          66        1.68          2490        63.46  
+                            67          45        1.15          2535        64.60  
+                            68          47        1.20          2582        65.80  
+                            69          52        1.33          2634        67.13  
+                            70          31        0.79          2665        67.92  
+                            71          37        0.94          2702        68.86  
+                            72          36        0.92          2738        69.78  
+                            73          58        1.48          2796        71.25  
+                            74          24        0.61          2820        71.87  
+                            75          48        1.22          2868        73.09  
+                            76          57        1.45          2925        74.54  
+                            77          44        1.12          2969        75.66  
+                            78          21        0.54          2990        76.20  
+                            79          56        1.43          3046        77.62  
+                            80          25        0.64          3071        78.26  
+                            81          30        0.76          3101        79.03  
+                            82          32        0.82          3133        79.84  
+                            83          53        1.35          3186        81.19  
+                            84          38        0.97          3224        82.16  
+                            85          49        1.25          3273        83.41  
+                            86          32        0.82          3305        84.23  
+                            87          24        0.61          3329        84.84  
+                            88          26        0.66          3355        85.50  
+                            89          60        1.53          3415        87.03  
+                            90          30        0.76          3445        87.79  
+                            91          10        0.25          3455        88.05  
+                            92          66        1.68          3521        89.73  
+                            93          42        1.07          3563        90.80  
+                            94          76        1.94          3639        92.74  
+                            95          61        1.55          3700        94.29  
+                            96          48        1.22          3748        95.51  
+                            97          32        0.82          3780        96.33  
+                            98          51        1.30          3831        97.63  
+                            99          44        1.12          3875        98.75  
+                           100          49        1.25          3924       100.00  
+                                              The SAS System          15:57 Saturday, October 13, 2007   3
+
+                                            The FREQ Procedure
+
+                                        PSU for variance estimation
+ 
+                                                         Cumulative    Cumulative
+                         PSU    Frequency     Percent     Frequency      Percent
+                         ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+                           1        1915       48.80          1915        48.80  
+                           2        2009       51.20          3924       100.00  
+
+
+                                                   Sex
+ 
+                                                          Cumulative    Cumulative
+                          SEX    Frequency     Percent     Frequency      Percent
+                       ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+                       Male          1805       46.00          1805        46.00  
+                       Female        2119       54.00          3924       100.00  
+
+
+                                                   Age
+ 
+                                                             Cumulative    Cumulative
+                           AGE_P    Frequency     Percent     Frequency      Percent
+                    ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+                    1-84 years          3854       98.22          3854        98.22  
+                    85+ years             70        1.78          3924       100.00  
+
+
+                                               Age Recode #1
+ 
+                                                                Cumulative    Cumulative
+                             R_AGE1    Frequency     Percent     Frequency      Percent
+                  ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+                  18-24 years               512       13.05           512        13.05  
+                  25-44 years              1555       39.63          2067        52.68  
+                  45-64 years              1255       31.98          3322        84.66  
+                  65-69 years               164        4.18          3486        88.84  
+                  70-74 years               150        3.82          3636        92.66  
+                  75 years and over         288        7.34          3924       100.00  
+
+
+                                            Hispanic Ethnicity
+ 
+                                                           Cumulative    Cumulative
+                      ORIGIN_I    Frequency     Percent     Frequency      Percent
+                      ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+                           Yes         801       20.41           801        20.41  
+                           No         3123       79.59          3924       100.00  
+
+
+                                              The SAS System          15:57 Saturday, October 13, 2007   4
+
+                                            The FREQ Procedure
+
+                                        OMB groups w/multiple race
+ 
+                                                                     Cumulative    Cumulative
+                                RACERPI2    Frequency     Percent     Frequency      Percent
+             ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+             White only                         3119       79.49          3119        79.49  
+             Black/African American only         591       15.06          3710        94.55  
+             AIAN only                            26        0.66          3736        95.21  
+             Asian only                          143        3.64          3879        98.85  
+             Race group not releasable*            6        0.15          3885        99.01  
+             Multiple race                        39        0.99          3924       100.00  
+
+
+                                 Race coded to single/multiple race group
+ 
+                                                                           Cumulative    Cumulative
+                                      MRACRPI2    Frequency     Percent     Frequency      Percent
+       ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+       White                                          3137       79.94          3137        79.94  
+       Black/African American                          600       15.29          3737        95.23  
+       Indian (American), Alaska Native                 31        0.79          3768        96.02  
+       Asian Indian                                     18        0.46          3786        96.48  
+       Chinese                                          31        0.79          3817        97.27  
+       Filipino                                         35        0.89          3852        98.17  
+       Other Asian*                                     62        1.58          3914        99.75  
+       Primary race not releasable**                     6        0.15          3920        99.90  
+       Multiple race, no primary race selected           4        0.10          3924       100.00  
+
+
+                                               Race Recode
+ 
+                                                                  Cumulative    Cumulative
+                             RACRECI2    Frequency     Percent     Frequency      Percent
+               ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+               White                         3138       79.97          3138        79.97  
+               Black                          601       15.32          3739        95.29  
+               All other race groups*         185        4.71          3924       100.00  
+
+
+                                              Marital status
+ 
+                                                                          Cumulative    Cumulative
+                                     R_MARITL    Frequency     Percent     Frequency      Percent
+        ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+        Married - spouse in household                2154       54.89          2154        54.89  
+        Married - spouse not in household              57        1.45          2211        56.35  
+        Widowed                                       250        6.37          2461        62.72  
+        Divorced                                      307        7.82          2768        70.54  
+        Separated                                      99        2.52          2867        73.06  
+        Never married                                 830       21.15          3697        94.22  
+        Living with partner                           208        5.30          3905        99.52  
+        Unknown marital status                         19        0.48          3924       100.00  
+                                              The SAS System          15:57 Saturday, October 13, 2007   5
+
+                                            The FREQ Procedure
+
+                                           Legal marital status
+ 
+                                                                         Cumulative    Cumulative
+                                    LG_MSTAT    Frequency     Percent     Frequency      Percent
+        ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+        Married, spouse in household                2154       54.89          2154        54.89  
+        Married, spouse not in household              62        1.58          2216        56.47  
+        Widowed                                      258        6.57          2474        63.05  
+        Divorced                                     361        9.20          2835        72.25  
+        Separated                                    111        2.83          2946        75.08  
+        Never Married                                954       24.31          3900        99.39  
+        Unknown marital status                        24        0.61          3924       100.00  
+
+
+                                  CDC standard for legal marital status
+ 
+                                                                   Cumulative    Cumulative
+                              CDCMSTAT    Frequency     Percent     Frequency      Percent
+              ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+              Separated                        111        2.83           111         2.83  
+              Divorced                         361        9.20           472        12.03  
+              Married                         2216       56.47          2688        68.50  
+              Single/never married             954       24.31          3642        92.81  
+              Widowed                          258        6.57          3900        99.39  
+              Unknown marital status            24        0.61          3924       100.00  
+
+
+                                      Parent(s) present in the family
+ 
+                                                                    Cumulative    Cumulative
+                                PARENTS    Frequency     Percent     Frequency      Percent
+              ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+              Mother, no father                 206        5.25           206         5.25  
+              Father, no mother                  33        0.84           239         6.09  
+              Mother and father                 257        6.55           496        12.64  
+              Neither mother nor father        3428       87.36          3924       100.00  
+
+
+                                             Education Recode
+ 
+                                                                            Cumulative    Cumulative
+                                        EDUC_R1    Frequency     Percent     Frequency      Percent
+     ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+     Less/equal to 8th grade                            792       20.18           792        20.18  
+     High school graduate                              1177       29.99          1969        50.18  
+     Some college, no degree                            726       18.50          2695        68.68  
+     AA degree, technical or vocational                 933       23.78          3628        92.46  
+     Master's, professional, or doctoral degree         296        7.54          3924       100.00  
+                                              The SAS System          15:57 Saturday, October 13, 2007   6
+
+                                            The FREQ Procedure
+
+                                   Ratio of fam inc to poverty threshold
+ 
+                                                              Cumulative    Cumulative
+                          RAT_CAT    Frequency     Percent     Frequency      Percent
+                    ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+                    Under .50             127        3.24           127         3.24  
+                    .50 to .74             85        2.17           212         5.40  
+                    .75 to .99            120        3.06           332         8.46  
+                    1.00 to 1.24          137        3.49           469        11.95  
+                    1.25 to 1.49          141        3.59           610        15.55  
+                    1.50 to 1.74          136        3.47           746        19.01  
+                    1.75 to 1.99          112        2.85           858        21.87  
+                    2.00 to 2.49          232        5.91          1090        27.78  
+                    2.50 to 2.99          221        5.63          1311        33.41  
+                    3.00 to 3.49          218        5.56          1529        38.97  
+                    3.50 to 3.99          142        3.62          1671        42.58  
+                    4.00 to 4.49          169        4.31          1840        46.89  
+                    4.50 to 4.99          155        3.95          1995        50.84  
+                    5.00 and over         712       18.14          2707        68.99  
+                    Unknown              1217       31.01          3924       100.00  
+
+
+                                                         Cumulative    Cumulative
+                        resp    Frequency     Percent     Frequency      Percent
+                        ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+                           0        1217       31.01          1217        31.01  
+                           1        2707       68.99          3924       100.00  
+                                              The SAS System          15:57 Saturday, October 13, 2007   7
+
+                                         The UNIVARIATE Procedure
+                                         Variable:  AGE_P  (Age)
+
+                                                 Moments
+
+                     N                        3924    Sum Weights               3924
+                     Mean               45.0372069    Sum Observations        176726
+                     Std Deviation      17.4359362    Variance             304.01187
+                     Skewness           0.42731637    Kurtosis            -0.6392683
+                     Uncorrected SS        9151884    Corrected SS        1192638.57
+                     Coeff Variation    38.7145149    Std Error Mean       0.2783433
+
+
+                                        Basic Statistical Measures
+ 
+                              Location                    Variability
+
+                          Mean     45.03721     Std Deviation           17.43594
+                          Median   43.00000     Variance               304.01187
+                          Mode     43.00000     Range                   67.00000
+                                                Interquartile Range     26.00000
+
+
+                                        Tests for Location: Mu0=0
+ 
+                             Test           -Statistic-    -----p Value------
+
+                             Student's t    t  161.8045    Pr > |t|    <.0001
+                             Sign           M      1962    Pr >= |M|   <.0001
+                             Signed Rank    S   3850425    Pr >= |S|   <.0001
+
+
+                                         Quantiles (Definition 5)
+ 
+                                          Quantile      Estimate
+
+                                          100% Max            85
+                                          99%                 85
+                                          95%                 78
+                                          90%                 71
+                                          75% Q3              57
+                                          50% Median          43
+                                          25% Q1              31
+                                          10%                 23
+                                          5%                  20
+                                          1%                  18
+                                          0% Min              18
+
+
+                                           Extreme Observations
+ 
+                                   ----Lowest----        ----Highest---
+ 
+                                   Value      Obs        Value      Obs
+
+                                      18     3915           85     3774
+                                      18     3909           85     3800
+                                              The SAS System          15:57 Saturday, October 13, 2007   8
+
+                                         The UNIVARIATE Procedure
+                                         Variable:  AGE_P  (Age)
+
+                                           Extreme Observations
+ 
+                                   ----Lowest----        ----Highest---
+ 
+                                   Value      Obs        Value      Obs
+
+                                      18     3879           85     3847
+                                      18     3846           85     3854
+                                      18     3843           85     3857
+                                              The SAS System          15:57 Saturday, October 13, 2007   9
+
+                                            The FREQ Procedure
+
+                                           Table of resp by SEX
+
+                                   resp      SEX(Sex)
+
+                                   Frequency‚
+                                   Percent  ‚
+                                   Col Pct  ‚Male    ‚Female  ‚  Total
+                                   ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                                          0 ‚    543 ‚    674 ‚   1217
+                                            ‚  13.84 ‚  17.18 ‚  31.01
+                                            ‚  30.08 ‚  31.81 ‚
+                                   ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                                          1 ‚   1262 ‚   1445 ‚   2707
+                                            ‚  32.16 ‚  36.82 ‚  68.99
+                                            ‚  69.92 ‚  68.19 ‚
+                                   ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                                   Total        1805     2119     3924
+                                               46.00    54.00   100.00
+
+
+                                         Table of resp by R_AGE1
+
+                 resp      R_AGE1(Age Recode #1)
+
+                 Frequency‚
+                 Percent  ‚
+                 Col Pct  ‚18-24 ye‚25-44 ye‚45-64 ye‚65-69 ye‚70-74 ye‚75 years‚  Total
+                          ‚ars     ‚ars     ‚ars     ‚ars     ‚ars     ‚ and ove‚
+                          ‚        ‚        ‚        ‚        ‚        ‚r       ‚
+                 ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                        0 ‚    177 ‚    409 ‚    398 ‚     65 ‚     51 ‚    117 ‚   1217
+                          ‚   4.51 ‚  10.42 ‚  10.14 ‚   1.66 ‚   1.30 ‚   2.98 ‚  31.01
+                          ‚  34.57 ‚  26.30 ‚  31.71 ‚  39.63 ‚  34.00 ‚  40.63 ‚
+                 ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                        1 ‚    335 ‚   1146 ‚    857 ‚     99 ‚     99 ‚    171 ‚   2707
+                          ‚   8.54 ‚  29.20 ‚  21.84 ‚   2.52 ‚   2.52 ‚   4.36 ‚  68.99
+                          ‚  65.43 ‚  73.70 ‚  68.29 ‚  60.37 ‚  66.00 ‚  59.38 ‚
+                 ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                 Total         512     1555     1255      164      150      288     3924
+                             13.05    39.63    31.98     4.18     3.82     7.34   100.00
+
+
+                                              The SAS System          15:57 Saturday, October 13, 2007  10
+
+                                            The FREQ Procedure
+
+                                        Table of resp by ORIGIN_I
+
+                                   resp      ORIGIN_I(Hispanic Ethnicity)
+
+                                   Frequency‚
+                                   Percent  ‚
+                                   Col Pct  ‚Yes     ‚No      ‚  Total
+                                   ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                                          0 ‚    287 ‚    930 ‚   1217
+                                            ‚   7.31 ‚  23.70 ‚  31.01
+                                            ‚  35.83 ‚  29.78 ‚
+                                   ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                                          1 ‚    514 ‚   2193 ‚   2707
+                                            ‚  13.10 ‚  55.89 ‚  68.99
+                                            ‚  64.17 ‚  70.22 ‚
+                                   ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                                   Total         801     3123     3924
+                                               20.41    79.59   100.00
+
+
+                                        Table of resp by RACRECI2
+
+                               resp      RACRECI2(Race Recode)
+
+                               Frequency‚
+                               Percent  ‚
+                               Col Pct  ‚White   ‚Black   ‚All othe‚  Total
+                                        ‚        ‚        ‚r race g‚
+                                        ‚        ‚        ‚roups*  ‚
+                               ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                                      0 ‚    953 ‚    196 ‚     68 ‚   1217
+                                        ‚  24.29 ‚   4.99 ‚   1.73 ‚  31.01
+                                        ‚  30.37 ‚  32.61 ‚  36.76 ‚
+                               ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                                      1 ‚   2185 ‚    405 ‚    117 ‚   2707
+                                        ‚  55.68 ‚  10.32 ‚   2.98 ‚  68.99
+                                        ‚  69.63 ‚  67.39 ‚  63.24 ‚
+                               ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                               Total        3138      601      185     3924
+                                           79.97    15.32     4.71   100.00
+
+
+                                              The SAS System          15:57 Saturday, October 13, 2007  11
+
+                                            The FREQ Procedure
+
+                                        Table of resp by CDCMSTAT
+
+                 resp      CDCMSTAT(CDC standard for legal marital status)
+
+                 Frequency‚
+                 Percent  ‚
+                 Col Pct  ‚Separate‚Divorced‚Married ‚Single/n‚Widowed ‚Unknown ‚  Total
+                          ‚d       ‚        ‚        ‚ever mar‚        ‚marital ‚
+                          ‚        ‚        ‚        ‚ried    ‚        ‚status  ‚
+                 ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                        0 ‚     38 ‚    102 ‚    644 ‚    313 ‚    101 ‚     19 ‚   1217
+                          ‚   0.97 ‚   2.60 ‚  16.41 ‚   7.98 ‚   2.57 ‚   0.48 ‚  31.01
+                          ‚  34.23 ‚  28.25 ‚  29.06 ‚  32.81 ‚  39.15 ‚  79.17 ‚
+                 ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                        1 ‚     73 ‚    259 ‚   1572 ‚    641 ‚    157 ‚      5 ‚   2707
+                          ‚   1.86 ‚   6.60 ‚  40.06 ‚  16.34 ‚   4.00 ‚   0.13 ‚  68.99
+                          ‚  65.77 ‚  71.75 ‚  70.94 ‚  67.19 ‚  60.85 ‚  20.83 ‚
+                 ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                 Total         111      361     2216      954      258       24     3924
+                              2.83     9.20    56.47    24.31     6.57     0.61   100.00
+
+
+                                         Table of resp by PARENTS
+
+                          resp      PARENTS(Parent(s) present in the family)
+
+                          Frequency‚
+                          Percent  ‚
+                          Col Pct  ‚Mother, ‚Father, ‚Mother a‚Neither ‚  Total
+                                   ‚no fathe‚no mothe‚nd fathe‚mother n‚
+                                   ‚r       ‚r       ‚r       ‚or fathe‚
+                                   ‚        ‚        ‚        ‚r       ‚
+                          ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                                 0 ‚     75 ‚     13 ‚    102 ‚   1027 ‚   1217
+                                   ‚   1.91 ‚   0.33 ‚   2.60 ‚  26.17 ‚  31.01
+                                   ‚  36.41 ‚  39.39 ‚  39.69 ‚  29.96 ‚
+                          ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                                 1 ‚    131 ‚     20 ‚    155 ‚   2401 ‚   2707
+                                   ‚   3.34 ‚   0.51 ‚   3.95 ‚  61.19 ‚  68.99
+                                   ‚  63.59 ‚  60.61 ‚  60.31 ‚  70.04 ‚
+                          ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                          Total         206       33      257     3428     3924
+                                       5.25     0.84     6.55    87.36   100.00
+
+
+                                              The SAS System          15:57 Saturday, October 13, 2007  12
+
+                                            The FREQ Procedure
+
+                                         Table of resp by EDUC_R1
+
+                      resp      EDUC_R1(Education Recode)
+
+                      Frequency‚
+                      Percent  ‚
+                      Col Pct  ‚Less/equ‚High sch‚Some col‚AA degre‚Master's‚  Total
+                               ‚al to 8t‚ool grad‚lege, no‚e, techn‚, profes‚
+                               ‚h grade ‚uate    ‚ degree ‚ical or ‚sional, ‚
+                               ‚        ‚        ‚        ‚vocation‚or docto‚
+                               ‚        ‚        ‚        ‚al      ‚ral degr‚
+                               ‚        ‚        ‚        ‚        ‚ee      ‚
+                      ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                             0 ‚    284 ‚    406 ‚    203 ‚    242 ‚     82 ‚   1217
+                               ‚   7.24 ‚  10.35 ‚   5.17 ‚   6.17 ‚   2.09 ‚  31.01
+                               ‚  35.86 ‚  34.49 ‚  27.96 ‚  25.94 ‚  27.70 ‚
+                      ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                             1 ‚    508 ‚    771 ‚    523 ‚    691 ‚    214 ‚   2707
+                               ‚  12.95 ‚  19.65 ‚  13.33 ‚  17.61 ‚   5.45 ‚  68.99
+                               ‚  64.14 ‚  65.51 ‚  72.04 ‚  74.06 ‚  72.30 ‚
+                      ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                      Total         792     1177      726      933      296     3924
+                                  20.18    29.99    18.50    23.78     7.54   100.00

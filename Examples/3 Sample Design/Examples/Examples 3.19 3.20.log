@@ -1,0 +1,313 @@
+1                                           The SAS System               17:17 Saturday, July 10, 2010
+
+NOTE: Copyright (c) 2002-2008 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.2 (TS2M2) 
+      Licensed to UNIVERSITY OF MARYLAND-T&R, Site 70035155.
+NOTE: This session is executing on the NET_SRV  platform.
+
+
+
+NOTE: SAS initialization used:
+      real time           0.98 seconds
+      cpu time            0.57 seconds
+      
+1          /***********************************************************************/
+2          /* PROGRAM: Examples 3.19 3.20.sas                                     */
+3          /* PROJECT: Practical Tools for Designing and Weighting Survey Samples */
+4          /* DATE:    07/10/10                                                   */
+5          /* AUTHOR:  J.Dever                                                    */
+6          /* PURPOSE: Produce results for Examples 3.19 and 3.20.                */
+7          /* REVISED:                                                            */
+8          /***********************************************************************/
+9          options nocenter pageno=1 errors=1 orientation=portrait nofmterr ls=200;
+10         LIBNAME inxp xport "\\Jpsmnds\Users\Share\Practical tools\Class Material\Data\smho98.xpt";
+NOTE: Libref INXP was successfully assigned as follows: 
+      Engine:        XPORT 
+      Physical Name: \\Jpsmnds\Users\Share\Practical tools\Class Material\Data\smho98.xpt
+11         
+12         ************************************************************************;
+13         ** Load SAS Transport Data File.                                      **;
+14         ************************************************************************;
+15         DATA SMHO98(KEEP=STRATUM HospID BEDS);
+16           SET inxp.SMHO98;
+17           HospID = _n_;
+18         RUN;
+
+NOTE: There were 875 observations read from the data set INXP.SMHO98.
+NOTE: The data set WORK.SMHO98 has 875 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.12 seconds
+      cpu time            0.07 seconds
+      
+
+19         
+20         PROC SORT DATA=SMHO98 nodupkey;  BY HospID;  RUN;
+
+NOTE: There were 875 observations read from the data set WORK.SMHO98.
+NOTE: 0 observations with duplicate key values were deleted.
+NOTE: The data set WORK.SMHO98 has 875 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+21         
+22         PROC CONTENTS DATA=SMHO98;  RUN cancel;
+
+2 The SAS System                                                                                                                                                           17:17 Saturday, July 10, 2010
+
+WARNING: The procedure was not executed at the user's request.
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.03 seconds
+      
+
+23         
+24         ************************************************************************;
+25         TITLE2 "Example 3.19";
+26         ************************************************************************;
+27         DATA SMHO98;
+28           LENGTH stratum6 3;
+29           SET SMHO98;
+30                                                 *Create 6-level stratum variable;
+31           IF       1<=STRATUM<=2  THEN stratum6=1;
+32           ELSE IF  3<=STRATUM<=4  THEN stratum6=2;
+33           ELSE IF  5<=STRATUM<=8  THEN stratum6=3;
+34           ELSE IF  9<=STRATUM<=10 THEN stratum6=4;
+35           ELSE IF 11<=STRATUM<=13 THEN stratum6=5;
+36           ELSE IF 14<=STRATUM<=16 THEN stratum6=6;
+37         RUN;
+
+NOTE: There were 875 observations read from the data set WORK.SMHO98.
+NOTE: The data set WORK.SMHO98 has 875 observations and 4 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+38         
+39         PROC FREQ DATA=SMHO98;
+40           TABLES stratum6*STRATUM stratum6
+41             / LIST MISSING;
+42         RUN;
+
+NOTE: There were 875 observations read from the data set WORK.SMHO98.
+NOTE: The PROCEDURE FREQ printed page 1.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.03 seconds
+      
+
+43         
+44         PROC SURVEYSELECT DATA=SMHO98 OUT=SampData
+45              METHOD=SRS SAMPSIZE=(10 10 10 10 10 10) SEED=82841;
+46           STRATA stratum6;
+47         RUN;
+
+NOTE: The data set WORK.SAMPDATA has 60 observations and 6 variables.
+NOTE: The PROCEDURE SURVEYSELECT printed page 2.
+NOTE: PROCEDURE SURVEYSELECT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+3 The SAS System                                                                                                                                                           17:17 Saturday, July 10, 2010
+
+
+48         
+49         PROC FREQ DATA=SampData;
+50           TABLES stratum6 / LIST MISSING;
+51         RUN;
+
+NOTE: There were 60 observations read from the data set WORK.SAMPDATA.
+NOTE: The PROCEDURE FREQ printed page 3.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+      
+
+52         
+53         PROC CONTENTS DATA=SampData;  RUN;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 4.
+
+54         
+55         PROC SORT DATA=SampData;  BY stratum6;  RUN;
+
+NOTE: There were 60 observations read from the data set WORK.SAMPDATA.
+NOTE: The data set WORK.SAMPDATA has 60 observations and 6 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+56         
+57         PROC MEANS DATA=SampData MIN MEAN MAX SUM;
+58           VAR SelectionProb SamplingWeight;
+59           BY stratum6;
+60         RUN;
+
+NOTE: There were 60 observations read from the data set WORK.SAMPDATA.
+NOTE: The PROCEDURE MEANS printed pages 5-6.
+NOTE: PROCEDURE MEANS used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+61         
+62         PROC MEANS DATA=SampData MIN MEAN MAX SUM;
+63           VAR SelectionProb SamplingWeight;
+64         RUN;
+
+NOTE: There were 60 observations read from the data set WORK.SAMPDATA.
+NOTE: The PROCEDURE MEANS printed page 7.
+NOTE: PROCEDURE MEANS used (Total process time):
+      real time           0.03 seconds
+4 The SAS System                                                                                                                                                           17:17 Saturday, July 10, 2010
+
+      cpu time            0.03 seconds
+      
+
+65         
+66         ************************************************************************;
+67         TITLE2 "Example 3.20";
+68         ************************************************************************;
+69         DATA SMHO98inp DROPCASE;
+70           LENGTH stratum5 3;
+71           SET SMHO98;
+72                                                 *Eliminate outpatient facilities;
+73           IF BEDS<1 THEN OUTPUT DROPCASE;
+74           ELSE DO;
+75                                                 *Create 5-level stratum variable;
+76             IF       1<=STRATUM<=2  THEN stratum5=1;
+77             ELSE IF  3<=STRATUM<=4  THEN stratum5=2;
+78             ELSE IF  5<=STRATUM<=8  THEN stratum5=3;
+79             ELSE IF  9<=STRATUM<=13 THEN stratum5=4;
+80             ELSE IF 14<=STRATUM<=16 THEN stratum5=5;
+81                                                                    *Size measure;
+82             sqrtBEDS = sqrt(BEDS);
+83         	OUTPUT SMHO98inp;
+84           END;
+85         RUN;
+
+NOTE: There were 875 observations read from the data set WORK.SMHO98.
+NOTE: The data set WORK.SMHO98INP has 671 observations and 6 variables.
+NOTE: The data set WORK.DROPCASE has 204 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+      
+
+86         
+87         PROC FREQ DATA=SMHO98inp;
+88           TABLES stratum5*STRATUM stratum5
+89             / LIST MISSING;
+90         RUN;
+
+NOTE: There were 671 observations read from the data set WORK.SMHO98INP.
+NOTE: The PROCEDURE FREQ printed page 8.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+      
+
+91         
+92         /*PROC SORT DATA=SMHO98inp;  BY stratum5;  RUN;*/
+93         
+94         PROC SURVEYSELECT DATA=SMHO98inp OUT=StratSiz N=50;
+95           STRATA stratum5 / ALLOC=PROP NOSAMPLE;
+96         RUN;
+
+NOTE: The data set WORK.STRATSIZ has 5 observations and 5 variables.
+5 The SAS System                                                                                                                                                           17:17 Saturday, July 10, 2010
+
+NOTE: The PROCEDURE SURVEYSELECT printed page 9.
+NOTE: PROCEDURE SURVEYSELECT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+97         
+98         PROC PRINT DATA=StratSiz;
+99           VAR stratum5 SampleSize;
+100          SUM SampleSize;
+101        RUN;
+
+NOTE: There were 5 observations read from the data set WORK.STRATSIZ.
+NOTE: The PROCEDURE PRINT printed page 10.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+102        
+103        PROC CONTENTS DATA=StratSiz;  RUN;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 11.
+
+104        
+105        PROC SORT DATA=StratSiz(KEEP=stratum5 SampleSize);
+106          BY stratum5;
+107        RUN;
+
+NOTE: There were 5 observations read from the data set WORK.STRATSIZ.
+NOTE: The data set WORK.STRATSIZ has 5 observations and 2 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.01 seconds
+      
+
+108        
+109        PROC SURVEYSELECT DATA=SMHO98inp OUT=SampDat2
+110             METHOD=PPS_SYS SAMPSIZE=StratSiz SEED=4297005;
+111          STRATA stratum5;
+112          SIZE sqrtBEDS;
+113          ID HospID;
+114        RUN;
+
+NOTE: The data set WORK.SAMPDAT2 has 50 observations and 6 variables.
+NOTE: The PROCEDURE SURVEYSELECT printed page 12.
+NOTE: PROCEDURE SURVEYSELECT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+6 The SAS System                                                                                                                                                           17:17 Saturday, July 10, 2010
+
+
+115                                                  *Identify duplicate selections;
+116        PROC SORT DATA=SampDat2 OUT=DUPCHECK nodupkey;
+117          BY HospID;
+118        RUN;
+
+NOTE: There were 50 observations read from the data set WORK.SAMPDAT2.
+NOTE: 0 observations with duplicate key values were deleted.
+NOTE: The data set WORK.DUPCHECK has 50 observations and 6 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+      
+
+119        
+120        PROC CONTENTS DATA=SampDat2;  RUN;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.01 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 13.
+
+121        
+122        /***********************************************************************/
+
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: The SAS System used:
+      real time           1.81 seconds
+      cpu time            1.15 seconds
+      

@@ -1,0 +1,360 @@
+1                                                          The SAS System                             17:05 Friday, January 27, 2012
+
+NOTE: Unable to open SASUSER.REGSTRY. WORK.REGSTRY will be opened instead.
+NOTE: All registry changes will be lost at the end of the session.
+
+WARNING: Unable to copy SASUSER registry to WORK registry. Because of this, you will not see registry customizations during this 
+         session.
+NOTE: Unable to open SASUSER.PROFILE. WORK.PROFILE will be opened instead.
+NOTE: All profile changes will be lost at the end of the session.
+NOTE: Copyright (c) 2002-2008 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.2 (TS2M2) 
+      Licensed to UNIVERSITY OF MARYLAND-CAMPUSWIDE-T/R, Site 70085382.
+NOTE: This session is executing on the X64_VSPRO  platform.
+
+
+
+NOTE: SAS initialization used:
+      real time           9.95 seconds
+      cpu time            0.26 seconds
+      
+1          /********************************************************************************/
+2          /* FILE:    relabel sofr.sas                                                    */
+3          /* TOPIC:   2003 May SOFS - Reserve Component (SOFR)                            */
+4          /* DATE:    01/27/2012                                                          */
+5          /* AUTHOR:  R. Valliant                                                         */
+6          /* PURPOSE: Relabel some fields in the sofr data file. Write out new format     */
+7          /*          catalog.                                                            */
+8          /********************************************************************************/
+9          
+10         options nocenter pageno=1 errors=1 orientation=portrait
+11                 nofmterr ls=200
+12                 pagesize = 80;
+13         
+14         libname myfmtlib "C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files";
+NOTE: Libref MYFMTLIB was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files
+15         libname a "C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files";
+NOTE: Libname A refers to the same physical library as MYFMTLIB.
+NOTE: Libref A was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files
+16         
+17         data sofr;
+18           set a.sofrsafe;
+NOTE: Data file A.SOFRSAFE.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might 
+      require additional CPU resources and might reduce performance.
+19           label
+20           	ra008   = "Retention intention"
+21           	ra115   = "Preparation rating"
+22           	ra118   = "Stress rating"
+23           	ra006a  = "Satisfaction with compensation"
+24           	ra006b  = "Satisfaction with type of work"
+25           	ra112ra = "Days in compensated status"
+26           	sred    = "Highest level of school"
+27           	srmarst = "Marital status"
+28           	xact2r  = "Length of activation in last 24 months"
+29                 xcpay1r = "Pay grade"
+30         	xreth4r = "Race/ethnicity"
+31         	xsexr   = "Gender"
+32         	xsrrcr  = "Service"
+33                 ;
+34         run;
+
+NOTE: Format RA107_ was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Format RA121_ was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Format RA082_ was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Format RA125_ was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Format RA123_ was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Format RA108_ was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Format RA098_ was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Format RA020_ was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+2 The SAS System                                                                                                                                                          17:05 Friday, January 27, 2012
+
+NOTE: Format XSRRCF was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Format XACT2F was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Format XRETH4_ was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Format XSEXF was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Format XCPAYF was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: There were 71701 observations read from the data set A.SOFRSAFE.
+NOTE: The data set WORK.SOFR has 71701 observations and 19 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.23 seconds
+      cpu time            0.14 seconds
+      
+
+35         
+36         proc contents data = sofr;
+37         run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.04 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 1.
+
+38         
+39         
+40         proc format library = myfmtlib;
+41           value ra008_
+42           	1 = "Very unlikely"
+43           	2 = "Unlikely"
+44           	3 = "Neither likely nor unlikely"
+45           	4 = "Likely"
+46           	5 = "Very likely";
+NOTE: Format RA008_ is already on the library.
+NOTE: Format RA008_ has been written to MYFMTLIB.FORMATS.
+47           value ra115_
+48           	1 = "Very poorly prepared"
+49           	2 = "Poorly prepared"
+50           	3 = "Neither well nor poorly prepared"
+51         	4 = "Well prepared"
+52           	5 = "Very well prepared";
+NOTE: Format RA115_ is already on the library.
+NOTE: Format RA115_ has been written to MYFMTLIB.FORMATS.
+53           value ra118_
+54           	1 = "Much less than usual"
+55           	2 = "Less than usual"
+56           	3 = "About the same as usual"
+57         	4 = "More than usual"
+58           	5 = "Much more than usual";
+NOTE: Format RA118_ is already on the library.
+NOTE: Format RA118_ has been written to MYFMTLIB.FORMATS.
+59           value ra006a_
+60           	1 = "Very dissatisfied"
+61         	2 = "Dissatisfied"
+62         	3 = "Neither satisfied nor dissatisfied"
+63         	4 = "Satisfied"
+64         	5 = "Very satisfied";
+NOTE: Format RA006A_ is already on the library.
+NOTE: Format RA006A_ has been written to MYFMTLIB.FORMATS.
+65           value ra006b_
+66           	1 = "Very dissatisfied"
+67         	2 = "Dissatisfied"
+68         	3 = "Neither satisfied nor dissatisfied"
+69         	4 = "Satisfied"
+70         	5 = "Very satisfied";
+NOTE: Format RA006B_ is already on the library.
+NOTE: Format RA006B_ has been written to MYFMTLIB.FORMATS.
+71           value respstat_
+72         	1  = "Questionnaire Returned-Completed"
+73         	2  = "Questionnaire Returned-(Sufficient) Partial Complete"
+74         	3  = "Questionnaire Returned-(Insufficient) Partial Complete"
+75         	4  = "Questionnaire Returned-Ineligible"
+76         	5  = "Questionnaire Returned-Blank"
+3 The SAS System                                                                                                                                                          17:05 Friday, January 27, 2012
+
+77         	18 = "No Return-Deceased"
+78         	19 = "No Return-Incarcerated"
+79         	22 = "No Return-Separated/Retired"
+80         	23 = "No Return-Active Refusal"
+81         	25 = "No Return-Other"
+82         	26 = "No Return-Eligible based on administrative records"
+83         	27 = "Postal Non-delivery"
+84         	29 = "Not Locatable"
+85         	35 = "Ineligible-No Questionnaire Sent" ;
+NOTE: Format RESPSTAT_ is already on the library.
+NOTE: Format RESPSTAT_ has been written to MYFMTLIB.FORMATS.
+86         
+87           value sred_
+88                 1 = "12 years or less of school (no diploma)"
+89         	2 = "High school graduate, high school diploma or equivalent"
+90         	3 = "Some college credit, but less than 1 year"
+91         	4 = "1 or more years of college, no degree"
+92         	5 = "Associate degree (e.g., AA, AS)"
+93         	6 = "Bachelor’s degree (e.g., BA, AB, BS)"
+94         	7 = "Master’s, doctoral or professional school degree";
+NOTE: Format SRED_ is already on the library.
+NOTE: Format SRED_ has been written to MYFMTLIB.FORMATS.
+95           value srmarst_
+96           	1 = "Married"
+97         	2 = "Separated"
+98         	3 = "Divorced"
+99         	4 = "Widowed"
+100        	5 = "Never Married";
+NOTE: Format SRMARST_ is already on the library.
+NOTE: Format SRMARST_ has been written to MYFMTLIB.FORMATS.
+101          value xact2r_
+102        	1 = "Activated 30 Days or Less"
+103        	2 = "Activated More Than 30 Days"
+104        	3 = "Not activated";
+NOTE: Format XACT2R_ is already on the library.
+NOTE: Format XACT2R_ has been written to MYFMTLIB.FORMATS.
+105          value xcpay1r_
+106          	1 = "E1-E3"
+107          	2 = "E4"
+108        	3 = "E5-E6"
+109        	4 = "E7-E9"
+110        	5 = "W1-W5"
+111        	6 = "O1-O3"
+112        	7 = "O4-O6";
+NOTE: Format XCPAY1R_ is already on the library.
+NOTE: Format XCPAY1R_ has been written to MYFMTLIB.FORMATS.
+113          value xreth4r_
+114          	1 = "NonHispanic White"
+115        	2 = "Minority";
+NOTE: Format XRETH4R_ is already on the library.
+NOTE: Format XRETH4R_ has been written to MYFMTLIB.FORMATS.
+116          value xsexr_
+117          	1 = "Male"
+118          	2 = "Female";
+NOTE: Format XSEXR_ is already on the library.
+NOTE: Format XSEXR_ has been written to MYFMTLIB.FORMATS.
+119          value xsrrcr_
+120          	1 = "Army National Guard"
+121        	2 = "Army Reserve"
+122        	3 = "Navy Reserve"
+123        	4 = "Marine Corp Reserve"
+124        	5 = "Air National Guard"
+125        	6 = "Air Force Reserve"
+126        	8 = "No reserve component";
+NOTE: Format XSRRCR_ is already on the library.
+NOTE: Format XSRRCR_ has been written to MYFMTLIB.FORMATS.
+127        run;
+
+NOTE: PROCEDURE FORMAT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+128        
+129        options fmtsearch=(myfmtlib);
+130        
+131        data a.sofr;
+132          set sofr;
+4 The SAS System                                                                                                                                                          17:05 Friday, January 27, 2012
+
+133          format _all_;
+134          format ra008   ra008_.;
+135          format ra115   ra115_.;
+136          format ra118   ra118_.;
+137          format ra006a  ra006a_.;
+138          format ra006b  ra006b_.;
+139          format respstat respstat_. ;
+140          format sred    sred_.  ;
+141          format srmarst srmarst_.;
+142          format xact2r  xact2r_. ;
+143          format xcpay1r xcpay1r_.;
+144          format xreth4r xreth4r_.;
+145          format xsexr   xsexr_.  ;
+146          format xsrrcr  xsrrcr_.;
+147        /*
+148          if ra008 = N then ra008 = .;
+149          if ra008 = B then ra008 = .;
+150          if ra115 = N then ra115 = .;
+151          if ra115 = B then ra115 = .;
+152          if ra118 = N then ra118 = .;
+153          if ra118 = B then ra118 = .;
+154          if ra006a = N then ra006a = .;
+155          if ra006a = B then ra006a = .;
+156          if ra006b = N then ra006b = .;
+157          if ra006b = B then ra006b = .;
+158          if ra112ra = N then ra112ra = .;
+159          if ra112ra = B then ra112ra = .;
+160          if sred = N then sred = .;
+161          if sred = B then sred = .;
+162          if srmarst = N then srmarst = .;
+163          if srmarst = B then srmarst = .;
+164          if xact2r = N then xact2r = .;
+165          if xact2r = B then xact2r = .;
+166          if xcpay1r = N then xcpay1r = .;
+167          if xcpay1r = B then xcpay1r = .;
+168          if xreth4r = N then xreth4r = .;
+169          if xreth4r = B then xreth4r = .;
+170          if xsexr = N then xsexr = .;
+171          if xsexr = B then xsexr = .;
+172          if xsrrcr = N then xsrrcr = .;
+173          if xsrrcr = B then xsrrcr = .;
+174        */
+175        run;
+
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: There were 71701 observations read from the data set WORK.SOFR.
+NOTE: The data set A.SOFR has 71701 observations and 19 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.01 seconds
+      
+
+176        
+177        proc contents data = a.sofr;
+178        run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 2.
+
+179        
+180        proc freq data = a.sofr;
+5 The SAS System                                                                                                                                                          17:05 Friday, January 27, 2012
+
+181          table ra008
+182        	ra115
+183        	ra118
+184        	ra006a
+185        	ra006b
+186        	respstat
+187        	sred
+188        	srmarst
+189        	xact2r
+190        	xcpay1r
+191        	xreth4r
+192        	xsexr
+193        	xsrrcr  ;
+194        run;
+
+NOTE: There were 71701 observations read from the data set A.SOFR.
+NOTE: The PROCEDURE FREQ printed pages 3-5.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.05 seconds
+      cpu time            0.06 seconds
+      
+
+195        
+196        proc univariate data = a.sofr;
+197          var ra112ra;
+198        run;
+
+NOTE: The PROCEDURE UNIVARIATE printed page 6.
+NOTE: PROCEDURE UNIVARIATE used (Total process time):
+      real time           0.05 seconds
+      cpu time            0.03 seconds
+      
+
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: The SAS System used:
+      real time           10.91 seconds
+      cpu time            0.63 seconds
+      

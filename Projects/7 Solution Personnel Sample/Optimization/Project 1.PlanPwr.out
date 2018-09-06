@@ -1,0 +1,433 @@
+q()
+install.packages ("MatchIt")
+install.packages ("MatchIt")
+data(lalonde)
+library(MatchIt)
+data(lalonde)
+m.out <- matchit(treat ~ educ + black + hispan, data = lalonde,
+method = "exact")
+utils:::menuInstallPkgs()
+library(MatchIt)
+data(lalonde)
+m.out <- matchit(treat ~ educ + black + hispan, data = lalonde,
+method = "exact")
+summary(m.out)
+plot(m.out)
+m.out <- matchit(treat ~ age + educ + black + hispan + married + nodegree +
+re74 + re75, data = lalonde, method = "genetic")
+summary(m.out)
+> m.out <- matchit(treat ~ educ + black + hispan, data = lalonde,
++ method = "exact")
+> summary(m.out)
+m.out <- matchit (treat ~ re74 + re75, data = lalonde, method = "exact")
+summary(m.out)
+m.out <- matchit(treat ~ re74 + re75 + educ + black + hispan + age,
+data = lalonde, method = "nearest")
+summary(m.out)
+install.packages ("Zelig")
+library(Zelig)
+m.out <- matchit(treat ~ age + educ + black + hispan + nodegree +
+married + re74 + re75, method = "nearest", discard
+= "hull.control", data = lalonde)
+z.out <- zelig(re78 ~ treat + age + educ + black + hispan + nodegree +
+married + re74 + re75, data = match.data(m.out),
+model = "ls")
+> x.out <- setx(z.out, treat=0)
+> x1.out <- setx(z.out, treat=1)
+x.out <- setx(z.out, treat=0)
+x1.out <- setx(z.out, treat=1)
+s.out <- sim(z.out, x = x.out, x1 = x1.out)
+summary(s.out)
+summary(z.out)
+> m.out <- matchit(treat ~ re74 + re75 + educ + black + hispan + age,
+data = lalonde, method = "subclass")
+install.packages("MatchIt")
+library(MatchIt)
+data(lanlonde)
+data(lalonde)
+> m.out <- matchit(treat ~ re74 + re75 + educ + black + hispan + age, data = lalonde, method = "subclass")
+m.out <- matchit(treat ~ re74 + re75 + educ + black + hispan + age, data = lalonde, method = "subclass")
+> library(MatchIt)
+> data(lalonde)
+library(MatchIt)
+data(lalonde)
+local({pkg <- select.list(sort(.packages(all.available = TRUE)))
+if(nchar(pkg)) library(pkg, character.only=TRUE)})
+library(MatchIt)
+data(lalonde)
+m.out<-matchit(treat~re74 + re75 + edu + black + hispan + age, + data=lalonde, method = "nearest")
+m.out<-matchit(treat~re74 + re75 + edu + black + hispan + age, + data=lalonde method = "nearest")
+summary()
+summary(m.out)
+ m.out <- matchit(treat ~ re74 + re75 + re78 + educ + black + hispan + married + nodegree + age, data = lalonde, method = "subclass")
+summary(m.out)
+ m.out <- matchit(treat ~ re74 + re75 + re78 + educ + black + hispan + married + nodegree + age, data = lalonde, method = "nearest")
+summary(m.out)
+ m.out <- matchit(treat ~ re74 + re75 + re78 + educ + black + hispan + age, data = lalonde, method = "subclass")
+summary(m.out)
+ m.out <- matchit(treat ~ re74 + re75 + re78 + educ + black + hispan + age, data = lalonde, method = "nearest")
+summary(m.out)
+ m.out <- matchit(treat ~ educ + black + hispan + married + nodegree + age, data = lalonde, method = "subclass")
+symmary(m.out)
+summary(m.out)
+ m.out <- matchit(treat ~ educ + black + hispan + married + nodegree + age, data = lalonde, method = "nearest")
+summary(m.out)
+save.image("C:\\Documents and Settings\\kmcclelland\\Desktop\\km.RData")
+m.out <- kdensity(treat)
+local({pkg <- select.list(sort(.packages(all.available = TRUE)))
+if(nchar(pkg)) library(pkg, character.only=TRUE)})
+m.out <- kdensity (treat)
+save.image("C:\\Documents and Settings\\kmcclelland\\Desktop\\km.RData")
+n1=46
+n1
+n2=59
+xbar1=matrix(c(64.59,443.26,388.04),3)
+xbar1
+xbar2=matrix(c(52.25,379.15,358.83),3)
+xbar2
+spooled=c(548.16,1618.10,1959.30,1618.10,9528.82,7992.65,1959.30,7992.65,12421.97)
+spooled=matrix(spooled,3)
+spooled
+sinv=solve(spooled,3)
+sinv=solve(spooled)
+t2=(n1*n2/(n1+n2))*t(xbar1-xbar2)%*%sinv%*%(xbar1-xbar2)
+t2
+fval=qf(0.05,3,101,lower.tail=FALSE)
+(n1+n2-2)*3/(n1+n2-2-1)*fval
+hw3 <- read.table("C:\Documents and Settings\jcoombs\Desktop\616\HW03.DAT")
+hw3 <- read.table("C:/Documents and Settings/jcoombs/Desktop/616/HW03.DAT")
+hw3
+hw3 <- read.table("C:/Documents and Settings/jcoombs/Desktop/616/HW03.DAT", + col.names=c("gender","afqt","satm","satv))
+hw3 <- read.table("C:/Documents and Settings/jcoombs/Desktop/616/HW03.DAT" + col.names=c("gender","afqt","satm","satv))
+hw3 <- read.table("C:/Documents and Settings/jcoombs/Desktop/616/HW03.DAT" + col.names=c("gender","afqt","satm","satv"))
+hw3 <- read.table("C:/Documents and Settings/jcoombs/Desktop/616/HW03.DAT" + col.names = c("gender","afqt","satm","satv"))
+names(hw3) = c("gender","afqt","satm","satv")
+hw3
+afqt = hw3$afqt
+afqt
+satm = hw3$satm
+satv = hw3$satv
+scores = cbind(afqt,satm,satv)
+scores
+covr(scores)
+cov(scores)
+mean(scores)
+matrix(rowmeans(scores))
+matrix(rowmeans(scores),3,3)
+hw3 <- read.table("C:/Documents and Settings/jcoombs/Desktop/616/HW03.DAT")
+names(hw3) = c("gender","afqt","satm","satv")
+afqt = hw3$afqt
+satm = hw3$satm
+satv = hw3$satv
+scores = cbind(afqt,satm,satv)
+cov(scores)
+hw3 <- read.table("C:/Documents and Settings/jcoombs/Desktop/616/HW03.DAT")
+names(hw3) = c("gender","afqt","satm","satv")
+afqt = hw3$afqt
+satm = hw3$satm
+satv = hw3$satv
+scores = cbind(afqt,satm,satv)
+cov(scores)
+hw3 <- read.table("C:/Documents and Settings/jcoombs/Desktop/616/HW03.DAT")
+names(hw3) = c("gender","afqt","satm","satv")
+afqt = hw3$afqt
+satm = hw3$satm
+satv = hw3$satv
+scores = cbind(afqt,satm,satv)
+cov(scores)
+matrix(rowMeans(scores))
+matrix(colMeans(scores))
+mean_matrix = matrix(colMeans(scores))
+mean_matrix
+hw3 <- read.table("C:/Documents and Settings/jcoombs/Desktop/616/HW03.DAT")
+names(hw3) = c("gender","afqt","satm","satv")
+afqt = hw3$afqt
+satm = hw3$satm
+satv = hw3$satv
+scores = cbind(afqt,satm,satv)
+matrix(colMeans(scores))
+cov(scores)
+boxplot(afqt ~ gender, data=hw3)
+boxplot(satm ~ gender, data=hw3)
+boxplot(satv ~ gender, data=hw4)
+boxplot(satv ~ gender, data=hw3)
+mu = matrix(colMeans(scores))
+mu
+sigma = cov(scores)
+sigma
+n = 105
+n
+hotelling = (1/105)*(t(mu - mu0)%*%solve(sigma)%*%(mu-mu0))
+mu0 <- matrix(c(50,400,370), ncol=1)
+hotelling = (1/105)*(t(mu - mu0)%*%solve(sigma)%*%(mu-mu0))
+hotelling
+f(5,100)
+106
+(((105-1)*3)/(105-3))*2.69372092
+mu - (1.96)*sqrt(diag(sigma)/105)
+mu + (1.96)*sqrt(diag(sigma)/105)
+mu - sqrt(diag(sigma)*((((105-1)*3)/(105-3))*2.69372092)/105)
+mu + sqrt(diag(sigma)*((((105-1)*3)/(105-3))*2.69372092)/105)
+sum = satm + satv
+sum
+mean(sum)
+cov(sum)
+var(sum)
+m[sigma[2,2]]
+sigma[2,2]
+sigma[2,]
+sigma[2,2-3]
+sigma[2-3,2-3]
+subsig = sigma[2-3,2-3]
+subsig
+sigma[2,]
+mean[2,]
+mu[2,]
+mu[2-3,]
+submu = matrix[mu[2-3,], ncol=1]
+submu = matrix(mu[2-3,], ncol=1)
+submu
+subsig = matrix(sigma[2-3,2-3])
+subsig
+subsig = matrix(sigma[2-3,2-3], ncol=2)
+subsig
+a = matrix(c(1,-1,1,1), ncol=2)
+a
+a%*%submu
+a = matrix(c(1,1,-1,1), ncol=2)
+a
+a%*%submu
+a%*%subsig%*%solve(a)
+sqrt(diag(a%*%subsig%*%solve(a))
+a
+a
+sqrt(diag(a%*%subsig%*%solve(a)))
+subset(mu,[1,1])
+subset(mu1,1])
+subset(mu[1,1])
+mu[1,1]
+mu[1:3,1]
+mu[1 3,1]
+matrix(mu[1:3,1])
+matrix(mu[1&3,1])
+matrix(mu[1$3,1])
+matrix(mu[1/3,1])
+matrix(mu[1!3,1])
+matrix(mu[1+3,1])
+matrix(mu[1|3,1])
+matrix(mu[1;3,1])
+matrix(mu[1,1],mu[3,1])
+matrix(c(mu[1,1],mu[3,1]))
+mu[1,1]+(sigma[1,2]/sigma[2,2])*(500-mu[2,1])
+mu[3,1]+(sigma[3,2]/sigma[2,2])*(500-mu[2,1])
+sigma[1,1]+(sigma[1,3]*sigma[3,1]/sigma[3,3])
+sigma[2,2]+(sigma[2,3]*sigma[3,2]/sigma[3,3])
+hw3 <- read.table("C:/Documents and Settings/jcoombs/Desktop/616/HW03.DAT")
+names(hw3) = c("gender","afqt","satm","satv")
+boxplot(afqt ~ gender, data=hw3)
+boxplot(satm ~ gender, data=hw3)
+boxplot(satv ~ gender, data=hw3)
+afqt = hw3$afqt
+satm = hw3$satm
+satv = hw3$satv
+scores = cbind(afqt,satm,satv)
+mu = matrix(colMeans(scores))
+sigma = cov(scores)
+mu0 <- matrix(c(50,400,370), ncol=1)
+hotelling = (1/105)*(t(mu - mu0)%*%solve(sigma)%*%(mu-mu0))
+(((105-1)*3)/(105-3))*2.69372092
+mu - (1.96)*sqrt(diag(sigma)/105)
+mu + (1.96)*sqrt(diag(sigma)/105)
+mu - sqrt(diag(sigma)*((((105-1)*3)/(105-3))*2.69372092)/105)
+mu + sqrt(diag(sigma)*((((105-1)*3)/(105-3))*2.69372092)/105)
+submu = matrix(mu[2-3,], ncol=1)
+subsig = matrix(sigma[2-3,2-3], ncol=2)
+a = matrix(c(1,1,-1,1), ncol=2)
+a%*%submu
+a%*%subsig%*%solve(a)
+mu[1,1]+(sigma[1,2]/sigma[2,2])*(500-mu[2,1])
+mu[3,1]+(sigma[3,2]/sigma[2,2])*(500-mu[2,1])
+sigma[1,1]+(sigma[1,3]*sigma[3,1]/sigma[3,3])
+sigma[2,2]+(sigma[2,3]*sigma[3,2]/sigma[3,3])
+boxplot(satm ~ satv, data=hw3)
+scatterplot(satm ~ satv, data=hw3)
+splot(satm ~ satv, data=hw3)
+plot(satm ~ satv, data=hw3)
+plot(afqt ~ satv, data=hw3)
+plot(afqt ~ satm, data=hw3)
+hw3 <- read.table("C:/Documents and Settings/jcoombs/Desktop/616/HW03.DAT")
+names(hw3) = c("gender","afqt","satm","satv")
+plot(afqt ~ satm, data=hw3)
+plot(afqt ~ satv, data=hw3)
+plot(satm ~ satv, data=hw3)
+afqt = hw3$afqt
+satm = hw3$satm
+satv = hw3$satv
+scores = cbind(afqt,satm,satv)
+mu = matrix(colMeans(scores))
+mu
+sigma = cov(scores)
+sigma
+mu0 <- matrix(c(50,400,370), ncol=1)
+hotelling = (1/105)*(t(mu - mu0)%*%solve(sigma)%*%(mu-mu0))
+(((105-1)*3)/(105-3))*2.69372092
+mu - (1.96)*sqrt(diag(sigma)/105)
+mu + (1.96)*sqrt(diag(sigma)/105)
+mu - sqrt(diag(sigma)*((((105-1)*3)/(105-3))*2.69372092)/105)
+mu + sqrt(diag(sigma)*((((105-1)*3)/(105-3))*2.69372092)/105)
+submu = matrix(mu[2-3,], ncol=1)
+subsig = matrix(sigma[2-3,2-3], ncol=2)
+a = matrix(c(1,1,-1,1), ncol=2)
+a%*%submu
+a%*%subsig%*%solve(a)
+mu[1,1]+(sigma[1,2]/sigma[2,2])*(500-mu[2,1])
+mu[3,1]+(sigma[3,2]/sigma[2,2])*(500-mu[2,1])
+sigma[1,1]+(sigma[1,3]*sigma[3,1]/sigma[3,3])
+sigma[2,2]+(sigma[2,3]*sigma[3,2]/sigma[3,3])
+boxplot(afqt ~ gender, data=hw3)
+boxplot(satm ~ gender, data=hw3)
+boxplot(satv ~ gender, data=hw3)
+hw3 <- read.table("C:/Documents and Settings/jcoombs/Desktop/616/HW03.DAT")
+names(hw3) = c("gender","afqt","satm","satv")
+plot(afqt ~ satm, data=hw3)
+plot(afqt ~ satv, data=hw3)
+plot(satm ~ satv, data=hw3)
+afqt = hw3$afqt
+satm = hw3$satm
+satv = hw3$satv
+scores = cbind(afqt,satm,satv)
+mu = matrix(colMeans(scores))
+mu
+sigma = cov(scores)
+sigma
+mu0 <- matrix(c(50,400,370), ncol=1)
+hotelling = (1/105)*(t(mu - mu0)%*%solve(sigma)%*%(mu-mu0))
+hotelling
+(((105-1)*3)/(105-3))*2.69372092
+mu - (1.96)*sqrt(diag(sigma)/105)
+mu + (1.96)*sqrt(diag(sigma)/105)
+mu - sqrt(diag(sigma)*((((105-1)*3)/(105-3))*2.69372092)/105)
+mu + sqrt(diag(sigma)*((((105-1)*3)/(105-3))*2.69372092)/105)
+submu = matrix(mu[2-3,], ncol=1)
+subsig = matrix(sigma[2-3,2-3], ncol=2)
+a = matrix(c(1,1,-1,1), ncol=2)
+a%*%submu
+a%*%subsig%*%solve(a)
+mu[1,1]+(sigma[1,2]/sigma[2,2])*(500-mu[2,1])
+mu[3,1]+(sigma[3,2]/sigma[2,2])*(500-mu[2,1])
+sigma[1,1]+(sigma[1,3]*sigma[3,1]/sigma[3,3])
+sigma[2,2]+(sigma[2,3]*sigma[3,2]/sigma[3,3])
+boxplot(afqt ~ gender, data=hw3)
+boxplot(satm ~ gender, data=hw3)
+boxplot(satv ~ gender, data=hw3)
+sigma[1,1]-(sigma[1,3]*sigma[3,1]/sigma[3,3])
+sigma[2,2]-(sigma[2,3]*sigma[3,2]/sigma[3,3])
+sigma[1,1]-(sigma[1,3]*sigma[3,1]/sigma[3,3])
+sigma[2,2]-(sigma[2,3]*sigma[3,2]/sigma[3,3])
+sigma[1,1]-(sigma[1,3]*sigma[3,1]/sigma[3,3])
+sigma[2,2]-(sigma[2,3]*sigma[3,2]/sigma[3,3])
+sigma[1,1]-(sigma[1,3]*sigma[3,1]/sigma[3,3])
+sigma[2,2]-(sigma[2,3]*sigma[3,2]/sigma[3,3])
+sigma[1,1]-(sigma[1,3]*sigma[3,1]/sigma[3,3])
+sigma[1,1]-(sigma[1,3]*sigma[3,1]/sigma[3,3])
+sigma[1,1]-(sigma[1,3]*sigma[3,1]/sigma[3,3])
+sigma[1,1]-(sigma[1,3]*sigma[3,1]/sigma[3,3])
+sigma[2,2]-(sigma[2,3]*sigma[3,2]/sigma[3,3])
+sigma12=matrix(c(sigma[1,2],sigma[1,3]))
+sigma12
+sigma12=matrix(c(sigma[1,2],sigma[1,3]),ncol=2)
+sigma12
+sigma12=matrix(c(sigma[2,1],sigma[2,3]),ncol=2)
+sigma12
+sigma21=t(sigma12)
+sigma21
+sigma22=matrix(c(sigma[1,2
+sigma21
+sigma22=matrix(c(sigma[1,1],sigma[1,3],sigma[3,1],sigma[3,3]))
+sigma12=matrix(c(sigma[2,1],sigma[2,3]))
+sigma21=t(sigma12)
+sigma12
+sigma21
+sigma12=matrix(c(sigma[2,1],sigma[2,3]),ncol=2)
+sigma21=t(sigma12)
+sigma12
+sigma21
+sigma22
+sigma22=matrix(c(sigma[1,1],sigma[1,3],sigma[3,1],sigma[3,3]),ncol=2)
+sigma22
+sigma12
+sigma21
+sigma22
+Sigma_1cond2=Sigma_11-Sigma_12%*%solve(Sigma_22)%*%Sigma_21
+Sigma_1cond2=Sigma11-Sigma12%*%solve(Sigma22)%*%Sigma21
+sigma1cond2=sigma11-sigma12%*%solve(sigma22)%*%sigma21
+sigma11=matrix(sigma[2,2]
+sigma1cond2=sigma11-sigma12%*%solve(sigma22)%*%sigma21
+sigma1cond2 = sigma11-sigma12%*%solve(sigma22)%*%sigma21
+sigma11=matrix(sigma[2,2])
+sigma1cond2 = sigma11-sigma12%*%solve(sigma22)%*%sigma21
+sigma1cond2
+######################################################################
+# Program: Project 1.PlanPwr.R
+# Name:    J.Dever
+# Project: Practical Tools for Designing and Weighting Survey Samples
+# Date:    02/09/12
+# Purpose: Sample size given power for Cycle 5
+# Revised: 
+######################################################################
+                                                #Set working directory
+rm(list=ls(all=TRUE))
+setwd("//Jpsmnds/Users/Share/Practical tools/Book/Book Chapters/7 Solution Personnel Sample/Optimization/")
+######################################################################
+# Cycle 5 - Sample size given 80% power and specified percent diff
+#           for proportions
+######################################################################
+(est.matrx <- matrix(c(0.84, 0.80, 0.69, 18.10, 0.98,
+                       0.90, 0.85, 0.83, 12.60, 0.90,
+                       0.67, 0.63, 0.60,  8.94, 0.60), 
+                    nrow=3, ncol=5, byrow=T,
+                    dimnames = list(c("SR","CR","FO"),
+                                    c("Q5","Q12","Q15","Mean","SE"))))
+                            # Function to calculate min sizes per unit
+prop.sizes <- function(min.days.diff=NULL){
+  if (is.null(min.days.diff))
+    min.days.diff <- 0.05
+  dif.matrx <- est.matrx + min.days.diff
+  SR.Q15 <- power.prop.test(p1=est.matrx[1,3], p2=dif.matrx[1,3], 
+                  sig.level = 0.05, power = 0.8, alternative = "two.sided")
+  CR.Q15 <- power.prop.test(p1=est.matrx[2,3], p2=dif.matrx[2,3], 
+                  sig.level = 0.05, power = 0.8, alternative = "two.sided")
+  FO.Q15 <- power.prop.test(p1=est.matrx[3,3], p2=dif.matrx[3,3], 
+                  sig.level = 0.05, power = 0.8, alternative = "two.sided")
+  minsz.vectr <- c(SR.Q15$n, CR.Q15$n, FO.Q15$n)
+  c(min.days.diff, minsz.vectr, sum(minsz.vectr))
+}
+                            # Call function with declared pct diff
+prop.sizes(0.05)
+prop.sizes(0.10)
+prop.sizes(0.13)
+prop.sizes(0.15)
+######################################################################
+# Cycle 5 - Sample size given 80% power and specified mean diff
+######################################################################
+                            # Population standard deviations
+(cycle4.resp.n  <- matrix(c(110,  65, 130), byrow=F))
+(cycle5.frame   <- matrix(c(554, 418, 897), byrow=F))
+ deff.mean      <- 1
+(pop.std <- sqrt(cycle4.resp.n * est.matrx[,5]**2 / 
+                 (1 - cycle4.resp.n / cycle5.frame) * deff.mean))
+mean.sizes <- function(days.diff=NULL){
+  SR.avg <- power.t.test(delta = days.diff, sd = pop.std[1], sig.level = 0.05,
+                         power = 0.8, type = "one.sample", alternative = "two.sided")
+  CR.avg <- power.t.test(delta = days.diff, sd = pop.std[2], sig.level = 0.05,
+                         power = 0.8, type = "one.sample", alternative = "two.sided")
+  FO.avg <- power.t.test(delta = days.diff, sd = pop.std[3], sig.level = 0.05,
+                         power = 0.8, type = "one.sample", alternative = "two.sided")
+  c(SR.avg$n, CR.avg$n, FO.avg$n, sum(SR.avg$n, CR.avg$n, FO.avg$n))
+}
+                            # Call function with declared mean diff
+mean.sizes(1.0)
+mean.sizes(1.5)
+mean.sizes(2.0)
+mean.sizes(2.5)
+######################################################################

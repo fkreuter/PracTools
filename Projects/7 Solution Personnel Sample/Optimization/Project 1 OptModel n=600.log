@@ -1,0 +1,636 @@
+1                                           The SAS System            15:21 Thursday, February 9, 2012
+
+NOTE: Copyright (c) 2002-2008 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.2 (TS2M2) 
+      Licensed to UNIVERSITY OF MARYLAND-T&R, Site 70035155.
+NOTE: This session is executing on the NET_SRV  platform.
+
+
+
+NOTE: SAS initialization used:
+      real time           0.67 seconds
+      cpu time            0.28 seconds
+      
+1          /*********************************************************************/
+2          /* Program: Project 1 OptModel n=600.sas                             */
+3          /* Date:    02/09/12                                                 */
+4          /* Author:  J.Dever                                                  */
+5          /* Purpose: Reproduce optimization results generated with Solver.    */
+6          /* Revised:                                                          */
+7          /*********************************************************************/
+8          options nocenter orientation=portrait;
+9          
+10         TITLE1 "VNUV Annual Survey Division Climate Survey (Sample Allocation)";
+11         FOOTNOTE "Program: Project 1 OptModel n=600.sas";
+12         
+13         **********************************************************************;
+14         ** Variable Formats.                                                **;
+15         **********************************************************************;
+16         PROC FORMAT;
+17           VALUE salgrad_ 1="A1-A3"
+18                          2="R1-R5"
+19                          3="M1-M3";
+NOTE: Format SALGRAD_ has been output.
+20           VALUE tenure_  1="Less than 5 Years"
+21                          2="5+ Years";
+NOTE: Format TENURE_ has been output.
+22           VALUE busunit_ 1="Survey Research Unit (SR)"
+23                          2="Computing Research Unit (CR)"
+24                          3="Field Operations (FO)";
+NOTE: Format BUSUNIT_ has been output.
+25         RUN;
+
+NOTE: PROCEDURE FORMAT used (Total process time):
+      real time           0.14 seconds
+      cpu time            0.03 seconds
+      
+
+26         
+27         **********************************************************************;
+28         ** Macro Variables.                                                 **;
+29         **********************************************************************;
+30         %let maxsize   =600;                       *Max respondent sample size;
+31         %let minsz_SR  =179.2;            *Min size for SR domain (power calc);
+32         %let minsz_CR  = 90.4;            *Min size for CR domain (power calc);
+33         %let minsz_FO  =216.0;            *Min size for FO domain (power calc);
+34         
+2 The SAS System                                                      15:21 Thursday, February 9, 2012
+
+35         %let domaincv1 =0.06;                       *Max cv for domain group 1;
+36         %let domaincv2 =0.10;                       *Max cv for domain group 2;
+37         
+38         **********************************************************************;
+39         Title2 "Load Chapter 2 Tables 2.1, 2.3, 2.4";
+40         **********************************************************************;
+41         DATA OptParms;
+42           LENGTH StratID 3 SalGrade Tenure BusUnit 3 FrameCts PopEst1-PopEst4
+43                  STD_Est4 InEligRt ERespRt 8;
+44           LABEL StratID  = "Stratum ID"
+45                 BusUnit  = "Business Unit (3) within VUV-SD"
+46                 SalGrade = "Salary Grade (3)"
+47                 Tenure   = "Years of Tenure at VUV"
+48                 FrameCts = "Sampling Frame Counts per Stratum"
+49                 PopEst1  = "Pop Proportion Answering (Strongly) Agree to Q5 by Stratum"
+50                 PopEst2  = "Pop Proportion Answering (Strongly) Agree to Q12 by Stratum"
+51                 PopEst3  = "Pop Proportion Answering (Strongly) Agree to Q15 by Stratum"
+52                 PopEst4  = "Pop Average Number of Classes Attended by Stratum"
+53                 STD_Est4 = "Pop STD for Number of Classes Attended by Stratum"
+54                 InEligRt = "Ineligibility Rate for Cycle 7 by Stratum"
+55                 ERespRt  = "Response Rate among Eligible Sample Members by Stratum";
+56           StratID = _n_;
+57         
+58           INPUT BusUnit SalGrade Tenure FrameCts
+59                 PopEst1 PopEst2 PopEst3 PopEst4 STD_Est4
+60                 InEligRt ERespRt;
+61           CARDS;
+
+NOTE: The data set WORK.OPTPARMS has 18 observations and 12 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+80           ;
+81         RUN;
+82         
+83         DATA OptParms;
+84           LENGTH VarU_Est1-VarU_Est4 InflateRts 8;
+85           SET OptParms;
+86                                     *Unit varianace for population proportions;
+87           ARRAY varU_s VarU_Est1-VarU_Est3;
+88           ARRAY p_s    PopEst1-PopEst3;
+89           DO OVER p_s;
+90             varU_s = p_s * (1 - p_s) * FrameCts / (FrameCts - 1);
+91           END;
+92         
+93           VarU_Est4 = STD_Est4**2;
+94         
+95           InflateRts = (1 - InEligRt) * ERespRt;
+96         
+97           LABEL VarU_Est1  = "Pop Unit Variance for Proportion Answering (Strongly) Agree to Q5 by
+97       ! Stratum"
+98                 VarU_Est2  = "Pop Unit Variance for Proportion Answering (Strongly) Agree to Q12 by
+3 The SAS System                                                      15:21 Thursday, February 9, 2012
+
+98       !  Stratum"
+99                 VarU_Est3  = "Pop Unit Variance for Proportion Answering (Strongly) Agree to Q15 by
+99       !  Stratum"
+100                VarU_Est4  = "Pop Unit Variance for Number of Classes Attended by Stratum"
+101                InflateRts = "Inflation Rate for Allocation Sample Size";
+102        RUN;
+
+NOTE: There were 18 observations read from the data set WORK.OPTPARMS.
+NOTE: The data set WORK.OPTPARMS has 18 observations and 17 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+103        
+104        PROC PRINT DATA=OptParms UNIFORM NOOBS;
+105          FORMAT SalGrade salgrad_. Tenure tenure_. BusUnit busunit_.;
+106          SUM FrameCts;
+107        RUN cancel;
+
+WARNING: The procedure was not executed at the user's request.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+      
+
+108        
+109        PROC MEANS DATA=OptParms MIN MAX;
+110          VAR InflateRts;
+111        RUN;
+
+NOTE: There were 18 observations read from the data set WORK.OPTPARMS.
+NOTE: The PROCEDURE MEANS printed page 1.
+NOTE: PROCEDURE MEANS used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+112        
+113        **********************************************************************;
+114        Title2 "Add Domain Indicators by Stratum to Sampling Frame File";
+115        **********************************************************************;
+116        DATA OptParms;
+117          LENGTH Domain1-Domain18 3;
+118          SET OptParms;
+119                                              *Business Unit Reporting Domains;
+120          Domain1 = ( 1<=StratID<= 6);
+121          Domain2 = ( 7<=StratID<=12);
+122          Domain3 = (13<=StratID<=18);
+123                              *Business Unit by Salary Grade Reporting Domains;
+124          Domain4  = (StratID in (1,2));
+125          Domain5  = (StratID in (3,4));
+126          Domain6  = (StratID in (5,6));
+127          Domain7  = (StratID in (7,8));
+4 The SAS System                                                      15:21 Thursday, February 9, 2012
+
+128          Domain8  = (StratID in (9,10));
+129          Domain9  = (StratID in (11,12));
+130          Domain10 = (StratID in (13,14));
+131          Domain11 = (StratID in (15,16));
+132          Domain12 = (StratID in (17,18));
+133                              *Business Unit by Salary Grade Reporting Domains;
+134          Domain13 = (StratID in (1,3,5));
+135          Domain14 = (StratID in (2,4,6));
+136          Domain15 = (StratID in (7,9,11));
+137          Domain16 = (StratID in (8,10,12));
+138          Domain17 = (StratID in (13,15,17));
+139          Domain18 = (StratID in (14,16,18));
+140        
+141          LABEL Domain1  = "Survey Research (SR) Reporting Domain Indicator"
+142                Domain2  = "Computing Research (CR) Reporting Domain Indicator"
+143                Domain3  = "Field Operations (FO) Reporting Domain Indicator"
+144                Domain4  = "Survey Research (SR) by A1-A3 Reporting Domain Indicator"
+145                Domain5  = "Survey Research (SR) by R1-R5 Reporting Domain Indicator"
+146                Domain6  = "Survey Research (SR) by M1-M3 Reporting Domain Indicator"
+147                Domain7  = "Computing Research (CR) by A1-A3 Reporting Domain Indicator"
+148                Domain8  = "Computing Research (CR) by R1-R5 Reporting Domain Indicator"
+149                Domain9  = "Computing Research (CR) by M1-M3 Reporting Domain Indicator"
+150                Domain10 = "Field Operations (FO) by A1-A3 Reporting Domain Indicator"
+151                Domain11 = "Field Operations (FO) by R1-R5 Reporting Domain Indicator"
+152                Domain12 = "Field Operations (FO) by M1-M3 Reporting Domain Indicator"
+153                Domain13 = "Survey Research (SR) by <5-yr Tenure Reporting Domain Indicator"
+154                Domain14 = "Survey Research (SR) by 5+-yr Tenure Reporting Domain Indicator"
+155                Domain15 = "Computing Research (CR) by <5-yr Tenure Reporting Domain Indicator"
+156                Domain16 = "Computing Research (CR) by 5+-yr Tenure Reporting Domain Indicator"
+157                Domain17 = "Field Operations (FO) by <5 yr Tenure Reporting Domain Indicator"
+158                Domain18 = "Field Operations (FO) by 5+ yr Tenure Reporting Domain Indicator";
+159        RUN;
+
+NOTE: There were 18 observations read from the data set WORK.OPTPARMS.
+NOTE: The data set WORK.OPTPARMS has 18 observations and 35 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+160        
+161        PROC PRINT DATA=OptParms UNIFORM NOOBS;
+162          VAR StratID BusUnit SalGrade Tenure Domain1-Domain18;
+163          FORMAT SalGrade salgrad_. Tenure tenure_. BusUnit busunit_.;
+164          SUM Domain1-Domain18;
+165        RUN cancel;
+
+WARNING: The procedure was not executed at the user's request.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+166        
+5 The SAS System                                                      15:21 Thursday, February 9, 2012
+
+167        **********************************************************************;
+168        Title2 "Calculate Population Totals";
+169        **********************************************************************;
+170        DATA OptParms;
+171          LENGTH PopTotal1-PopTotal4 8;
+172          SET OptParms;
+173        
+174          ARRAY p_s   PopEst1-PopEst4;
+175          ARRAY tot_s PopTotal1-PopTotal4;
+176          DO OVER p_s;
+177            tot_s = FrameCts * p_s;
+178          END;
+179        
+180          LABEL PopTotal1 = "Pop Total Answering (Strongly) Agree to Q5 by Stratum"
+181                PopTotal2 = "Pop Total Answering (Strongly) Agree to Q12 by Stratum"
+182                PopTotal3 = "Pop Total Answering (Strongly) Agree to Q15 by Stratum"
+183                PopTotal4 = "Pop Total Number of Classes Attended by Stratum"
+184        RUN;
+185        
+
+NOTE: There were 18 observations read from the data set WORK.OPTPARMS.
+NOTE: The data set WORK.OPTPARMS has 18 observations and 39 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+186        PROC PRINT DATA=OptParms UNIFORM NOOBS;
+187          VAR StratID PopTotal1-PopTotal4;
+188          SUM PopTotal1-PopTotal4;
+189        RUN cancel;
+
+WARNING: The procedure was not executed at the user's request.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+190        
+191        **********************************************************************;
+192        Title2 "Create proportional allocation for initial values";
+193        **********************************************************************;
+194        PROC FREQ DATA=OptParms noprint;
+195          TABLES StratID / OUT=InitValsDS(KEEP=StratID Percent);
+196          WEIGHT FrameCts;
+197        RUN;
+
+NOTE: There were 18 observations read from the data set WORK.OPTPARMS.
+NOTE: The data set WORK.INITVALSDS has 18 observations and 2 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+6 The SAS System                                                      15:21 Thursday, February 9, 2012
+
+198        
+199        DATA InitValsDS;
+200          SET InitValsDS;
+201          InitVals = ROUND(&maxsize. * Percent / 100);
+202          *InitVals = ROUND((&maxsize. - 100) * Percent / 100);
+203        RUN;
+
+NOTE: There were 18 observations read from the data set WORK.INITVALSDS.
+NOTE: The data set WORK.INITVALSDS has 18 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+204        
+205        PROC PRINT DATA=InitValsDS UNIFORM NOOBS;
+206          SUM PERCENT InitVals;
+207        RUN cancel;
+
+WARNING: The procedure was not executed at the user's request.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+208        
+209        **********************************************************************;
+210        Title2 "Create Domain Constraints";
+211        **********************************************************************;
+212        PROC TRANSPOSE DATA=OptParms(obs=1 KEEP=Domain1-Domain18)
+213                        OUT=DConstraints(DROP=_NAME_ _LABEL_);
+214        RUN;
+
+NOTE: There were 1 observations read from the data set WORK.OPTPARMS.
+NOTE: The data set WORK.DCONSTRAINTS has 18 observations and 1 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+215        
+216        DATA DConstraints;
+217          LENGTH DomainID 3 DomainRelVar 8;
+218          SET DConstraints(DROP=COL1);
+219        
+220          DomainID = _n_;
+221                                      *Constrained domain-specific relvariance;
+222          IF      1<=DomainID<=3  THEN DomainRelVar=(&domaincv1.)**2;
+223          ELSE IF 4<=DomainID<=18 THEN DomainRelVar=(&domaincv2.)**2;
+224        
+225          LABEL DomainID     = "Reporting Domain ID"
+226                DomainRelVar = "Constrained Relvariance per Domain";
+227        RUN;
+
+7 The SAS System                                                      15:21 Thursday, February 9, 2012
+
+NOTE: There were 18 observations read from the data set WORK.DCONSTRAINTS.
+NOTE: The data set WORK.DCONSTRAINTS has 18 observations and 2 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+228        
+229        PROC PRINT DATA=DConstraints;  RUN cancel;
+
+WARNING: The procedure was not executed at the user's request.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+230        
+231        **********************************************************************;
+232        Title2 "Sample Allocation - Initial Solution";
+233        **********************************************************************;
+234        PROC OPTMODEL initvar;
+235        
+236          *_____ OPTIMIZATION CONSTANTS _____*;
+237           NUMBER nStrata  = 18;
+237      !                                             *Number of sampling strata;
+238           NUMBER nDomains = 18;
+238      !                                           *Number of reporting domains;
+239           NUMBER nMeans   = 4;
+239      !                                           *Number of means/proportions;
+240        
+241        
+242          *_____ CONSTRAINED SIZES _____*;
+243           NUMBER minStrat = 2;
+243      !                                                *Min sample per stratum;
+244           NUMBER maxSamp  = &maxsize.;
+244      !                                           *Max overall respondent size;
+245        
+246        
+247          *_____ LOAD CHAPTER 2 PARAMETER TABLES _____*;
+248                                                         *Stratum frame counts;
+249           NUMBER FrameCts{1..nStrata};
+250           READ DATA OptParms INTO [_n_] FrameCts;
+NOTE: There were 18 observations read from the data set WORK.OPTPARMS.
+251           *PRINT FrameCts;
+252        
+253                                                 *Population totals by stratum;
+254           SET<NUMBER> StratID;
+255           NUMBER PopTotals{StratID, 1..nMeans};
+256           READ DATA OptParms INTO StratID=[StratID]
+257                {c in 1..nMeans} <PopTotals[StratID,c]=COL("PopTotal"||c)>;
+NOTE: There were 18 observations read from the data set WORK.OPTPARMS.
+258           *PRINT PopTotals;
+259        
+260                                          *Population unit variance by stratum;
+8 The SAS System                                                      15:21 Thursday, February 9, 2012
+
+261           NUMBER PopUVars{StratID, 1..nMeans};
+262           READ DATA OptParms INTO StratID=[StratID]
+263                {c in 1..nMeans} <PopUVars[StratID,c]=COL("VarU_Est"||c)>;
+NOTE: There were 18 observations read from the data set WORK.OPTPARMS.
+264           *PRINT PopUVars;
+265           *PRINT {i in 1..18} PopUVars[i,1];
+266        
+267                                            *Sample allocation inflation rates;
+268           NUMBER InflateRts{1..nStrata};
+269           READ DATA OptParms INTO [_n_] InflateRts;
+NOTE: There were 18 observations read from the data set WORK.OPTPARMS.
+270           *PRINT InflateRts;
+271        
+272                                                 *Domain indicators by stratum;
+273           NUMBER DomInds{StratID, 1..nDomains};
+274           READ DATA OptParms INTO StratID=[StratID]
+275                {c in 1..nDomains} <DomInds[StratID,c]=COL("Domain"||c)>;
+NOTE: There were 18 observations read from the data set WORK.OPTPARMS.
+276           *PRINT DomInds;
+277        
+278        
+279          *_____ OPTIMIZATION CONSTRAINTS _____*;
+280        
+281                                               *Domain relvariance constraints;
+282           NUMBER DomainRelVar{1..nDomains};
+283           READ DATA DConstraints INTO [_n_] DomainRelVar;
+NOTE: There were 18 observations read from the data set WORK.DCONSTRAINTS.
+284           *PRINT DomainRelVar;
+285        
+286                                                 *Initial stratum sample sizes;
+287           NUMBER InitVals{1..nStrata};
+288           READ DATA InitValsDS INTO [_n_] InitVals;
+NOTE: There were 18 observations read from the data set WORK.INITVALSDS.
+289           *PRINT InitVals;
+290           *PRINT (SUM{i in 1..nStrata} InitVals[i]);
+291        
+292                                                         *Stratum sample sizes;
+293           *VAR NResp{i in 1..nStrata} init 2;
+294           VAR NResp{i in 1..nStrata} init InitVals[i];
+295           *VAR NResp{i in 1..nStrata};
+296        
+297           CONSTRAINT MaxSSize{i in 1..nStrata}: (NResp[i] / InflateRts[i]) <= FrameCts[i];
+298           CONSTRAINT MinSSize{i in 1..nStrata}: minStrat <= NResp[i];
+299           *PRINT NResp;
+300           *PRINT (SUM{i in 1..nStrata} NResp[i]);
+301        
+302                                *Overall respondent sample size (study budget);
+303           CONSTRAINT TotSmpSize:
+304               (SUM{i in 1..nStrata} NResp[i]) <= maxSamp;
+305        
+306                                 *Minimum sample size per business unit domain;
+307           CONSTRAINT SRsmpSize:
+308               (SUM{i in 1..nStrata} DomInds[i,1] * NResp[i]) >= &minsz_SR.;
+309           CONSTRAINT CRsmpSize:
+9 The SAS System                                                      15:21 Thursday, February 9, 2012
+
+310               (SUM{i in 1..nStrata} DomInds[i,2] * NResp[i]) >= &minsz_CR.;
+311           CONSTRAINT FOsmpSize:
+312               (SUM{i in 1..nStrata} DomInds[i,2] * NResp[i]) >= &minsz_FO.;
+313        
+314                                                        *Relvariance by domain;
+315           CONSTRAINT DomainRelVars{d in 1..nDomains, j in 1..nMeans}:
+316               ((SUM{i in 1..nStrata} DomInds[i,d] * FrameCts[i] * (FrameCts[i] / NResp[i] - 1) *
+316      ! PopUVars[i,j])
+317                / (SUM{i in 1..nStrata} DomInds[i,d] * PopTotals[i,j])^2)
+318        	   <= DomainRelVar[d];
+319           *PRINT {d in 1..nDomains, j in 1..nMeans}
+320               ((SUM{i in 1..nStrata} DomInds[i,d] * FrameCts[i] * (FrameCts[i] / NResp[i] - 1) *
+320      ! PopUVars[i,j])
+321                / (SUM{i in 1..nStrata} DomInds[i,d] * PopTotals[i,j])^2);
+322        
+323        
+324          *_____ OBJECTIVE FUNCTION _____*;
+325        
+326                                       *Importance weights for study estimates;
+327           NUMBER impwt{1..nMeans} = 1;
+328           *PRINT impwt;
+329        
+330                                                  *Minimize sum of overall CVs;
+331           MIN f = SUM{j in 1..nMeans} impwt[j] *
+332                   ((SUM{i in 1..nStrata} FrameCts[i] * (FrameCts[i] / NResp[i] - 1) *
+332      ! PopUVars[i,j])
+333                    / (SUM{i in 1..nStrata} PopTotals[i,j])^2 );
+334           *PRINT {j in 1..nMeans}
+335                 (SQRT(SUM{i in 1..nStrata} FrameCts[i] * (FrameCts[i] / NResp[i] - 1) *
+335      ! PopUVars[i,j])
+336                  / (SUM{i in 1..nStrata} PopTotals[i,j])^2 );
+337           *PRINT (SUM{j in 1..nMeans} impwt[j] *
+338                  (SQRT(SUM{i in 1..nStrata} FrameCts[i] * (FrameCts[i] / NResp[i] - 1) *
+338      ! PopUVars[i,j])
+339                   / (SUM{i in 1..nStrata} PopTotals[i,j]))^2);
+340        
+341           SOLVE;
+NOTE: The problem has 18 variables (18 free, 0 fixed).
+NOTE: The problem has 40 linear constraints (37 LE, 0 EQ, 3 GE, 0 range).
+NOTE: The problem has 72 linear constraint coefficients.
+NOTE: The problem has 72 nonlinear constraints (72 LE, 0 EQ, 0 GE, 0 range).
+NOTE: The OPTMODEL presolver removed 0 variables, 37 linear constraints, and 0 nonlinear constraints.
+NOTE: The OPTMODEL presolved problem has 18 variables, 3 linear constraints, and 72 nonlinear 
+      constraints.
+NOTE: The OPTMODEL presolver removed 42 linear constraint coefficients, leaving 30.
+NOTE: Using analytic derivatives for objective.
+NOTE: Using analytic derivatives for nonlinear constraints.
+NOTE: The SQP solver is called.
+                    Objective                    Optimality
+          Iter          Value  Infeasibility          Error  Complementarity
+             0      0.0016019     81.0000000  0.00000750901       81.0000000
+             1      0.0018406     11.1827501     12.0905071       11.1827501
+             2      0.0023720      0.6994557      4.0254439        1.2938339
+             3      0.0021420      0.0321918      1.0621840        0.3704818
+10 The SAS System                                                     15:21 Thursday, February 9, 2012
+
+             4      0.0021025      0.0680580      0.0691176        0.0680580
+             5      0.0021027      0.0267391      0.0060014        0.0267391
+             6      0.0021024      0.0266410      0.0059602        0.0266410
+             7      0.0020786      0.0203977      0.0026802        0.0203977
+             8      0.0020783      0.0201953      0.0027431        0.0201953
+             9      0.0020697      0.0181489      0.0028056        0.0181489
+            10      0.0020636      0.0160798      0.0027773        0.0160798
+            11      0.0020625      0.0155829      0.0027465        0.0155829
+            12      0.0020614      0.0152012      0.0026942        0.0152012
+            13      0.0020508      0.0127156      0.0020766        0.0127156
+            14      0.0020416      0.0103333      0.0033927        0.0103333
+            15      0.0020278      0.0058632      0.0021867        0.0058632
+            16      0.0020257      0.0035180      0.0016521        0.0035180
+            17      0.0020303      0.0035006      0.0009224        0.0035006
+            18      0.0020332      0.0036324      0.0007970        0.0036324
+            19      0.0020320      0.0036466      0.0007521        0.0036466
+            20      0.0020106      0.0034290      0.0005892        0.0034290
+            21      0.0019834      0.0030184      0.0005302        0.0030184
+            22      0.0019809      0.0029503      0.0005514        0.0029503
+            23      0.0019800      0.0029218      0.0005604        0.0029218
+            24      0.0019789      0.0028908      0.0005682        0.0028908
+            25      0.0019730      0.0027147      0.0005517        0.0027147
+            26      0.0019620      0.0032701      0.0005394        0.0032701
+            27      0.0019610      0.0019869      0.0004415        0.0019869
+            28      0.0019610      0.0020441      0.0003888        0.0020441
+            29      0.0019611      0.0020575      0.0003770        0.0020575
+            30      0.0019628      0.0019475      0.0003865        0.0019475
+            31      0.0020339      0.0006689      0.0003696        0.0054572
+            32      0.0020917      0.0002320      0.0003524        0.0066525
+            33      0.0021287      0.0000540      0.0000743        0.0000540
+            34      0.0021327      0.0000174      0.0000602        0.0000174
+            35      0.0021333              0      0.0000362        0.0000286
+            36      0.0021323  0.00000338762      0.0000421    0.00000693715
+            37      0.0021292  0.00000705667      0.0000364    0.00000705667
+            38      0.0021294      0.0000160      0.0000437        0.0000160
+            39      0.0021301  0.00000880787      0.0000439    0.00000880787
+            40      0.0021307  0.00000058904      0.0000353    0.00000437972
+            41      0.0021298  0.00000129653      0.0000398    0.00000137434
+            42      0.0021287  0.00000460860      0.0000398    0.00000460860
+            43      0.0021290  0.00000851129      0.0000445    0.00000851129
+            44      0.0021247  0.00000821862      0.0000444        0.0000162
+            45      0.0021203      0.0000101      0.0000167        0.0000101
+            46      0.0021197  0.00000220594      0.0000205    0.00000220594
+            47      0.0021197  0.00000019304      0.0000273    0.00000066606
+            48      0.0021197  0.00000106963      0.0000258    0.00000106963
+            49      0.0021195  0.00000284685      0.0000284    0.00000284685
+            50      0.0021196  0.00000194182      0.0000284    0.00000194182
+            51      0.0021196  0.00000106557      0.0000282    0.00000106557
+            52      0.0021196  0.00000043759      0.0000282    0.00000066667
+            53      0.0021196  0.00000037168      0.0000282    0.00000070605
+            54      0.0021196  0.00000046290      0.0000282    0.00000076635
+            55      0.0021196  0.00000040625      0.0000282    0.00000134769
+            56      0.0021196  0.00000037969      0.0000282    0.00000138673
+            57      0.0021196  0.00000033947      0.0000282    0.00000121429
+11 The SAS System                                                     15:21 Thursday, February 9, 2012
+
+            58      0.0021196  0.00000029877      0.0000282    0.00000099060
+            59      0.0021196  0.00000026990      0.0000282    0.00000091880
+            60      0.0020935  0.00000199391      0.0000278        0.0000357
+            61      0.0020913  0.00000126960      0.0000264        0.0000161
+            62      0.0020808  0.00000719842      0.0000264        0.0000161
+            63      0.0020204  0.00000671859      0.0000262        0.0000161
+            64      0.0020227  0.00000474069      0.0000250        0.0000274
+            65      0.0020223  0.00000474340      0.0000250        0.0000396
+            66      0.0020225  0.00000117624      0.0000250        0.0000459
+            67      0.0020208  0.00000630867      0.0000226        0.0002448
+            68      0.0020196  0.00000860701      0.0000190        0.0004137
+            69      0.0020185  0.00000043308      0.0000190        0.0007630
+            70      0.0020185  0.00000043295      0.0000190        0.0007697
+            71      0.0020176  0.00000121491  0.00000975645    0.00000565355
+            72      0.0020172  0.00000058211      0.0000140    0.00000058211
+            73      0.0020172  0.00000002259      0.0000126    0.00000007944
+            74      0.0020172  0.00000000134      0.0000125    0.00000004339
+            75      0.0020172  0.00000033339      0.0000143    0.00000033339
+            76      0.0020172  0.00000021568      0.0000139    0.00000021568
+            77      0.0020172  0.00000002984      0.0000134    0.00000121239
+            78      0.0020172  0.00000003909      0.0000134    0.00000143560
+            79      0.0020172  0.00000003001      0.0000134    0.00000183278
+            80      0.0020172  0.00000001628      0.0000174    0.00000009518
+            81      0.0020171  0.00000003036      0.0000175    0.00000003978
+            82      0.0020171  0.00000053621      0.0000132    0.00000053621
+            83      0.0020166  0.00000032267      0.0000124    0.00000032267
+            84      0.0020150  0.00000262931      0.0000123    0.00000262931
+            85      0.0020137  0.00000469694      0.0000123    0.00000469694
+            86      0.0020118  0.00000723569      0.0000122    0.00000723569
+            87      0.0020092      0.0000110      0.0000124        0.0000110
+            88      0.0020050      0.0000107      0.0000126        0.0000129
+            89      0.0020003  0.00000020760      0.0000128        0.0000162
+            90      0.0019796  0.00000153719      0.0000133        0.0000162
+            91      0.0019745      0.0000148      0.0000132        0.0000148
+            92      0.0019681      0.0000484      0.0000117        0.0000484
+            93      0.0019681      0.0000439      0.0000115        0.0000439
+            94      0.0019681      0.0000346      0.0000114        0.0000346
+            95      0.0019681      0.0000249      0.0000113        0.0000249
+            96      0.0019680      0.0000199      0.0000112        0.0000199
+            97      0.0019680      0.0000159      0.0000110        0.0000159
+            98      0.0019679      0.0000177      0.0000108        0.0000177
+            99      0.0019599  0.00000160727      0.0000110        0.0000129
+           100      0.0019558  0.00000101282      0.0000113        0.0000129
+           101      0.0019536  0.00000287288  0.00000542102    0.00000515432
+           102      0.0019536  0.00000453530  0.00000541898    0.00000515432
+           103      0.0019536  0.00000073550  0.00000554242    0.00000546761
+NOTE: Converged.
+NOTE: Objective = 0.00195361398.
+342             PRINT NResp InflateRts FrameCts;
+343        	 *PRINT ({i in 1..nStrata} (NResp[i] / InflateRts[i]));
+344             PRINT (SUM{i in 1..nStrata} NResp[i]);
+345             PRINT (SUM{j in 1..nMeans} impwt[j] *
+346                    (SQRT(SUM{i in 1..nStrata} FrameCts[i] * (FrameCts[i] / NResp[i] - 1) *
+346      ! PopUVars[i,j])
+12 The SAS System                                                     15:21 Thursday, February 9, 2012
+
+347                    / (SUM{i in 1..nStrata} PopTotals[i,j])^2));
+348        
+349           QUIT;
+NOTE: The PROCEDURE OPTMODEL printed pages 2-3.
+NOTE: PROCEDURE OPTMODEL used (Total process time):
+      real time           0.17 seconds
+      cpu time            0.17 seconds
+      
+
+350        RUN;
+351        
+352        /*********************************************************************/
+
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: The SAS System used:
+      real time           1.35 seconds
+      cpu time            0.78 seconds
+      

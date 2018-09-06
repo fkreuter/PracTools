@@ -1,0 +1,262 @@
+> ##################################################################
+> ## Program: RPART Example.R
+> ## Name:    J.Dever
+> ## Project: SURV699E - A Practical Course in Sampling and Weighting
+> ## Date:    10/23/07
+> ## Purpose: Example rpart program to demonstrate regression tree
+> ##          technique available in R.
+> ## Revised: 
+> ##################################################################
+>                                                   #Set working directory
+> rm(list=ls(all=TRUE))
+> 
+>                                                   #Load R libraries
+> require(MASS)
+[1] TRUE
+> library(rpart) 
+> # library(datasets) 
+> 
+> ##################################################################
+> ## Description of Data
+> ##################################################################
+> ## From R help page: "A population of women who were at least 21
+> ##   years old, of Pima Indian heritage and living near Phoenix, 
+> ##   Arizona, was tested for diabetes according to WHO criteria. 
+> ##   The data were collected by the US National Institute of 
+> ##   Diabetes and Digestive and Kidney Diseases. We used the 532 
+> ##   complete records after dropping the (mainly missing) data on
+> ##   serum insulin." 
+> ##
+> ## Variables:
+> ##    npregnumber of pregnancies 
+> ##    gluplasma glucose conc. in an oral tolerance test 
+> ##    bpdiastolic blood pressure (mm Hg) 
+> ##    skintriceps skin fold thickness (mm) 
+> ##    bmibody mass index (weight in kg/(height in m)^2) 
+> ##    peddiabetes pedigree function 
+> ##    ageage in years 
+> ##    typeYes or No, for diabetic according to WHO criteria 
+> 
+> ##################################################################
+> ## Examine analysis data file
+> ##################################################################
+> names(Pima.tr)
+[1] "npreg" "glu"   "bp"    "skin"  "bmi"   "ped"   "age"   "type" 
+> names(Pima.te)
+[1] "npreg" "glu"   "bp"    "skin"  "bmi"   "ped"   "age"   "type" 
+>                                                   #Combine ds and examine
+> Diabetes <- rbind(Pima.tr, Pima.te)
+> Diabetes[c(1:5,450:458),]
+    npreg glu bp skin  bmi   ped age type
+1       5  86 68   28 30.2 0.364  24   No
+2       7 195 70   33 25.1 0.163  55  Yes
+3       5  77 82   41 35.8 0.156  35   No
+4       0 165 76   43 47.9 0.259  26   No
+5       0 107 60   25 26.4 0.133  23   No
+450     6  99 60   19 26.9 0.497  32   No
+451     1  99 72   30 38.6 0.412  21   No
+452     3 111 58   31 29.5 0.430  22   No
+453     2  98 60   17 34.7 0.198  22   No
+454     1 143 86   30 30.1 0.892  23   No
+455     1 119 44   47 35.5 0.280  25   No
+456     6 108 44   20 24.0 0.813  35   No
+457     3 176 86   27 33.3 1.154  52  Yes
+458    11 111 84   40 46.8 0.925  45  Yes
+> 
+> summary(Diabetes)
+     npreg             glu               bp             skin      
+ Min.   : 0.000   Min.   : 56.00   Min.   : 24.0   Min.   : 7.00  
+ 1st Qu.: 1.000   1st Qu.: 98.75   1st Qu.: 64.0   1st Qu.:22.00  
+ Median : 2.000   Median :115.00   Median : 72.0   Median :29.00  
+ Mean   : 3.517   Mean   :121.03   Mean   : 71.5   Mean   :29.18  
+ 3rd Qu.: 5.000   3rd Qu.:141.25   3rd Qu.: 80.0   3rd Qu.:36.00  
+ Max.   :17.000   Max.   :199.00   Max.   :110.0   Max.   :99.00  
+      bmi             ped              age         type    
+ Min.   :18.20   Min.   :0.0850   Min.   :21.00   No :355  
+ 1st Qu.:27.88   1st Qu.:0.2587   1st Qu.:23.00   Yes:177  
+ Median :32.80   Median :0.4160   Median :28.00            
+ Mean   :32.89   Mean   :0.5030   Mean   :31.61            
+ 3rd Qu.:36.90   3rd Qu.:0.6585   3rd Qu.:38.00            
+ Max.   :67.10   Max.   :2.4200   Max.   :81.00            
+> table(Diabetes$npreg, exclude=NULL)
+
+  0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  17 
+ 77 116  79  57  41  31  28  29  20  19  12   7   8   4   2   1   1 
+> 
+> ##################################################################
+> ## Regression tree (default minimum node sizes)
+> ##################################################################
+> 
+>                                                   #Model
+> Diabetes.tree1 <- rpart(type ~ npreg+glu+bp+skin+bmi+ped+age, 
++                        data   =Diabetes, 
++                        method ='class') 
+> 
+>                                                   #Plot regression tree
+> plot(Diabetes.tree1, uniform=TRUE, , cex = 0.8,
++      main="Regression Tree for WHO Diabetes Study (n=532) - Default Node Size") 
+> text(Diabetes.tree1) 
+>                                                   #Details of results
+> # summary(Diabetes.tree1)
+>                                                   #Number and size of nodes
+> length(unique(Diabetes.tree1$where))
+[1] 15
+> table(Diabetes.tree1$where)
+
+  3   6   8   9  11  13  14  17  20  24  25  26  27  28  29 
+214  52  27   8   7  10  25  34  15  13   8  10  13  20  76 
+> 
+> ##################################################################
+> ## Regression tree (minimum node size = 30)
+> ##################################################################
+> 
+>                                                   #Model
+> Diabetes.tree2 <- rpart(type ~ npreg+glu+bp+skin+bmi+ped+age, 
++                        data   =Diabetes, 
++                        method ='class', 
++                        control=rpart.control(minbucket=30)) 
+> 
+>                                                   #Plot regression tree
+> x11()
+> plot(Diabetes.tree2, uniform=TRUE, cex = 0.8,
++      main="Regression Tree for WHO Diabetes Study (n=532) - Node Size >= 30") 
+> text(Diabetes.tree2) 
+>                                                   #Details of results
+> summary(Diabetes.tree2)
+Call:
+rpart(formula = type ~ npreg + glu + bp + skin + bmi + ped + 
+    age, data = Diabetes, method = "class", control = rpart.control(minbucket = 30))
+  n= 532 
+
+          CP nsplit rel error    xerror       xstd
+1 0.26553672      0 1.0000000 1.0000000 0.06140047
+2 0.05649718      1 0.7344633 0.8022599 0.05764311
+3 0.01129944      3 0.6214689 0.7796610 0.05711610
+4 0.01000000      5 0.5988701 0.8022599 0.05764311
+
+Node number 1: 532 observations,    complexity param=0.2655367
+  predicted class=No   expected loss=0.3327068
+    class counts:   355   177
+   probabilities: 0.667 0.333 
+  left son=2 (343 obs) right son=3 (189 obs)
+  Primary splits:
+      glu   < 127.5  to the left,  improve=49.86310, (0 missing)
+      age   < 28.5   to the left,  improve=29.53543, (0 missing)
+      bmi   < 29.65  to the left,  improve=19.94752, (0 missing)
+      npreg < 6.5    to the left,  improve=19.87718, (0 missing)
+      skin  < 23.5   to the left,  improve=14.24001, (0 missing)
+  Surrogate splits:
+      age   < 48.5   to the left,  agree=0.688, adj=0.122, (0 split)
+      bp    < 81     to the left,  agree=0.680, adj=0.101, (0 split)
+      bmi   < 39.95  to the left,  agree=0.669, adj=0.069, (0 split)
+      skin  < 40.5   to the left,  agree=0.658, adj=0.037, (0 split)
+      npreg < 6.5    to the left,  agree=0.654, adj=0.026, (0 split)
+
+Node number 2: 343 observations,    complexity param=0.01129944
+  predicted class=No   expected loss=0.1720117
+    class counts:   284    59
+   probabilities: 0.828 0.172 
+  left son=4 (214 obs) right son=5 (129 obs)
+  Primary splits:
+      age   < 28.5   to the left,  improve=10.761810, (0 missing)
+      ped   < 0.6385 to the left,  improve= 7.858602, (0 missing)
+      npreg < 6.5    to the left,  improve= 7.525753, (0 missing)
+      bmi   < 26.45  to the left,  improve= 5.212789, (0 missing)
+      skin  < 23.5   to the left,  improve= 4.126363, (0 missing)
+  Surrogate splits:
+      npreg < 4.5    to the left,  agree=0.816, adj=0.512, (0 split)
+      bp    < 71     to the left,  agree=0.671, adj=0.124, (0 split)
+      skin  < 36.5   to the left,  agree=0.650, adj=0.070, (0 split)
+      ped   < 0.911  to the left,  agree=0.650, adj=0.070, (0 split)
+      bmi   < 45.55  to the left,  agree=0.644, adj=0.054, (0 split)
+
+Node number 3: 189 observations,    complexity param=0.05649718
+  predicted class=Yes  expected loss=0.3756614
+    class counts:    71   118
+   probabilities: 0.376 0.624 
+  left son=6 (113 obs) right son=7 (76 obs)
+  Primary splits:
+      glu  < 157.5  to the left,  improve=12.056180, (0 missing)
+      bmi  < 29.8   to the left,  improve=10.674880, (0 missing)
+      age  < 24.5   to the left,  improve= 7.795897, (0 missing)
+      ped  < 0.3065 to the left,  improve= 4.333110, (0 missing)
+      skin < 21.5   to the left,  improve= 4.174255, (0 missing)
+  Surrogate splits:
+      bmi  < 43.2   to the left,  agree=0.624, adj=0.066, (0 split)
+      ped  < 1.3925 to the left,  agree=0.619, adj=0.053, (0 split)
+      bp   < 103    to the left,  agree=0.614, adj=0.039, (0 split)
+      skin < 55     to the left,  agree=0.614, adj=0.039, (0 split)
+      age  < 46.5   to the left,  agree=0.608, adj=0.026, (0 split)
+
+Node number 4: 214 observations
+  predicted class=No   expected loss=0.07476636
+    class counts:   198    16
+   probabilities: 0.925 0.075 
+
+Node number 5: 129 observations,    complexity param=0.01129944
+  predicted class=No   expected loss=0.3333333
+    class counts:    86    43
+   probabilities: 0.667 0.333 
+  left son=10 (87 obs) right son=11 (42 obs)
+  Primary splits:
+      ped   < 0.62   to the left,  improve=5.719212, (0 missing)
+      glu   < 108.5  to the left,  improve=5.160000, (0 missing)
+      age   < 42.5   to the left,  improve=1.650607, (0 missing)
+      bmi   < 27.85  to the left,  improve=1.594689, (0 missing)
+      npreg < 6.5    to the left,  improve=1.433333, (0 missing)
+  Surrogate splits:
+      skin < 9.5    to the right, agree=0.69, adj=0.048, (0 split)
+      bmi  < 40.3   to the left,  agree=0.69, adj=0.048, (0 split)
+
+Node number 6: 113 observations,    complexity param=0.05649718
+  predicted class=No   expected loss=0.4778761
+    class counts:    59    54
+   probabilities: 0.522 0.478 
+  left son=12 (34 obs) right son=13 (79 obs)
+  Primary splits:
+      bmi   < 30.2   to the left,  improve=7.195784, (0 missing)
+      age   < 24.5   to the left,  improve=6.907083, (0 missing)
+      skin  < 31.5   to the left,  improve=3.758033, (0 missing)
+      npreg < 6.5    to the left,  improve=2.840769, (0 missing)
+      ped   < 0.3065 to the left,  improve=2.207562, (0 missing)
+  Surrogate splits:
+      skin < 22.5   to the left,  agree=0.770, adj=0.235, (0 split)
+      age  < 21.5   to the left,  agree=0.735, adj=0.118, (0 split)
+      ped  < 0.1255 to the left,  agree=0.717, adj=0.059, (0 split)
+      bp   < 61     to the left,  agree=0.708, adj=0.029, (0 split)
+
+Node number 7: 76 observations
+  predicted class=Yes  expected loss=0.1578947
+    class counts:    12    64
+   probabilities: 0.158 0.842 
+
+Node number 10: 87 observations
+  predicted class=No   expected loss=0.2298851
+    class counts:    67    20
+   probabilities: 0.770 0.230 
+
+Node number 11: 42 observations
+  predicted class=Yes  expected loss=0.452381
+    class counts:    19    23
+   probabilities: 0.452 0.548 
+
+Node number 12: 34 observations
+  predicted class=No   expected loss=0.2058824
+    class counts:    27     7
+   probabilities: 0.794 0.206 
+
+Node number 13: 79 observations
+  predicted class=Yes  expected loss=0.4050633
+    class counts:    32    47
+   probabilities: 0.405 0.595 
+
+>                                                   #Number and size of nodes
+> length(unique(Diabetes.tree2$where))
+[1] 6
+> table(Diabetes.tree2$where)
+
+  3   5   6   9  10  11 
+214  87  42  34  79  76 
+> 
+> ##################################################################
+> 

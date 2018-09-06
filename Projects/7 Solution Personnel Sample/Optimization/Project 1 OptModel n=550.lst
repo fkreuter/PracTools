@@ -1,0 +1,168 @@
+VNUV Annual Survey Division Climate Survey (Sample Allocation)    15:22 Thursday, February 9, 2012   1
+Load Chapter 2 Tables 2.1, 2.3, 2.4
+
+The MEANS Procedure
+
+Analysis Variable : InflateRts Inflation Rate for Allocation Sample Size
+ 
+     Minimum         Maximum
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+   0.2744786       1.0000000
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Program: Project 1 OptModel n=550.sas
+VNUV Annual Survey Division Climate Survey (Sample Allocation)    15:22 Thursday, February 9, 2012   2
+Sample Allocation - Initial Solution
+
+The OPTMODEL Procedure
+
+            Problem Summary
+
+Objective Sense            Minimization
+Objective Function                    f
+Objective Type                Nonlinear
+                                       
+Number of Variables                  18
+Bounded Above                         0
+Bounded Below                         0
+Bounded Below and Above               0
+Free                                 18
+Fixed                                 0
+                                       
+Number of Constraints               112
+Linear LE (<=)                       37
+Linear EQ (=)                         0
+Linear GE (>=)                        3
+Linear Range                          0
+Nonlinear LE (<=)                    72
+Nonlinear EQ (=)                      0
+Nonlinear GE (>=)                     0
+Nonlinear Range                       0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Program: Project 1 OptModel n=550.sas
+VNUV Annual Survey Division Climate Survey (Sample Allocation)    15:22 Thursday, February 9, 2012   3
+Sample Allocation - Initial Solution
+
+The OPTMODEL Procedure
+
+              Solution Summary
+
+Solver                                    SQP
+Objective Function                          f
+Solution Status       Iteration Limit Reached
+Objective Value                  0.0029372965
+Iterations                              10000
+                                             
+Infeasibility                    0.0002917255
+Optimality Error                 0.0005890451
+Complementarity                  0.0028451821
+
+
+                    Inflate    Frame
+[1]       NResp         Rts      Cts
+
+  1     12.9028     0.88900       30
+  2     17.6420     0.84600       44
+  3     32.8979     0.46559      106
+  4     75.2357     0.77637      253
+  5     25.1921     0.91300       77
+  6     15.3294     0.71572       44
+  7     60.7463     0.54449      118
+  8     38.5810     0.49980       89
+  9     40.6905     0.50000       86
+ 10     39.2740     0.53800       73
+ 11      8.9322     1.00000       12
+ 12     27.7759     0.79032       40
+ 13     57.8806     0.27448      230
+ 14     30.5817     0.39400      115
+ 15     32.8640     0.63795      322
+ 16     17.9720     0.69914      136
+ 17      8.0587     1.00000       48
+ 18      7.4432     0.71572       46
+
+
+ 550
+
+
+ 0.000061029
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Program: Project 1 OptModel n=550.sas

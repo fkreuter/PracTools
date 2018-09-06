@@ -1,0 +1,406 @@
+                                                           The SAS System                            21:14 Monday, April 5, 2010   1
+
+                                                       The CONTENTS Procedure
+
+                     Data Set Name        Z.NHISPART                                Observations          3924
+                     Member Type          DATA                                      Variables             25  
+                     Engine               V9                                        Indexes               0   
+                     Created              Saturday, October 18, 2008 10:53:29 AM    Observation Length    112 
+                     Last Modified        Saturday, October 18, 2008 10:53:29 AM    Deleted Observations  0   
+                     Protection                                                     Compressed            NO  
+                     Data Set Type                                                  Sorted                NO  
+                     Label                                                                                    
+                     Data Representation  WINDOWS_32                                                          
+                     Encoding             wlatin1  Western (Windows)                                          
+
+
+                                                 Engine/Host Dependent Information
+
+     Data Set Page Size          12288                                                                                         
+     Number of Data Set Pages    37                                                                                            
+     First Data Page             1                                                                                             
+     Max Obs per Page            109                                                                                           
+     Obs in First Data Page      74                                                                                            
+     Number of Data Set Repairs  0                                                                                             
+     Filename                    C:\JPSM\SURV 699 Practical Tools\Lecture Notes\6 Steps in Weighting\Examples\nhispart.sas7bdat
+     Release Created             9.0101M3                                                                                      
+     Host Created                XP_PRO                                                                                        
+
+
+                                             Alphabetic List of Variables and Attributes
+ 
+                        #    Variable    Type    Len    Format       Label
+
+                        5    AGE_P       Num       3    PEP008X.     Age                                     
+                       13    CDCMSTAT    Num       3    PEP028X.     CDC standard for legal marital status   
+                       18    EDUC_R1     Num       3    PEP533X.     Education Recode                        
+                        2    HHX         Char      6                 Household Serial Number                 
+                       19    INCGRP      Num       3    PEP559X.     Total Combined Family Income (Grouped)  
+                       12    LG_MSTAT    Num       3    PEP027X.     Legal marital status                    
+                        9    MRACRPI2    Num       3    PEP019X.     Race coded to single/multiple race group
+                        7    ORIGIN_I    Num       3    PEP013X.     Hispanic Ethnicity                      
+                       14    PARENTS     Num       3    PEP043X.     Parent(s) present in the family         
+                       24    PARENTS1    Num       8                                                         
+                       17    PSU         Num       3                 PSU for variance estimation             
+                        3    PX          Char      2    $PEP005X.    Person Number                           
+                        8    RACERPI2    Num       3    PEP017X.     OMB groups w/multiple race              
+                       10    RACRECI2    Num       3    PEP021X.     Race Recode                             
+                       20    RAT_CAT     Num       3    PEP561X.     Ratio of fam inc to poverty threshold   
+                        1    RECTYPE     Num       3    PEP001X.     Record Type                             
+                        6    R_AGE1      Num       3    PEP009X.     Age Recode #1                           
+                       11    R_MARITL    Num       3    PEP024X.     Marital status                          
+                        4    SEX         Num       3    PEP007X.     Sex                                     
+                       16    STRATUM     Num       4                 Stratum for variance estimation         
+                       15    WTFA        Num       8                 Weight - Final Annual                   
+                                                           The SAS System                            21:14 Monday, April 5, 2010   2
+
+                                                       The CONTENTS Procedure
+
+                                             Alphabetic List of Variables and Attributes
+ 
+                        #    Variable    Type    Len    Format       Label
+
+                       22    X1          Num       8                                                         
+                       25    educ        Num       8                                                         
+                       23    resp        Num       8                                                         
+                       21    seed1       Num       8                                                         
+                                                           The SAS System                            21:14 Monday, April 5, 2010   3
+
+                                                         The FREQ Procedure
+
+                                                                      Cumulative    Cumulative
+                                     educ    Frequency     Percent     Frequency      Percent
+                                     ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+                                        1        1969       50.18          1969        50.18  
+                                        5         726       18.50          2695        68.68  
+                                        6         933       23.78          3628        92.46  
+                                        9         296        7.54          3924       100.00  
+
+
+                                                  Parent(s) present in the family
+ 
+                                                                          Cumulative    Cumulative
+                                      PARENTS    Frequency     Percent     Frequency      Percent
+                                 ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+                                            1         496       12.64           496        12.64  
+                                            4        3428       87.36          3924       100.00  
+                                                           The SAS System                            21:14 Monday, April 5, 2010   4
+
+                                                       The LOGISTIC Procedure
+
+                                                         Model Information
+
+                                           Data Set                      Z.NHISPART      
+                                           Response Variable             resp            
+                                           Number of Response Levels     2               
+                                           Model                         binary logit    
+                                           Optimization Technique        Fisher's scoring
+
+
+                                              Number of Observations Read        3924
+                                              Number of Observations Used        3924
+
+
+                                                          Response Profile
+ 
+                                                 Ordered                      Total
+                                                   Value         resp     Frequency
+
+                                                       1            0          1217
+                                                       2            1          2707
+
+                                                   Probability modeled is resp=1.
+
+
+                                                      Class Level Information
+ 
+                                              Class        Value     Design Variables
+
+                                              ORIGIN_I     1          0              
+                                                           2          1              
+
+                                              RACRECI2     1          0      0       
+                                                           2          1      0       
+                                                           3          0      1       
+
+                                              PARENTS      1          0              
+                                                           4          1              
+
+                                              educ         1          0      0      0
+                                                           5          1      0      0
+                                                           6          0      1      0
+                                                           9          0      0      1
+
+
+                                                      Model Convergence Status
+
+                                           Convergence criterion (GCONV=1E-8) satisfied.          
+                                                           The SAS System                            21:14 Monday, April 5, 2010   5
+
+                                                       The LOGISTIC Procedure
+
+                                                        Model Fit Statistics
+ 
+                                                                            Intercept
+                                                             Intercept            and
+                                               Criterion          Only     Covariates
+
+                                               AIC            4861.598       4792.709
+                                               SC             4867.873       4849.183
+                                               -2 Log L       4859.598       4774.709
+
+
+                                              Testing Global Null Hypothesis: BETA=0
+ 
+                                      Test                 Chi-Square       DF     Pr > ChiSq
+
+                                      Likelihood Ratio        84.8886        8         <.0001
+                                      Score                   84.7444        8         <.0001
+                                      Wald                    83.0241        8         <.0001
+
+
+                                                     Type 3 Analysis of Effects
+ 
+                                                                      Wald
+                                            Effect        DF    Chi-Square    Pr > ChiSq
+
+                                            AGE_P          1       33.4087        <.0001
+                                            ORIGIN_I       1       11.6310        0.0006
+                                            RACRECI2       2        8.0949        0.0175
+                                            PARENTS        1       24.5716        <.0001
+                                            educ           3       17.0779        0.0007
+
+
+                                             Analysis of Maximum Likelihood Estimates
+ 
+                                                                Standard          Wald
+                               Parameter      DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+                               Intercept       1      0.5666      0.1255       20.3959        <.0001
+                               AGE_P           1     -0.0127     0.00220       33.4087        <.0001
+                               ORIGIN_I  2     1      0.3105      0.0911       11.6310        0.0006
+                               RACRECI2  2     1     -0.1603      0.0992        2.6106        0.1061
+                               RACRECI2  3     1     -0.4030      0.1604        6.3124        0.0120
+                               PARENTS   4     1      0.5439      0.1097       24.5716        <.0001
+                               educ      5     1      0.2415      0.0975        6.1389        0.0132
+                               educ      6     1      0.3441      0.0914       14.1689        0.0002
+                               educ      9     1      0.2610      0.1414        3.4070        0.0649
+                                                           The SAS System                            21:14 Monday, April 5, 2010   6
+
+                                                       The LOGISTIC Procedure
+
+                                                       Odds Ratio Estimates
+                                                                 
+                                                              Point          95% Wald
+                                        Effect             Estimate      Confidence Limits
+
+                                        AGE_P                 0.987       0.983       0.992
+                                        ORIGIN_I 2 vs 1       1.364       1.141       1.631
+                                        RACRECI2 2 vs 1       0.852       0.701       1.035
+                                        RACRECI2 3 vs 1       0.668       0.488       0.915
+                                        PARENTS  4 vs 1       1.723       1.389       2.136
+                                        educ     5 vs 1       1.273       1.052       1.541
+                                        educ     6 vs 1       1.411       1.179       1.687
+                                        educ     9 vs 1       1.298       0.984       1.713
+
+
+                                   Association of Predicted Probabilities and Observed Responses
+
+                                        Percent Concordant       58.6    Somers' D    0.181
+                                        Percent Discordant       40.5    Gamma        0.182
+                                        Percent Tied              0.9    Tau-a        0.077
+                                        Pairs                 3294419    c            0.590
+                                                           The SAS System                            21:14 Monday, April 5, 2010   7
+
+                                                         The FREQ Procedure
+
+                                                      Table of pclass by resp
+
+                                                pclass     resp
+
+                                                Frequency‚
+                                                Percent  ‚
+                                                Row Pct  ‚
+                                                Col Pct  ‚       0‚       1‚  Total
+                                                ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                                                       1 ‚    322 ‚    462 ‚    784
+                                                         ‚   8.21 ‚  11.77 ‚  19.98
+                                                         ‚  41.07 ‚  58.93 ‚
+                                                         ‚  26.46 ‚  17.07 ‚
+                                                ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                                                       2 ‚    269 ‚    515 ‚    784
+                                                         ‚   6.86 ‚  13.12 ‚  19.98
+                                                         ‚  34.31 ‚  65.69 ‚
+                                                         ‚  22.10 ‚  19.02 ‚
+                                                ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                                                       3 ‚    246 ‚    542 ‚    788
+                                                         ‚   6.27 ‚  13.81 ‚  20.08
+                                                         ‚  31.22 ‚  68.78 ‚
+                                                         ‚  20.21 ‚  20.02 ‚
+                                                ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                                                       4 ‚    221 ‚    564 ‚    785
+                                                         ‚   5.63 ‚  14.37 ‚  20.01
+                                                         ‚  28.15 ‚  71.85 ‚
+                                                         ‚  18.16 ‚  20.83 ‚
+                                                ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                                                       5 ‚    159 ‚    624 ‚    783
+                                                         ‚   4.05 ‚  15.90 ‚  19.95
+                                                         ‚  20.31 ‚  79.69 ‚
+                                                         ‚  13.06 ‚  23.05 ‚
+                                                ƒƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆƒƒƒƒƒƒƒƒˆ
+                                                Total        1217     2707     3924
+                                                            31.01    68.99   100.00
+                                                           The SAS System                            21:14 Monday, April 5, 2010   8
+
+                                                         The GLM Procedure
+
+                                                      Class Level Information
+ 
+                                                 Class         Levels    Values
+
+                                                 pclass             5    1 2 3 4 5 
+
+
+                                              Number of Observations Read        3924
+                                              Number of Observations Used        3924
+                                                           The SAS System                            21:14 Monday, April 5, 2010   9
+
+                                                         The GLM Procedure
+ 
+Dependent Variable: AGE_P   Age
+
+                                                                Sum of
+                        Source                      DF         Squares     Mean Square    F Value    Pr > F
+
+                        Model                        9      196307.458       21811.940      85.69    <.0001
+
+                        Error                     3914      996331.110         254.556                     
+
+                        Corrected Total           3923     1192638.568                                     
+
+
+                                         R-Square     Coeff Var      Root MSE    AGE_P Mean
+
+                                         0.164599      35.42583      15.95480      45.03721
+
+
+                        Source                      DF       Type I SS     Mean Square    F Value    Pr > F
+
+                        pclass                       4     195699.1674      48924.7918     192.20    <.0001
+                        resp                         1          0.8845          0.8845       0.00    0.9530
+                        resp*pclass                  4        607.4058        151.8515       0.60    0.6652
+
+
+                        Source                      DF     Type III SS     Mean Square    F Value    Pr > F
+
+                        pclass                       4     61870.10073     15467.52518      60.76    <.0001
+                        resp                         1        10.42310        10.42310       0.04    0.8397
+                        resp*pclass                  4       607.40583       151.85146       0.60    0.6652
+                                                           The SAS System                            21:14 Monday, April 5, 2010  10
+
+                                                       The LOGISTIC Procedure
+
+                                                         Model Information
+
+                               Data Set                      WORK.A                                 
+                               Response Variable             ORIGIN_I             Hispanic Ethnicity
+                               Number of Response Levels     2                                      
+                               Model                         binary logit                           
+                               Optimization Technique        Fisher's scoring                       
+
+
+                                              Number of Observations Read        3924
+                                              Number of Observations Used        3924
+
+
+                                                          Response Profile
+ 
+                                               Ordered                          Total
+                                                 Value     ORIGIN_I         Frequency
+
+                                                     1     1                      801
+                                                     2     2                     3123
+
+                                                Probability modeled is ORIGIN_I='2'.
+
+
+                                                      Class Level Information
+ 
+                                            Class      Value         Design Variables
+
+                                            pclass     1         -1     -1     -1     -1
+                                                       2          1      0      0      0
+                                                       3          0      1      0      0
+                                                       4          0      0      1      0
+                                                       5          0      0      0      1
+
+                                            resp       0         -1                     
+                                                       1          1                     
+
+
+                                                      Model Convergence Status
+
+                                           Convergence criterion (GCONV=1E-8) satisfied.          
+
+
+                                                           The SAS System                            21:14 Monday, April 5, 2010  11
+
+                                                       The LOGISTIC Procedure
+
+                                                        Model Fit Statistics
+ 
+                                                                            Intercept
+                                                             Intercept            and
+                                               Criterion          Only     Covariates
+
+                                               AIC            3973.658       3468.045
+                                               SC             3979.933       3530.793
+                                               -2 Log L       3971.658       3448.045
+
+
+                                              Testing Global Null Hypothesis: BETA=0
+ 
+                                      Test                 Chi-Square       DF     Pr > ChiSq
+
+                                      Likelihood Ratio       523.6137        9         <.0001
+                                      Score                  447.6121        9         <.0001
+                                      Wald                   297.2187        9         <.0001
+
+
+                                                    Type 3 Analysis of Effects
+ 
+                                                                       Wald
+                                          Effect           DF    Chi-Square    Pr > ChiSq
+
+                                          pclass            4      255.7883        <.0001
+                                          resp              1        1.7738        0.1829
+                                          pclass*resp       4        4.2318        0.3755
+
+
+                                             Analysis of Maximum Likelihood Estimates
+ 
+                                                                  Standard          Wald
+                             Parameter          DF    Estimate       Error    Chi-Square    Pr > ChiSq
+
+                             Intercept           1      1.7462      0.0702      618.5172        <.0001
+                             pclass      2       1     -0.9494      0.0941      101.7438        <.0001
+                             pclass      3       1     -0.4698      0.1009       21.6925        <.0001
+                             pclass      4       1      0.5618      0.1281       19.2328        <.0001
+                             pclass      5       1      2.1390      0.2343       83.3684        <.0001
+                             resp        1       1      0.0935      0.0702        1.7738        0.1829
+                             pclass*resp 2 1     1    -0.00104      0.0941        0.0001        0.9912
+                             pclass*resp 3 1     1     -0.1337      0.1009        1.7570        0.1850
+                             pclass*resp 4 1     1     -0.0931      0.1281        0.5279        0.4675
+                             pclass*resp 5 1     1      0.3642      0.2343        2.4172        0.1200
+
+
+                                                           The SAS System                            21:14 Monday, April 5, 2010  12
+
+                                                       The LOGISTIC Procedure
+
+                                   Association of Predicted Probabilities and Observed Responses
+
+                                        Percent Concordant       68.5    Somers' D    0.476
+                                        Percent Discordant       20.9    Gamma        0.532
+                                        Percent Tied             10.5    Tau-a        0.155
+                                        Pairs                 2501523    c            0.738

@@ -1,0 +1,129 @@
+83   /********************************************************************************/
+84   /* FILE:    relabel rccpds57.sas                                                */
+85   /* TOPIC:   2003 May SOFS - Reserve Component (SOFR)                            */
+86   /* DATE:    01/27/2012                                                          */
+87   /* AUTHOR:  R. Valliant                                                         */
+88   /* PURPOSE: Relabel some fields in the rccpds57 data file.                      */
+89   /********************************************************************************/
+90
+91   options nocenter pageno=1 errors=1 orientation=portrait
+92           nofmterr ls=200
+93           pagesize = 80;
+94
+95   libname myfmtlib "C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files";
+NOTE: Libname MYFMTLIB refers to the same physical library as A.
+NOTE: Libref MYFMTLIB was successfully assigned as follows:
+      Engine:        V9
+      Physical Name: C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files
+96   libname a "C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files";
+NOTE: Libname A refers to the same physical library as MYFMTLIB.
+NOTE: Libref A was successfully assigned as follows:
+      Engine:        V9
+      Physical Name: C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files
+97
+98   options fmtsearch=(myfmtlib);
+99
+100  data rccpds57;
+101    set a.rccpds57safe;
+NOTE: Data file A.RCCPDS57SAFE.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might
+      require additional CPU resources and might reduce performance.
+102    format _all_;
+103    label
+104      count    = "Count of persons"
+105      service  = "Service (xsrrcr)"
+106      gender   = "Gender (xsexr)"
+107      educcat  = "Highest level of school (sred)"
+108      marit    = "Marital status (srmarst)"
+109      activatd = "Length of activation in last 24 months (xact2r)"
+110          pg_group = "Pay grade (xcpay1r)"
+111      raceth   = "Race/ethnicity (xreth4r)"
+112      ;
+113  run;
+
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: There were 4365 observations read from the data set A.RCCPDS57SAFE.
+NOTE: The data set WORK.RCCPDS57 has 4365 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+
+
+114
+115  proc contents data = rccpds57;
+116  run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+
+
+117
+118  /*
+119  proc format library = myfmtlib;
+120    value activatd_
+121      1 = "More than 30 days"
+122      2 = "Less than 30 days"
+123      3 = "Not activated" ;
+124  run;
+125  */
+126
+127  data rccpds57;
+128    set rccpds57;
+129    format _all_;
+130    format educcat sred_.  ;
+131    format marit srmarst_.;
+132    format activatd  xact2r_. ;
+133    format pg_group xcpay1r_.;
+134    format raceth xreth4r_.;
+135    format gender   xsexr_.  ;
+136    format service  xsrrcr_.;
+137  run;
+
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: There were 4365 observations read from the data set WORK.RCCPDS57.
+NOTE: The data set WORK.RCCPDS57 has 4365 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+
+
+138
+139  proc contents data = rccpds57;
+140  run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+
+
+141
+142  proc freq data = rccpds57;
+143    weight count;
+144    table
+145      service
+146      gender
+147      educcat
+148      marit
+149      activatd
+150      pg_group
+151      raceth ;
+152  run;
+
+NOTE: There were 4365 observations read from the data set WORK.RCCPDS57.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+
+

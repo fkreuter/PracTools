@@ -1,0 +1,119 @@
+The SAS System                                                                                   15:56 Tuesday, October 19, 2010   1
+
+PROC NLP: Nonlinear Minimization
+
+Gradient is computed using finite difference approximations (2).
+
+NOTE: Initial point was changed to be feasible for boundary and linear constraints.
+The SAS System                                                                                   15:56 Tuesday, October 19, 2010   2
+
+PROC NLP: Nonlinear Minimization
+
+                                      Optimization Start
+                                      Parameter Estimates
+                                      Gradient           Lower           Upper    Active
+                                     Objective           Bound           Bound    Bound
+  N Parameter         Estimate        Function      Constraint      Constraint    Constraint
+
+  1 n1              179.065439    -0.000010369      100.000000     6221.000000                
+  2 n2              908.443626    -3.843126E-9      100.000000           11738                
+  3 n3              167.943626    -0.000000105      100.000000     4333.000000                
+  4 n4             1971.124079    -2.588165E-8      100.000000           22809                
+  5 n5              100.000000    -0.000088154      100.000000     5467.000000     Lower BC   
+
+Value of Objective Function = 0.0105241849
+
+
+
+                                                     Linear Constraints
+
+  1 6.9349E-11 : ACT   300000  >=   +     120.0 * n1  +   80.0000 * n2  +   80.0000 * n3  +   90.0000 * n4  +     150.0 * n5
+
+
+                 Values of Nonlinear Constraints
+ 
+     Constraint            Value Residual
+
+[   2 ]    relvar2_L     0.00280 -0.00030 Violat. NLIC            
+[   3 ]    relvar3_L    0.000354 0.000546                         
+[   4 ]    relvar4_L     0.00114 -0.00024 Violat. NLIC            
+The SAS System                                                                                   15:56 Tuesday, October 19, 2010   3
+
+PROC NLP: Nonlinear Minimization
+
+Nelder-Mead Simplex Optimization
+
+COBYLA Algorithm by M.J.D. Powell (1992)
+
+Parameter Estimates                    5
+Functions (Observations)               4
+Lower Bounds                           5
+Upper Bounds                           5
+Linear Constraints                     1
+Nonlinear Constraints                  3
+
+                                             Optimization Start
+
+Objective Function                       0.0104750898  Maximum Constraint Violation                      260
+
+
+                                                                                           Ratio
+                                                                                         Between
+                                                                                          Actual
+                                                    Maximum                   Merit          and
+                     Function       Objective    Constraint       Merit    Function    Predicted
+Iter     Restarts       Calls        Function     Violation    Function      Change       Change
+
+   1            0        2541         0.00217      4.729E-9     0.00217     0.00830        1.125
+   2            0        2556         0.00217      1.57E-10     0.00217     1.59E-8        0.281
+   3            0        2567         0.00217      7.61E-12     0.00217     378E-12       0.0703
+   4            0        2578         0.00217      1.09E-12     0.00217     214E-13       0.0264
+   5            0        2589         0.00217      2.06E-13     0.00217     114E-13       0.0066
+   6            0        2600         0.00217      8.48E-15     0.00217     714E-15       0.0016
+   7            0        2631         0.00217       6.7E-16     0.00217     932E-15       0.0014
+   8            0        2643         0.00217      6.59E-17     0.00217     112E-15       0.0005
+   9            0        2656         0.00217      2.79E-17     0.00217     279E-16       0.0001
+  10            0        2662         0.00217      4.34E-19     0.00217     262E-16       0.0002
+  11            0        2675         0.00217      1.95E-18     0.00217     258E-16       0.0002
+  12            0        2683         0.00217      1.95E-18     0.00217           0       0.0001
+
+                                            Optimization Results
+
+Iterations                                         12  Function Calls                                   2684
+Restarts                                            0  Objective Function                       0.0021705236
+Maximum Constraint Violation             1.951564E-18  Merit Function                           0.0021705236
+Actual Over Pred Change                        0.0001                                                       
+
+ABSXCONV convergence criterion satisfied.                                                         
+The SAS System                                                                                   15:56 Tuesday, October 19, 2010   4
+
+PROC NLP: Nonlinear Minimization
+
+             Optimization Results
+              Parameter Estimates
+                                      Gradient
+                                     Objective
+  N Parameter         Estimate        Function
+
+  1 n1              412.851815    -0.000001951
+  2 n2              317.986985     -3.13662E-8
+  3 n3              123.729359    -0.000000193
+  4 n4             1397.142420    -5.151557E-8
+  5 n5              595.851046    -0.000002483
+
+Value of Objective Function = 0.0021705236
+
+
+
+                                         Linear Constraints Evaluated at Solution
+
+  1 ACT 1.2506E-11  =    300000  -     120.0 * n1  -   80.0000 * n2  -   80.0000 * n3  -   90.0000 * n4  -     150.0 * n5
+
+
+                 Values of Nonlinear Constraints
+ 
+     Constraint            Value Residual
+
+[   2 ]    relvar2_L    0.000572  0.00193                         
+[   3 ]    relvar3_L    0.000433 0.000467                         
+[   4 ]    relvar4_L    0.000900 -195E-20 Active  NLIC            

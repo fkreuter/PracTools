@@ -1,0 +1,143 @@
+VNUV Bi-Annual Survey Division Climate Survey (Sample Allocation)      12:48 Monday, July 19, 2010   1
+Sample Allocation - Initial Solution
+
+The OPTMODEL Procedure
+
+            Problem Summary
+
+Objective Sense            Minimization
+Objective Function                    f
+Objective Type                Nonlinear
+                                       
+Number of Variables                  18
+Bounded Above                         0
+Bounded Below                         0
+Bounded Below and Above               0
+Free                                 18
+Fixed                                 0
+                                       
+Number of Constraints                94
+Linear LE (<=)                        1
+Linear EQ (=)                         0
+Linear GE (>=)                        3
+Linear Range                         18
+Nonlinear LE (<=)                    72
+Nonlinear EQ (=)                      0
+Nonlinear GE (>=)                     0
+Nonlinear Range                       0
+VNUV Bi-Annual Survey Division Climate Survey (Sample Allocation)      12:48 Monday, July 19, 2010   2
+Sample Allocation - Initial Solution
+
+The OPTMODEL Procedure
+
+         Solution Summary
+
+Solver                         SQP
+Objective Function               f
+Solution Status            Optimal
+Objective Value       0.0849761474
+Iterations                     192
+                                  
+Infeasibility         3.9366308E-7
+Optimality Error      7.5637836E-6
+Complementarity       4.3146113E-7
+
+
+[1]       NSamp
+
+  1      5.5645
+  2     11.0781
+  3     25.2965
+  4     61.2405
+  5     14.9004
+  6      7.5201
+  7     64.7836
+  8     41.7444
+  9     34.2647
+ 10     38.9549
+ 11      7.6024
+ 12     22.8500
+ 13     45.9522
+ 14     23.0013
+ 15     57.7943
+ 16     25.7279
+ 17      6.0231
+ 18      5.7012
+
+
+ 500
+
+
+ 0.084976
+VNUV Bi-Annual Survey Division Climate Survey (Sample Allocation)      12:48 Monday, July 19, 2010   3
+Sample Allocation - Initial Solution
+
+The OPTMODEL Procedure
+
+            Problem Summary
+
+Objective Sense            Minimization
+Objective Function                    f
+Objective Type                Nonlinear
+                                       
+Number of Variables                  18
+Bounded Above                         0
+Bounded Below                         0
+Bounded Below and Above               0
+Free                                 18
+Fixed                                 0
+                                       
+Number of Constraints                94
+Linear LE (<=)                        1
+Linear EQ (=)                         0
+Linear GE (>=)                        3
+Linear Range                         18
+Nonlinear LE (<=)                    72
+Nonlinear EQ (=)                      0
+Nonlinear GE (>=)                     0
+Nonlinear Range                       0
+VNUV Bi-Annual Survey Division Climate Survey (Sample Allocation)      12:48 Monday, July 19, 2010   4
+Sample Allocation - Initial Solution
+
+The OPTMODEL Procedure
+
+               Solution Summary
+
+Solver                       NLPC/Quasi-Newton
+Objective Function                           f
+Solution Status                        Optimal
+Objective Value                   0.0849549699
+Iterations                                 208
+                                              
+Absolute Optimality Error         9.7407664E-7
+Relative Optimality Error         9.7407664E-7
+Absolute Infeasibility            3.9366303E-7
+Relative Infeasibility            3.1095026E-9
+
+
+[1]       NSamp
+
+  1      5.6889
+  2     10.9202
+  3     25.1635
+  4     61.4926
+  5     14.8965
+  6      7.4383
+  7     61.9900
+  8     42.0000
+  9     36.0000
+ 10     40.0000
+ 11      9.2304
+ 12     20.9796
+ 13     45.5428
+ 14     22.8367
+ 15     58.4251
+ 16     25.8430
+ 17      5.9060
+ 18      5.6463
+
+
+ 500
+
+
+ 0.084955

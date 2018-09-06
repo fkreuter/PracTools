@@ -1,0 +1,190 @@
+Example 6.4                                                          21:30 Tuesday, April 13, 2010   1
+Load Excel Information
+
+         Frame  Unit                                                   Off              OffSh_
+Stratum   Cts   Cost  Revenue  Emplyees  Revnu_SD  Emply_SD  RCredit  Shore  RCrdt_SD     SD
+
+   1      6221   120     85       511      170.0    255.50     0.8     0.06   0.40003  0.23751
+   2     11738    80     11        21        8.8      5.25     0.2     0.03   0.40002  0.17059
+   3      4333    80     23        70       23.0     35.00     0.5     0.03   0.50006  0.17061
+   4     22809    90     17        32       25.5     32.00     0.3     0.21   0.45827  0.40732
+   5      5467   150    126       157      315.0    471.00     0.9     0.77   0.30003  0.42087
+Example 6.4                                                          21:30 Tuesday, April 13, 2010   2
+Sample Allocation - Initial Solution
+
+The OPTMODEL Procedure
+
+        Frame
+[1]       Cts
+
+ 1       6221
+ 2      11738
+ 3       4333
+ 4      22809
+ 5       5467
+
+
+       Unit
+[1]    Cost
+
+ 1      120
+ 2       80
+ 3       80
+ 4       90
+ 5      150
+
+
+[1]    Revenue    Revnu_SD
+
+ 1          85       170.0
+ 2          11         8.8
+ 3          23        23.0
+ 4          17        25.5
+ 5         126       315.0
+
+
+[1]    NSamp
+
+ 1       100
+ 2       100
+ 3       100
+ 4       100
+ 5       100
+
+
+ 0.0033787
+Example 6.4                                                          21:30 Tuesday, April 13, 2010   3
+Sample Allocation - Initial Solution
+
+The OPTMODEL Procedure
+
+            Problem Summary
+
+Objective Sense            Minimization
+Objective Function                    f
+Objective Type                Nonlinear
+                                       
+Number of Variables                   5
+Bounded Above                         0
+Bounded Below                         0
+Bounded Below and Above               0
+Free                                  5
+Fixed                                 0
+                                       
+Number of Constraints                 9
+Linear LE (<=)                        1
+Linear EQ (=)                         0
+Linear GE (>=)                        0
+Linear Range                          5
+Nonlinear LE (<=)                     3
+Nonlinear EQ (=)                      0
+Nonlinear GE (>=)                     0
+Nonlinear Range                       0
+Example 6.4                                                          21:30 Tuesday, April 13, 2010   4
+Sample Allocation - Initial Solution
+
+The OPTMODEL Procedure
+
+         Solution Summary
+
+Solver                         SQP
+Objective Function               f
+Solution Status            Optimal
+Objective Value       0.0022110896
+Iterations                      43
+                                  
+Infeasibility         1.5272176E-7
+Optimality Error      3.1921606E-6
+Complementarity       1.5272176E-7
+
+
+[1]       NSamp
+
+ 1       363.39
+ 2       371.37
+ 3       103.15
+ 4      1382.25
+ 5       626.84
+
+
+ 2847
+
+
+ 0.047022
+
+
+ 0.024159
+
+
+ 0.020831
+
+
+ 0.030003
+Example 6.4                                                          21:30 Tuesday, April 13, 2010   5
+Sample Allocation - Initial Solution
+
+The OPTMODEL Procedure
+
+            Problem Summary
+
+Objective Sense            Minimization
+Objective Function                    f
+Objective Type                Nonlinear
+                                       
+Number of Variables                   5
+Bounded Above                         0
+Bounded Below                         0
+Bounded Below and Above               0
+Free                                  5
+Fixed                                 0
+                                       
+Number of Constraints                 9
+Linear LE (<=)                        1
+Linear EQ (=)                         0
+Linear GE (>=)                        0
+Linear Range                          5
+Nonlinear LE (<=)                     3
+Nonlinear EQ (=)                      0
+Nonlinear GE (>=)                     0
+Nonlinear Range                       0
+Example 6.4                                                          21:30 Tuesday, April 13, 2010   6
+Sample Allocation - Initial Solution
+
+The OPTMODEL Procedure
+
+               Solution Summary
+
+Solver                       NLPC/Quasi-Newton
+Objective Function                           f
+Solution Status                        Optimal
+Objective Value                   0.0022110833
+Iterations                                   9
+                                              
+Absolute Optimality Error         8.2741391E-7
+Relative Optimality Error         8.2741391E-7
+Absolute Infeasibility            1.3531395E-7
+Relative Infeasibility            1.3518453E-7
+
+
+[1]       NSamp
+
+ 1       363.39
+ 2       371.38
+ 3       103.16
+ 4      1382.26
+ 5       626.84
+
+
+ 2847
+
+
+ 0.047022
+
+
+ 0.024159
+
+
+ 0.020831
+
+
+ 0.030002

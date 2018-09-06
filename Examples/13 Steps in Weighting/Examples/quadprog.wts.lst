@@ -1,0 +1,121 @@
+> ##################################################################################
+> ### Use quadprog package to compute bounded weights.
+> ###
+> ### File quadprog.wts.R
+> ### Pgmr: R. Valliant
+> ### Date: 10/31/08
+> ##################################################################################
+> 
+> library(quadprog)
+> library(survey)
+> attach("C:\\JPSM\\SURV 699S-Prediction Theory\\R\\.RData", pos = 2)
+
+        The following object(s) are masked _by_ .GlobalEnv :
+
+         HMT.pop n sam tmp x X 
+
+
+        The following object(s) are masked from file:C:\JPSM\SURV 699S-Prediction Theory\R\.RData ( position 3 ) :
+
+         .First .Traceback age.dum age.fac age.lab ahr ahr.5.16 ahr.5.17 beta cancer cexv clus.parm.est.anova clus.sam co60 co70 cs.reg1 cs.reg2 cs.reg3 ex.4.11.fcn exam.clusv exam.plt exer.5.16 exer1 exer2 exer7.3.13 exer7.4.13 fig51.plt fig54.plt fig55.plt fig56.plt fig57.plt Flotsam.Inc fm fm.f fm.o gamma.fit.fcn gen.HMT.pop grade3 greg h HMT.pop hosp.reg hosp.reg.1.1.x hosp.reg.rtx.x hosp.reg.x.x2 hosp.reg.x.x2A hosp.reg1 hospital i labor lam little.sim n N n.calc n.calc.fcn new.sam Nh Nr out p pps.fcn pps.fcn.test pps.random.fcn pps.strat.fcn pred.f pred.o pred.y pred5 pred5a pred5b pred5c preda predb predc project.pop project.reg ratio.fcn reg reg.5.16 reg.5.17 reg1.5 res.SS restrict.pps restrict.pps.jd restrict.pps.old restrict.srs sam sam.ex.5.16 sam.ex.5.17 sam.size sam.size1 sam.size2 sam.size3 samp save.seed sel.fcn sex.fac sex.lab sigma sigma2 sim.results skip str strat.opt.alloc.const.cost strat.opt.alloc.x sum.fcn T.blu T.hat T0 table1.1 tcost tj.sim.plt tmp TR TR.sim Tx.HT Ty.blu1 Ty.blu2 Ty.blu3 v vD vH vJ vJ.star vR weed.high wts.r x X X.age X.hosp x.sam X.sex x1 X1 x16 X2 Xbar Xs y y.leg y.pop y.sam 
+
+
+        The following object(s) are masked from package:base :
+
+         .Traceback 
+
+>                                 # Select pps(sqrt(beds)) sample from smho98.sub
+>                                 # Same sample as used for calibration example.
+> n <- 80
+> set.seed(331)
+> x <- smho98.sub[,"BEDS"]
+>                     # recode small hospitals to have a minimum MOS
+> x[x <= 5] <- 5
+> x <- sqrt(x)
+> 
+> sam <- pps.random.fcn(x, n)     # probability proportional to sqrt(x)
+> sam.dat <- smho98.sub[sam, ]
+> d <- sum(x) / (n * x[sam])      # base wts
+> 
+>                                 # Tabulate pop totals for constraints
+> x.beds <- sum(smho98.sub[,"BEDS"])
+> x.seen <- sum(smho98.sub[,"SEENCNT"])
+> x.eoy <- sum(smho98.sub[,"EOYCNT"])
+> x.Nhosp <- table(smho98.sub[,"hosp.type"])
+> 
+>                                
+>                                 # Set up constraints for calibration to pop totals
+> hosp.dum <- model.matrix(~ 0 + as.factor(hosp.type), data = sam.dat)
+> X <- rbind(sam.dat[, "BEDS"],
++       sam.dat[, "SEENCNT"],
++       sam.dat[, "EOYCNT"],
++       t(hosp.dum)
++       )
+> c0a <- c(x.beds, x.seen, x.eoy, x.Nhosp)
+> 
+>                                 # Set up constraints for lower and upper weight bounds
+> In <- diag(nrow = n)
+> L <- 2
+> U <- 30
+> one <- rep(1, n)
+> 
+> c0b <- c( L * one,
++         -U * one)
+> 
+> Cmat <- rbind(X, In, -In)
+> 
+> wts <- solve.QP(Dmat = diag(1/d),
++          dvec = 2 * one,
++          Amat = t(Cmat),
++          bvec = c(c0a, c0b),
++          meq = 8
++          )
+>         
+> quad.dsgn <- svydesign(ids = ~0,                 # no clusters 
++                        strata = NULL,            # no strata
++                        data = data.frame(sam.dat), 
++                        weights = ~wts$solution)
+> 
+> range(d)
+[1]  2.166015 35.683421
+> range(weights(quad.dsgn))
+[1]  2 30
+> 
+> sum(weights(quad.dsgn))
+[1] 874
+> 
+>                                 # Check calibration
+> c(x.beds, x.seen, x.eoy, x.Nhosp)   # pop.tots
+                              1       2       3       4       5 
+  71002 1827541  727723     215     115     252     149     143 
+> svytotal(~BEDS, quad.dsgn)
+     total     SE
+BEDS 71002 7539.3
+> svytotal(~SEENCNT, quad.dsgn)
+          total     SE
+SEENCNT 1827541 340432
+> svytotal(~EOYCNT, quad.dsgn)
+        total     SE
+EOYCNT 727723 202258
+> svytotal(~ as.factor(hosp.type), quad.dsgn)
+                      total     SE
+as.factor(hosp.type)1   215 38.972
+as.factor(hosp.type)2   115 46.304
+as.factor(hosp.type)3   252 47.233
+as.factor(hosp.type)4   149 64.052
+as.factor(hosp.type)5   143 47.719
+>                                 # CV on EXPTOTAL
+> tot <- svytotal(~EXPTOTAL, quad.dsgn)
+> SE(tot)/tot
+  EXPTOTAL 
+0.09852568 
+attr(,"class")
+[1] "svystat"
+attr(,"var")
+             EXPTOTAL
+EXPTOTAL 7.470098e+17
+attr(,"statistic")
+[1] "total"
+> 
+> rm(wts, L, U, In, x, X, n, sam.dat, d, tot) 
+> 

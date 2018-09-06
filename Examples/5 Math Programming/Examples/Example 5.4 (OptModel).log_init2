@@ -1,0 +1,275 @@
+1                                                          The SAS System                               11:05 Friday, March 12, 2010
+
+NOTE: Copyright (c) 2002-2008 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.2 (TS1M0) 
+      Licensed to UNIVERSITY OF MARYLAND-CAMPUSWIDE-T/R, Site 0070003533.
+NOTE: This session is executing on the XP_PRO  platform.
+
+
+
+NOTE: SAS initialization used:
+      real time           1.43 seconds
+      cpu time            0.29 seconds
+      
+1          /*********************************************************************/
+2          /* Program: Example 6.2 (OptModel).sas                               */
+3          /* Date:    03/12/10                                                 */
+4          /* Author:  J.Dever                                                  */
+5          /* Purpose: Reproduce optimization results generated with Solver.    */
+6          /* Revised:                                                          */
+7          /*********************************************************************/
+8          options nocenter orientation=portrait;
+9          
+10         TITLE1 "Example 6.2";
+11         
+12         **********************************************************************;
+13         Title2 "Load Excel Information";
+14         **********************************************************************;
+15         DATA Example_62;
+16           LENGTH Stratum 3 FrameCts UnitCost Revenue Emplyees Revnu_SD Emply_SD
+17                  RCredit OffShore 8;
+18           LABEL Stratum  = "Stratum ID"
+19                 FrameCts = "Sampling Frame Counts per Stratum"
+20                 UnitCost = "Unit-specific Data CollectionCost"
+21                 Revenue  = "Pop. Mean Revenue (Millions)"
+22                 Emplyees = "Pop. Mean Employees"
+23                 Revnu_SD = "Pop. Standard Deviation Revenue (Millions)"
+24                 Emply_SD = "Pop. Standard Deviation Employees"
+25                 RCredit  = "Pop. Proportion Claimed Research Credits"
+26                 OffShore = "Pop. Proportion Had Offshore Affiliates";
+27           INPUT Stratum FrameCts UnitCost Revenue Emplyees Revnu_SD Emply_SD
+28                 RCredit OffShore;
+29           CARDS;
+
+NOTE: The data set WORK.EXAMPLE_62 has 5 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.29 seconds
+      cpu time            0.01 seconds
+      
+
+35           ;
+36         RUN;
+37         
+38         DATA Example_62;
+39           SET Example_62;
+40           ARRAY p_s  RCredit  OffShore;
+41           ARRAY sd_s RCrdt_SD OffSh_SD;
+2 The SAS System                                                                                        11:05 Friday, March 12, 2010
+
+42         
+43           DO OVER p_s;
+44             sd_s = SQRT(p_s * (1 - p_s) * FrameCts / (FrameCts - 1));
+45           END;
+46         RUN;
+
+NOTE: There were 5 observations read from the data set WORK.EXAMPLE_62.
+NOTE: The data set WORK.EXAMPLE_62 has 5 observations and 11 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.01 seconds
+      
+
+47         
+48         PROC PRINT DATA=Example_62 UNIFORM NOOBS;  RUN;
+
+NOTE: There were 5 observations read from the data set WORK.EXAMPLE_62.
+NOTE: The PROCEDURE PRINT printed page 1.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.37 seconds
+      cpu time            0.03 seconds
+      
+
+49         
+50         **********************************************************************;
+51         Title2 "Sample Allocation - Initial Solution";
+52         **********************************************************************;
+53         PROC OPTMODEL;
+54         
+55          *_____ LOAD PARAMETERS _____*;
+56                                                          *Stratum frame counts;
+57            NUMBER FrameCts{1..5};
+58            READ DATA Example_62 INTO [_n_] FrameCts;
+NOTE: There were 5 observations read from the data set WORK.EXAMPLE_62.
+59            *PRINT FrameCts;
+60                                                                 *Per Unit Cost;
+61            NUMBER UnitCost{1..5};
+62            READ DATA Example_62 INTO [_n_] UnitCost;
+NOTE: There were 5 observations read from the data set WORK.EXAMPLE_62.
+63            *PRINT UnitCost;
+64                                         *Population means & standard deviations;
+65            NUMBER Revenue{1..5},  Emplyees{1..5}, RCredit{1..5},  OffShore{1..5},
+66                   Revnu_SD{1..5}, Emply_SD{1..5}, RCrdt_SD{1..5}, OffSh_SD{1..5};
+67            READ DATA Example_62 INTO [_n_]
+68                                      Revenue Emplyees RCredit OffShore
+69                                      Revnu_SD Emply_SD RCrdt_SD OffSh_SD;
+NOTE: There were 5 observations read from the data set WORK.EXAMPLE_62.
+70            *PRINT Revenue Revnu_SD;
+71         
+72         
+73           *_____ DECISION VARIABLES _____*;
+74                                                           *Stratum sample sizes;
+75            VAR NSamp{i in 1..5} init 2;
+76            PRINT NSamp;
+3 The SAS System                                                                                        11:05 Friday, March 12, 2010
+
+77         
+78           *_____ CONSTRAINTS _____*;
+79         
+80                                           *Stratum sizes >= 100, <= Frame Sizes;
+81            CON SampSize{i in 1..5}: 100 <= NSamp[i] <= FrameCts[i];
+82         
+83                                                                  *Survey Budget;
+84            CON Budget:  (SUM{i in 1..5} UnitCost[i] * NSamp[i]) <= 300000;
+85         
+86                                       *Relvariance for Mean Number of Employees;
+87            CON RelVar1:
+88                (SUM{i in 1..5} FrameCts[i] * (FrameCts[i]/NSamp[i] - 1) * Emply_SD[i]^2)
+89                 / ((SUM{i in 1..5} FrameCts[i] * Emplyees[i])^2)
+90                <= (0.05^2);
+91            *PRINT ((SUM{i in 1..5} FrameCts[i] * (FrameCts[i]/NSamp[i] - 1) * Emply_SD[i]^2)
+92                   / ((SUM{i in 1..5} FrameCts[i] * Emplyees[i])^2));
+93         
+94                         *Relvariance for Proportion of Claimed Research Credits;
+95            CON RelVar2:
+96                (SUM{i in 1..5} FrameCts[i] * (FrameCts[i]/NSamp[i] - 1) * RCrdt_SD[i]^2)
+97                 / ((SUM{i in 1..5} FrameCts[i] * RCredit[i])^2)
+98                <= (0.03^2);
+99         
+100                         *Relvariance for Proportion Having Offshore Affiliates;
+101           CON RelVar3:
+102               (SUM{i in 1..5} FrameCts[i] * (FrameCts[i]/NSamp[i] - 1) * OffSh_SD[i]^2)
+103                / ((SUM{i in 1..5} FrameCts[i] * OffShore[i])^2)
+104               <= (0.03^2);
+105        
+106          *_____ OBJECTIVE FUNCTION _____*;
+107        
+108           MIN f = (SUM{i in 1..5} FrameCts[i] * (FrameCts[i]/NSamp[i] - 1) * Revnu_SD[i]^2)
+109                    / ((SUM{i in 1..5} FrameCts[i] * Revenue[i])^2);
+110        
+111        
+112          *_____ SOLUTION _____*;
+113        
+114           SOLVE;
+NOTE: The problem has 5 variables (5 free, 0 fixed).
+NOTE: The problem has 6 linear constraints (1 LE, 0 EQ, 0 GE, 5 range).
+NOTE: The problem has 10 linear constraint coefficients.
+NOTE: The problem has 3 nonlinear constraints (3 LE, 0 EQ, 0 GE, 0 range).
+NOTE: The OPTMODEL presolver removed 0 variables, 5 linear constraints, and 0 nonlinear constraints.
+NOTE: The OPTMODEL presolved problem has 5 variables, 1 linear constraints, and 3 nonlinear constraints.
+NOTE: The OPTMODEL presolver removed 5 linear constraint coefficients, leaving 5.
+NOTE: Using analytic derivatives for objective.
+NOTE: Using analytic derivatives for nonlinear constraints.
+NOTE: The SQP solver is called. 
+                    Objective                    Optimality
+          Iter          Value  Infeasibility          Error  Complementarity
+             0      0.6601278     98.0000000      0.1805879       98.0000000
+             1      0.0193778     32.6664206     65.3201687       32.6664206
+             2      0.0101384      0.0069827      0.0000543        0.0069827
+             3      0.0076901      0.0064594      0.0000268        0.0064594
+4 The SAS System                                                                                        11:05 Friday, March 12, 2010
+
+             4      0.0072488      0.0063473      0.0000231        0.0063473
+             5      0.0019198      0.0033826  0.00000353567        0.0033826
+             6      0.0018818      0.0033394      0.0000386        0.0033394
+             7      0.0018818      0.0033394  0.00000454182        0.0033394
+             8      0.0017803      0.0032190      0.0000686        0.0032190
+             9      0.0017803      0.0032190  0.00000599333        0.0032190
+            10      0.0017771      0.0032148      0.0000694        0.0032148
+            11      0.0015104      0.0028511  0.00000631359        0.0028511
+            12      0.0014999      0.0028359  0.00000705120        0.0028359
+            13      0.0015046      0.0027171      0.0000101        0.0027171
+            14      0.0015355      0.0025536      0.0000111        0.0025536
+            15      0.0015676      0.0024857      0.0000140        0.0024857
+            16      0.0017737      0.0023095      0.0000157        0.0023095
+            17      0.0018010      0.0022957      0.0000225        0.0022957
+            18      0.0019291      0.0022427      0.0000189        0.0022427
+            19      0.0019669      0.0022313      0.0000334        0.0022313
+            20      0.0020854      0.0022003      0.0000416        0.0022003
+            21      0.0023011      0.0021589      0.0000531        0.0021589
+            22      0.0023876      0.0021463      0.0000681        0.0021463
+            23      0.0026477      0.0021176      0.0000865        0.0021176
+            24      0.0027188      0.0021116      0.0001142        0.0021116
+            25      0.0029616      0.0020960      0.0001475        0.0020960
+            26      0.0030556      0.0020915      0.0001950        0.0020915
+            27      0.0032202      0.0020855      0.0001928        0.0020855
+            28      0.0032054      0.0020859      0.0001930        0.0020859
+            29      0.0033770      0.0020671      0.0001890        0.0020671
+            30      0.0034041      0.0020607      0.0001879        0.0020607
+            31      0.0034270      0.0020602      0.0001876        0.0020602
+            32      0.0034785      0.0020591      0.0001870        0.0020591
+            33      0.0035336      0.0020582      0.0001864        0.0020582
+            34      0.0035872      0.0020574      0.0001859        0.0020574
+            35      0.0036376      0.0020568      0.0001854        0.0020568
+            36      0.0036832      0.0020564      0.0001849        0.0020564
+            37      0.0037234      0.0020561      0.0001846        0.0020561
+            38      0.0037581      0.0020559      0.0001842        0.0020559
+            39      0.0037877      0.0020557      0.0001840        0.0020557
+            40      0.0038132      0.0020556      0.0001837        0.0020556
+            41      0.0038362      0.0020556      0.0001835        0.0020556
+            42      0.0038596      0.0020555      0.0001833        0.0020555
+            43      0.0038922      0.0020555      0.0001831        0.0020555
+            44      0.0039898      0.0020552      0.0001822        0.0020552
+            45      0.0042214      0.0020431      0.0001786        0.0020431
+            46      0.0076683      0.0014526      0.0000861        0.0014526
+            47      0.0031751      0.0006577      0.0000444        0.0006577
+            48      0.0023416      0.0002239      0.0000216        0.0002239
+            49      0.0019479      0.0001381      0.0000152        0.0001381
+            50      0.0021470      0.0001080      0.0000138        0.0001080
+            51      0.0022136      0.0000374      0.0000101        0.0000374
+            52      0.0023241  0.00000314303  0.00000687764    0.00000314303
+            53      0.0023490 9.09494702E-12  0.00000272259    0.00000228965
+NOTE: Converged.
+NOTE: Objective = 0.002348969.
+115             PRINT NSamp;
+116             PRINT (SUM{i in 1..5} NSamp[i]);
+5 The SAS System                                                                                        11:05 Friday, March 12, 2010
+
+117             PRINT (SQRT((SUM{i in 1..5} FrameCts[i] * (FrameCts[i]/NSamp[i] - 1) * Revnu_SD[i]^2)
+118                         / ((SUM{i in 1..5} FrameCts[i] * Revenue[i])^2)));
+119             PRINT (SQRT((SUM{i in 1..5} FrameCts[i] * (FrameCts[i]/NSamp[i] - 1) * Emply_SD[i]^2)
+120                         / ((SUM{i in 1..5} FrameCts[i] * Emplyees[i])^2)));
+121             PRINT (SQRT((SUM{i in 1..5} FrameCts[i] * (FrameCts[i]/NSamp[i] - 1) * RCrdt_SD[i]^2)
+122                         / ((SUM{i in 1..5} FrameCts[i] * RCredit[i])^2)));
+123             PRINT (SQRT((SUM{i in 1..5} FrameCts[i] * (FrameCts[i]/NSamp[i] - 1) * OffSh_SD[i]^2)
+124                         / ((SUM{i in 1..5} FrameCts[i] * OffShore[i])^2)));
+125        
+126           SOLVE with NLPC / TECH=QUANEW;
+NOTE: The problem has 5 variables (5 free, 0 fixed).
+NOTE: The problem has 6 linear constraints (1 LE, 0 EQ, 0 GE, 5 range).
+NOTE: The problem has 10 linear constraint coefficients.
+NOTE: The problem has 3 nonlinear constraints (3 LE, 0 EQ, 0 GE, 0 range).
+NOTE: The OPTMODEL presolver removed 0 variables, 5 linear constraints, and 0 nonlinear constraints.
+NOTE: The OPTMODEL presolved problem has 5 variables, 1 linear constraints, and 3 nonlinear constraints.
+NOTE: The OPTMODEL presolver removed 5 linear constraint coefficients, leaving 5.
+NOTE: Using analytic derivatives for objective.
+NOTE: Using analytic derivatives for nonlinear constraints.
+NOTE: The experimental quasi-Newton method with BFGS update is used.
+WARNING: Algorithm failed to converge.
+NOTE: Objective = 0.0023283263.
+127             PRINT NSamp;
+128             PRINT (SUM{i in 1..5} NSamp[i]);
+129             PRINT (SQRT((SUM{i in 1..5} FrameCts[i] * (FrameCts[i]/NSamp[i] - 1) * Revnu_SD[i]^2)
+130                         / ((SUM{i in 1..5} FrameCts[i] * Revenue[i])^2)));
+131             PRINT (SQRT((SUM{i in 1..5} FrameCts[i] * (FrameCts[i]/NSamp[i] - 1) * Emply_SD[i]^2)
+132                         / ((SUM{i in 1..5} FrameCts[i] * Emplyees[i])^2)));
+133             PRINT (SQRT((SUM{i in 1..5} FrameCts[i] * (FrameCts[i]/NSamp[i] - 1) * RCrdt_SD[i]^2)
+134                         / ((SUM{i in 1..5} FrameCts[i] * RCredit[i])^2)));
+135             PRINT (SQRT((SUM{i in 1..5} FrameCts[i] * (FrameCts[i]/NSamp[i] - 1) * OffSh_SD[i]^2)
+136                         / ((SUM{i in 1..5} FrameCts[i] * OffShore[i])^2)));
+137        
+138           QUIT;
+NOTE: The PROCEDURE OPTMODEL printed pages 2-6.
+NOTE: PROCEDURE OPTMODEL used (Total process time):
+      real time           0.42 seconds
+      cpu time            0.07 seconds
+      
+
+139        RUN;
+140        
+141        /*********************************************************************/
+
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: The SAS System used:
+      real time           2.76 seconds
+      cpu time            0.48 seconds
+      

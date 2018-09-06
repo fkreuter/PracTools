@@ -1,0 +1,47 @@
+> ######################################################################
+> # Program: Example 3.3.R
+> # Name:    J.Dever
+> # Project: Practical Tools for Designing and Weighting Survey Samples
+> # Date:    07/09/10
+> # Purpose: Produce results for Example 3.3
+> # Revised: 
+> ######################################################################
+>                                                 #Set working directory
+> rm(list=ls(all=TRUE))
+> setwd("//Jpsmnds/Users/Share/Practical tools/Book/Book Chapters/3 Sample Design/")
+> 
+>                                             #Load sample size function
+> source("//Jpsmnds/Users/Share/Practical tools/Book/Book Chapters/3 Sample Design/n.cont.fcn")
+> 
+> 
+>                                                  #Common population CV
+> CVpop_=0.4
+> 
+>                            #Sample size for Business Unit=SR (overall)
+> SR.smp    <- n.cont(CV0=0.05, CVpop=CVpop_, N=504)
+> SR.smp
+[1] 56.78873
+> 
+>                      #Sample size for Business Unit=SR by Salary Grade
+> SR.As.smp <- n.cont(CV0=0.05, CVpop=CVpop_, N= 68)
+> SR.Rs.smp <- n.cont(CV0=0.05, CVpop=CVpop_, N=326)
+> SR.Ms.smp <- n.cont(CV0=0.05, CVpop=CVpop_, N=110)
+> 
+> SR.SG.smp <- sum(SR.As.smp, SR.Rs.smp, SR.Ms.smp)
+> c(SR.SG.smp, SR.As.smp, SR.Rs.smp, SR.Ms.smp)
+[1] 126.92690  32.96970  53.49744  40.45977
+> 
+>                                  #Compare overall and by-grade results
+> c(SR.smp, SR.SG.smp, SR.SG.smp - SR.smp)
+[1]  56.78873 126.92690  70.13817
+> 
+>                                                       #Decrease pop CV
+> CVpop_=0.25
+> n.cont(CV0=0.05, CVpop=CVpop_, N=504)
+[1] 23.81853
+> 
+>                                                       #Increase pop CV
+> CVpop_=0.75
+> n.cont(CV0=0.05, CVpop=CVpop_, N=504)
+[1] 155.5556
+> 

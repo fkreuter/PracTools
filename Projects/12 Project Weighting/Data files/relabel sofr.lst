@@ -1,0 +1,372 @@
+The SAS System                                                                                                                                                        17:05 Friday, January 27, 2012   1
+
+The CONTENTS Procedure
+
+Data Set Name        WORK.SOFR                               Observations          71701
+Member Type          DATA                                    Variables             19   
+Engine               V9                                      Indexes               0    
+Created              Friday, January 27, 2012 05:06:09 PM    Observation Length    80   
+Last Modified        Friday, January 27, 2012 05:06:09 PM    Deleted Observations  0    
+Protection                                                   Compressed            NO   
+Data Set Type                                                Sorted                NO   
+Label                                                                                   
+Data Representation  WINDOWS_64                                                         
+Encoding             wlatin1  Western (Windows)                                         
+
+
+                                    Engine/Host Dependent Information
+
+Data Set Page Size          8192                                                                          
+Number of Data Set Pages    711                                                                           
+First Data Page             1                                                                             
+Max Obs per Page            101                                                                           
+Obs in First Data Page      58                                                                            
+Number of Data Set Repairs  0                                                                             
+Filename                    C:\Users\RVALLI~1\AppData\Local\Temp\SAS Temporary Files\_TD6544\sofr.sas7bdat
+Release Created             9.0202M2                                                                      
+Host Created                X64_VSPRO                                                                     
+
+
+                          Alphabetic List of Variables and Attributes
+ 
+ #    Variable    Type    Len    Format      Informat    Label
+
+16    NSAMP       Num       5    6.          STDOS6.     Stratum Sample Count                  
+17    NSTRAT      Num       5    6.          STDOS6.     Stratum Population Count              
+ 6    RA008       Num       3    RA125_.     STDOS2.     Retention intention                   
+ 7    RA115       Num       3    RA123_.     STDOS2.     Preparation rating                    
+ 8    RA118       Num       3    RA108_.     STDOS2.     Stress rating                         
+ 4    RA006A      Num       3    RA121_.     STDOS2.     Satisfaction with compensation        
+ 5    RA006B      Num       3    RA082_.     STDOS2.     Satisfaction with type of work        
+10    RA112RA     Num       3    RA020_.     STDOS2.     Days in compensated status            
+ 1    REC_ID      Num       8                            Unique Record Identification Number   
+ 2    RESPSTAT    Num       3                            Final Respondent Status Code          
+ 9    SRED        Num       3    RA098_.     STDOS2.     Highest level of school               
+ 3    SRMARST     Num       3    RA107_.     STDOS2.     Marital status                        
+19    STRATUM     Num       8                            Design stratum                        
+18    V_STRAT     Num       8    16.         16.         Variance estimation stratum           
+12    XACT2R      Num       3    XACT2F.     STDOS2.     Length of activation in last 24 months
+15    XCPAY1R     Num       3    XCPAYF.     STDOS2.     Pay grade                             
+13    XRETH4R     Num       3    XRETH4_.    STDOS2.     Race/ethnicity                        
+14    XSEXR       Num       3    XSEXF.      STDOS2.     Gender                                
+11    XSRRCR      Num       3    XSRRCF.     STDOS2.     Service                               
+The SAS System                                                                                                                                                        17:05 Friday, January 27, 2012   2
+
+The CONTENTS Procedure
+
+Data Set Name        A.SOFR                                  Observations          71701
+Member Type          DATA                                    Variables             19   
+Engine               V9                                      Indexes               0    
+Created              Friday, January 27, 2012 05:06:09 PM    Observation Length    80   
+Last Modified        Friday, January 27, 2012 05:06:09 PM    Deleted Observations  0    
+Protection                                                   Compressed            NO   
+Data Set Type                                                Sorted                NO   
+Label                                                                                   
+Data Representation  WINDOWS_64                                                         
+Encoding             wlatin1  Western (Windows)                                         
+
+
+                                           Engine/Host Dependent Information
+
+Data Set Page Size          8192                                                                                        
+Number of Data Set Pages    711                                                                                         
+First Data Page             1                                                                                           
+Max Obs per Page            101                                                                                         
+Obs in First Data Page      58                                                                                          
+Number of Data Set Repairs  0                                                                                           
+Filename                    C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files\sofr.sas7bdat
+Release Created             9.0202M2                                                                                    
+Host Created                X64_VSPRO                                                                                   
+
+
+                           Alphabetic List of Variables and Attributes
+ 
+ #    Variable    Type    Len    Format        Informat    Label
+
+16    NSAMP       Num       5                  STDOS6.     Stratum Sample Count                  
+17    NSTRAT      Num       5                  STDOS6.     Stratum Population Count              
+ 6    RA008       Num       3    RA008_.       STDOS2.     Retention intention                   
+ 7    RA115       Num       3    RA115_.       STDOS2.     Preparation rating                    
+ 8    RA118       Num       3    RA118_.       STDOS2.     Stress rating                         
+ 4    RA006A      Num       3    RA006A_.      STDOS2.     Satisfaction with compensation        
+ 5    RA006B      Num       3    RA006B_.      STDOS2.     Satisfaction with type of work        
+10    RA112RA     Num       3                  STDOS2.     Days in compensated status            
+ 1    REC_ID      Num       8                              Unique Record Identification Number   
+ 2    RESPSTAT    Num       3    RESPSTAT_.                Final Respondent Status Code          
+ 9    SRED        Num       3    SRED_.        STDOS2.     Highest level of school               
+ 3    SRMARST     Num       3    SRMARST_.     STDOS2.     Marital status                        
+19    STRATUM     Num       8                              Design stratum                        
+18    V_STRAT     Num       8                  16.         Variance estimation stratum           
+12    XACT2R      Num       3    XACT2R_.      STDOS2.     Length of activation in last 24 months
+15    XCPAY1R     Num       3    XCPAY1R_.     STDOS2.     Pay grade                             
+13    XRETH4R     Num       3    XRETH4R_.     STDOS2.     Race/ethnicity                        
+14    XSEXR       Num       3    XSEXR_.       STDOS2.     Gender                                
+11    XSRRCR      Num       3    XSRRCR_.      STDOS2.     Service                               
+The SAS System                                                                                                                                                        17:05 Friday, January 27, 2012   3
+
+The FREQ Procedure
+
+                               Retention intention
+ 
+                                                        Cumulative    Cumulative
+                      RA008    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+Very unlikely                      1348        5.22          1348         5.22  
+Unlikely                           2315        8.97          3663        14.19  
+Neither likely nor unlikely        2053        7.95          5716        22.15  
+Likely                             8360       32.39         14076        54.54  
+Very likely                       11732       45.46         25808       100.00  
+
+Frequency Missing = 45893
+
+
+                                  Preparation rating
+ 
+                                                             Cumulative    Cumulative
+                           RA115    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+Very poorly prepared                     288        1.14           288         1.14  
+Poorly prepared                          815        3.22          1103         4.36  
+Neither well nor poorly prepared        3059       12.10          4162        16.46  
+Well prepared                          11231       44.42         15393        60.89  
+Very well prepared                      9889       39.11         25282       100.00  
+
+Frequency Missing = 46419
+
+
+                                Stress rating
+ 
+                                                    Cumulative    Cumulative
+                  RA118    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+Much less than usual            901        3.58           901         3.58  
+Less than usual                2532       10.05          3433        13.63  
+About the same as usual       10584       42.02         14017        55.65  
+More than usual                8323       33.05         22340        88.70  
+Much more than usual           2846       11.30         25186       100.00  
+
+Frequency Missing = 46515
+
+
+                             Satisfaction with compensation
+ 
+                                                               Cumulative    Cumulative
+                            RA006A    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+Very dissatisfied                          934        3.63           934         3.63  
+Dissatisfied                              3657       14.19          4591        17.82  
+Neither satisfied nor dissatisfied        4359       16.92          8950        34.74  
+Satisfied                                13463       52.25         22413        86.99  
+Very satisfied                            3352       13.01         25765       100.00  
+
+Frequency Missing = 45936
+
+
+                             Satisfaction with type of work
+ 
+                                                               Cumulative    Cumulative
+                            RA006B    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+Very dissatisfied                          689        2.68           689         2.68  
+Dissatisfied                              1888        7.35          2577        10.03  
+Neither satisfied nor dissatisfied        3076       11.97          5653        22.00  
+Satisfied                                12810       49.85         18463        71.85  
+Very satisfied                            7232       28.15         25695       100.00  
+
+Frequency Missing = 46006
+The SAS System                                                                                                                                                        17:05 Friday, January 27, 2012   4
+
+The FREQ Procedure
+
+                                        Final Respondent Status Code
+ 
+                                                                                   Cumulative    Cumulative
+                                              RESPSTAT    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+Questionnaire Returned-Completed                             25539       35.62         25539        35.62  
+Questionnaire Returned-(Sufficient) Partial Complete            20        0.03         25559        35.65  
+Questionnaire Returned-(Insufficient) Partial Complete         524        0.73         26083        36.38  
+Questionnaire Returned-Ineligible                              503        0.70         26586        37.08  
+Questionnaire Returned-Blank                                    97        0.14         26683        37.21  
+No Return-Deceased                                               9        0.01         26692        37.23  
+No Return-Incarcerated                                           2        0.00         26694        37.23  
+No Return-Separated/Retired                                     35        0.05         26729        37.28  
+No Return-Active Refusal                                       193        0.27         26922        37.55  
+No Return-Other                                                  8        0.01         26930        37.56  
+No Return-Eligible based on administrative records           39872       55.61         66802        93.17  
+Postal Non-delivery                                           1339        1.87         68141        95.03  
+Not Locatable                                                    6        0.01         68147        95.04  
+Ineligible-No Questionnaire Sent                              3554        4.96         71701       100.00  
+
+
+                                           Highest level of school
+ 
+                                                                                    Cumulative    Cumulative
+                                                   SRED    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+12 years or less of school (no diploma)                         146        0.59           146         0.59  
+High school graduate, high school diploma or equivalent        2060        8.34          2206         8.93  
+Some college credit, but less than 1 year                      2466        9.98          4672        18.91  
+1 or more years of college, no degree                          4969       20.11          9641        39.01  
+Associate degree (e.g., AA, AS)                                2400        9.71         12041        48.73  
+Bachelor’s degree (e.g., BA, AB, BS)                           7758       31.39         19799        80.12  
+Master’s, doctoral or professional school degree               4913       19.88         24712       100.00  
+
+Frequency Missing = 46989
+
+
+                          Marital status
+ 
+                                          Cumulative    Cumulative
+      SRMARST    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+Married             17174       66.14         17174        66.14  
+Separated             403        1.55         17577        67.69  
+Divorced             2579        9.93         20156        77.62  
+Widowed                75        0.29         20231        77.91  
+Never Married        5736       22.09         25967       100.00  
+
+Frequency Missing = 45734
+
+
+                     Length of activation in last 24 months
+ 
+                                                        Cumulative    Cumulative
+                     XACT2R    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+Activated 30 Days or Less           618        2.42           618         2.42  
+Activated More Than 30 Days       13064       51.19         13682        53.61  
+Not activated                     11840       46.39         25522       100.00  
+
+Frequency Missing = 46179
+
+
+The SAS System                                                                                                                                                        17:05 Friday, January 27, 2012   5
+
+The FREQ Procedure
+
+                          Pay grade
+ 
+                                    Cumulative    Cumulative
+XCPAY1R    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+  E1-E3        9381       13.17          9381        13.17  
+  E4          18483       25.96         27864        39.13  
+  E5-E6       16969       23.83         44833        62.96  
+  E7-E9        6323        8.88         51156        71.84  
+  W1-W5        2476        3.48         53632        75.32  
+  O1-O3        7418       10.42         61050        85.74  
+  O4-O6       10156       14.26         71206       100.00  
+
+Frequency Missing = 495
+
+
+                            Race/ethnicity
+ 
+                                              Cumulative    Cumulative
+          XRETH4R    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+NonHispanic White       40486       56.86         40486        56.86  
+Minority                30720       43.14         71206       100.00  
+
+Frequency Missing = 495
+
+
+                           Gender
+ 
+                                   Cumulative    Cumulative
+ XSEXR    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+Male         59263       83.23         59263        83.23  
+Female       11943       16.77         71206       100.00  
+
+Frequency Missing = 495
+
+
+                                 Service
+ 
+                                                 Cumulative    Cumulative
+              XSRRCR    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+Army National Guard        16366       22.83         16366        22.83  
+Army Reserve               14507       20.23         30873        43.06  
+Navy Reserve                9177       12.80         40050        55.86  
+Marine Corp Reserve        12325       17.19         52375        73.05  
+Air National Guard          9564       13.34         61939        86.39  
+Air Force Reserve           9267       12.92         71206        99.31  
+No reserve component         495        0.69         71701       100.00  
+The SAS System                                                                                                                                                        17:05 Friday, January 27, 2012   6
+
+The UNIVARIATE Procedure
+Variable:  RA112RA  (Days in compensated status)
+
+                            Moments
+
+N                       17996    Sum Weights              17996
+Mean               78.1250278    Sum Observations       1405938
+Std Deviation       104.08376    Variance            10833.4291
+Skewness           1.71500556    Kurtosis             1.7880269
+Uncorrected SS      304786502    Corrected SS         194947557
+Coeff Variation    133.227165    Std Error Mean      0.77588076
+
+
+              Basic Statistical Measures
+ 
+    Location                    Variability
+
+Mean     78.12503     Std Deviation          104.08376
+Median   35.00000     Variance                   10833
+Mode      0.00000     Range                  365.00000
+                      Interquartile Range     80.00000
+
+
+           Tests for Location: Mu0=0
+ 
+Test           -Statistic-    -----p Value------
+
+Student's t    t  100.6921    Pr > |t|    <.0001
+Sign           M    7719.5    Pr >= |M|   <.0001
+Signed Rank    S  59594540    Pr >= |S|   <.0001
+
+
+Quantiles (Definition 5)
+ 
+Quantile      Estimate
+
+100% Max           365
+99%                365
+95%                365
+90%                260
+75% Q3              93
+50% Median          35
+25% Q1              13
+10%                  0
+5%                   0
+1%                   0
+0% Min               0
+
+
+        Extreme Observations
+ 
+----Lowest----        ----Highest---
+ 
+Value      Obs        Value      Obs
+
+    0    70996          365    70880
+    0    70990          365    70929
+    0    70978          365    70954
+    0    70970          365    70963
+    0    70966          365    70993
+
+
+               Missing Values
+ 
+                       -----Percent Of-----
+Missing                             Missing
+  Value       Count     All Obs         Obs
+
+      .        1087        1.52        2.02
+      B       45018       62.79       83.82
+      I          31        0.04        0.06
+      N        7569       10.56       14.09
+  Total       53705       74.90      100.00

@@ -1,0 +1,181 @@
+The SAS System                                                                                                                                                        17:10 Friday, January 27, 2012   1
+
+The CONTENTS Procedure
+
+Data Set Name        WORK.RCCPDS57                           Observations          4365
+Member Type          DATA                                    Variables             8
+Engine               V9                                      Indexes               0
+Created              Friday, January 27, 2012 05:14:09 PM    Observation Length    32
+Last Modified        Friday, January 27, 2012 05:14:09 PM    Deleted Observations  0
+Protection                                                   Compressed            NO
+Data Set Type                                                Sorted                NO
+Label
+Data Representation  WINDOWS_64
+Encoding             wlatin1  Western (Windows)
+
+
+                                      Engine/Host Dependent Information
+
+Data Set Page Size          4096
+Number of Data Set Pages    36
+First Data Page             1
+Max Obs per Page            126
+Obs in First Data Page      63
+Number of Data Set Repairs  0
+Filename                    C:\Users\RVALLI~1\AppData\Local\Temp\SAS Temporary Files\_TD7248\rccpds57.sas7bdat
+Release Created             9.0202M2
+Host Created                X64_VSPRO
+
+
+                        Alphabetic List of Variables and Attributes
+
+#    Variable    Type    Len    Informat    Label
+
+7    ACTIVATD    Num       3    STDOS2.     Length of activation in last 24 months (xact2r)
+8    COUNT       Num       8                Count of persons
+5    EDUCCAT     Num       3    STDOS2.     Highest level of school (sred)
+2    GENDER      Num       3    STDOS2.     Gender (xsexr)
+6    MARIT       Num       3    STDOS2.     Marital status (srmarst)
+3    PG_GROUP    Num       3    STDOS2.     Pay grade (xcpay1r)
+4    RACETH      Num       3    STDOS2.     Race/ethnicity (xreth4r)
+1    SERVICE     Num       3    STDOS2.     Service (xsrrcr)
+The SAS System                                                                                                                                                        17:10 Friday, January 27, 2012   2
+
+The CONTENTS Procedure
+
+Data Set Name        WORK.RCCPDS57                           Observations          4365
+Member Type          DATA                                    Variables             8
+Engine               V9                                      Indexes               0
+Created              Friday, January 27, 2012 05:14:09 PM    Observation Length    32
+Last Modified        Friday, January 27, 2012 05:14:09 PM    Deleted Observations  0
+Protection                                                   Compressed            NO
+Data Set Type                                                Sorted                NO
+Label
+Data Representation  WINDOWS_64
+Encoding             wlatin1  Western (Windows)
+
+
+                                      Engine/Host Dependent Information
+
+Data Set Page Size          4096
+Number of Data Set Pages    36
+First Data Page             1
+Max Obs per Page            126
+Obs in First Data Page      61
+Number of Data Set Repairs  0
+Filename                    C:\Users\RVALLI~1\AppData\Local\Temp\SAS Temporary Files\_TD7248\rccpds57.sas7bdat
+Release Created             9.0202M2
+Host Created                X64_VSPRO
+
+
+                               Alphabetic List of Variables and Attributes
+
+#    Variable    Type    Len    Format       Informat    Label
+
+7    ACTIVATD    Num       3    XACT2R_.     STDOS2.     Length of activation in last 24 months (xact2r)
+8    COUNT       Num       8                             Count of persons
+5    EDUCCAT     Num       3    SRED_.       STDOS2.     Highest level of school (sred)
+2    GENDER      Num       3    XSEXR_.      STDOS2.     Gender (xsexr)
+6    MARIT       Num       3    SRMARST_.    STDOS2.     Marital status (srmarst)
+3    PG_GROUP    Num       3    XCPAY1R_.    STDOS2.     Pay grade (xcpay1r)
+4    RACETH      Num       3    XRETH4R_.    STDOS2.     Race/ethnicity (xreth4r)
+1    SERVICE     Num       3    XSRRCR_.     STDOS2.     Service (xsrrcr)
+The SAS System                                                                                                                                                        17:10 Friday, January 27, 2012   3
+
+The FREQ Procedure
+
+                             Service (xsrrcr)
+
+                                                 Cumulative    Cumulative
+             SERVICE    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+Army National Guard       322053       40.18        322053        40.18
+Army Reserve              190235       23.73        512288        63.91
+Navy Reserve               77022        9.61        589310        73.52
+Marine Corp Reserve        36094        4.50        625404        78.03
+Air National Guard        105092       13.11        730496        91.14
+Air Force Reserve          71022        8.86        801518       100.00
+
+Frequency Missing = 291
+
+
+                       Gender (xsexr)
+
+                                   Cumulative    Cumulative
+GENDER    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+Male        663122       82.71        663122        82.71
+Female      138574       17.29        801696       100.00
+
+Frequency Missing = 113
+
+
+                                       Highest level of school (sred)
+
+                                                                                    Cumulative    Cumulative
+                                                EDUCCAT    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+12 years or less of school (no diploma)                       10819        1.40         10819         1.40
+High school graduate, high school diploma or equivalent      116933       15.09        127752        16.48
+Some college credit, but less than 1 year                    113512       14.65        241264        31.13
+1 or more years of college, no degree                        223581       28.85        464845        59.98
+Associate degree (e.g., AA, AS)                               96073       12.40        560918        72.38
+Bachelor’s degree (e.g., BA, AB, BS)                         147450       19.03        708368        91.40
+Master’s, doctoral or professional school degree              66614        8.60        774982       100.00
+
+Frequency Missing = 26827
+
+
+                     Marital status (srmarst)
+
+                                          Cumulative    Cumulative
+        MARIT    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+Married            455603       56.94        455603        56.94
+Separated           11748        1.47        467351        58.41
+Divorced            75025        9.38        542376        67.78
+Widowed              3324        0.42        545700        68.20
+Never Married      254468       31.80        800168       100.00
+
+Frequency Missing = 1641
+
+
+                 Length of activation in last 24 months (xact2r)
+
+                                                        Cumulative    Cumulative
+                   ACTIVATD    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+Activated 30 Days or Less         37171        4.67         37171         4.67
+Activated More Than 30 Days      250808       31.51        287979        36.18
+Not activated                    508083       63.82        796062       100.00
+
+Frequency Missing = 5747
+The SAS System                                                                                                                                                        17:10 Friday, January 27, 2012   4
+
+The FREQ Procedure
+
+                     Pay grade (xcpay1r)
+
+                                     Cumulative    Cumulative
+PG_GROUP    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+   E1-E3      112244       14.00        112244        14.00
+   E4         197930       24.69        310174        38.69
+   E5-E6      265365       33.10        575539        71.79
+   E7-E9      110397       13.77        685936        85.56
+   W1-W5       10948        1.37        696884        86.93
+   O1-O3       41176        5.14        738060        92.07
+   O4-O6       63608        7.93        801668       100.00
+
+Frequency Missing = 141
+
+
+                       Race/ethnicity (xreth4r)
+
+                                              Cumulative    Cumulative
+           RACETH    Frequency     Percent     Frequency      Percent
+ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+NonHispanic White      540473       67.46        540473        67.46
+Minority               260734       32.54        801207       100.00
+
+Frequency Missing = 602

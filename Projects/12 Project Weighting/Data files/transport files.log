@@ -1,0 +1,136 @@
+1                                              The SAS System               11:45 Saturday, January 28, 2012
+
+NOTE: Copyright (c) 2002-2008 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.2 (TS2M2) 
+      Licensed to UNIVERSITY OF MARYLAND-CAMPUSWIDE-T/R, Site 70085382.
+NOTE: This session is executing on the X64_VSPRO  platform.
+
+
+
+NOTE: SAS initialization used:
+      real time           9.28 seconds
+      cpu time            0.28 seconds
+      
+1          /********************************************************************************/
+2          /* FILE:    transpot files.sas                                                  */
+3          /* TOPIC:   2003 May SOFS - Reserve Component (SOFR)                            */
+4          /* DATE:    01/28/2012                                                          */
+5          /* AUTHOR:  R. Valliant                                                         */
+6          /* PURPOSE: Create SAS transport files from sofr and rccpds57.                  */
+7          /********************************************************************************/
+8          
+9          options nocenter pageno=1 errors=1 orientation=portrait
+10                 nofmterr ls=200
+11                 pagesize = 80;
+12         
+13         
+14         * libname in '<pathname where SAS data file exists>'; * USE FOR SD2 DATASETS *;
+15         * libname in v604 '<pathname where SAS data file exists>'; * USE FOR SSD DATASETS *;
+16         * libname out xport '<pathname where you want to write the file, including FILENAME>';
+17         
+18         libname in1 "C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files";
+NOTE: Libref IN1 was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files
+19         libname in2 "C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files\tmp";
+NOTE: Libref IN2 was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files\tmp
+20         
+21         libname out1 xport "C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files\sofr.xpt";
+NOTE: Libref OUT1 was successfully assigned as follows: 
+      Engine:        XPORT 
+      Physical Name: C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files\sofr.xpt
+22         libname out2 xport "C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files\rccpds57.xpt";
+NOTE: Libref OUT2 was successfully assigned as follows: 
+      Engine:        XPORT 
+      Physical Name: C:\Projects\Practical Tools Book\Book Chapters\12 Project Weighting\Data files\rccpds57.xpt
+23         
+24         options fmtsearch=(in);
+25         
+26         data in2.sofr;
+27            set in1.sofr;
+28            format _all_;
+29         run;
+
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: There were 71701 observations read from the data set IN1.SOFR.
+NOTE: The data set IN2.SOFR has 71701 observations and 19 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+30         
+31         data in2.rccpds57;
+32            set in1.rccpds57;
+2 The SAS System                                                                                                                                                        11:45 Saturday, January 28, 2012
+
+NOTE: Data file IN1.RCCPDS57.DATA is in a format that is native to another host, or the file encoding does not match the session encoding. Cross Environment Data Access will be used, which might 
+      require additional CPU resources and might reduce performance.
+33            format _all_;
+34         run;
+
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: Informat STDOS was not found or could not be loaded.
+NOTE: There were 4365 observations read from the data set IN1.RCCPDS57.
+NOTE: The data set IN2.RCCPDS57 has 4365 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+35         
+36         proc copy in=in2 out=out1;
+37            select sofr;
+38         run;
+
+NOTE: Copying IN2.SOFR to OUT1.SOFR (memtype=DATA).
+NOTE: There were 71701 observations read from the data set IN2.SOFR.
+NOTE: The data set OUT1.SOFR has 71701 observations and 19 variables.
+NOTE: PROCEDURE COPY used (Total process time):
+      real time           0.34 seconds
+      cpu time            0.10 seconds
+      
+
+39         
+40         proc copy in=in2 out=out2;
+41            select rccpds57;
+42         run;
+
+NOTE: Copying IN2.RCCPDS57 to OUT2.RCCPDS57 (memtype=DATA).
+NOTE: The variable label (SRED) Highest degree/level of school completed has been truncated to (SRED) Highest degree/level of school co.
+NOTE: There were 4365 observations read from the data set IN2.RCCPDS57.
+NOTE: The data set OUT2.RCCPDS57 has 4365 observations and 8 variables.
+NOTE: PROCEDURE COPY used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+43         
+44         
+
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: The SAS System used:
+      real time           9.84 seconds
+      cpu time            0.54 seconds
+      
